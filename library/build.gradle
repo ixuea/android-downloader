@@ -1,9 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'findbugs'
-
+apply plugin: 'checkstyle'
 
 findbugs {
     toolVersion = FINDBUGS_VERSION
+}
+
+checkstyle {
+    toolVersion = '6.12.1'
 }
 
 android {
@@ -56,10 +60,19 @@ afterEvaluate {
         }
     }
 
+//    task checkstyle(type: Checkstyle) {
+//        configFile = rootProject.file('checkstyle.xml')
+//        configProperties.checkStyleConfigDir = rootProject.rootDir
+////        configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/quality/checkstyle/suppressions.xml").absolutePath
+//        source 'src'
+//        include '**/*.java'
+//        exclude '**/gen/**'
+//        classpath = files()
+//    }
+
     check.dependsOn('findbugs')
 
 }
-
 
 
 dependencies {
