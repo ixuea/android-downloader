@@ -31,4 +31,7 @@ ext {
     targetSdkVersion = 24
 
     androidSupportVersion = '24.2.1'
+
+//    gradle
+    androidGradleVersion='2.2.2'
 }
