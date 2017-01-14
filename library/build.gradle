@@ -1,4 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'findbugs'
+
+
+findbugs {
+    toolVersion = FINDBUGS_VERSION
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -20,6 +26,41 @@ android {
         }
     }
 }
+
+
+
+afterEvaluate {
+    task findbugs(type: FindBugs, dependsOn: assembleDebug) {
+
+        description 'Run findbugs'
+        group 'verification'
+
+        classes = fileTree('build/intermediates/classes/debug/')
+        source = fileTree('src/main/java')
+        classpath = project.configurations.compile
+
+        effort = 'max'
+
+        excludeFilter = file("findbugs-exclude.xml")
+
+        reports {
+            xml.enabled = false
+            html.enabled = true
+
+//            xml {
+//                destination "$project.buildDir/findbugs.xml"
+//            }
+//            html {
+//                destination "$project.buildDir/findbugs.html"
+//            }
+        }
+    }
+
+    check.dependsOn('findbugs')
+
+}
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
