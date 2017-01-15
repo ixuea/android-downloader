@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'findbugs'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
+apply plugin: "jacoco"
+apply plugin: 'com.github.kt3k.coveralls'
 
 findbugs {
     toolVersion = FINDBUGS_VERSION
@@ -13,6 +15,13 @@ checkstyle {
 
 pmd {
     toolVersion = PMD_VERSION
+}
+
+jacoco {
+    toolVersion = JACOCO_VERSION
+}
+coveralls {
+    jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
 }
 
 android {
@@ -101,6 +110,32 @@ afterEvaluate {
     }
 
     check.dependsOn('pmd')
+
+    task jacocoTestReport(type: JacocoReport, dependsOn: testDebugUnitTest) {
+        def coverageSourceDirs = ['src/main/java']
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports"
+
+        classDirectories = fileTree(
+                dir: 'build/intermediates/classes/debug',
+                excludes: ['**/R.class',
+                           '**/R$*.class',
+                           '**/BuildConfig.*',
+                           '**/Manifest*.*',
+                           '**/BitmapRequestBuilder.class',
+                           '**/DrawableRequestBuilder.class',
+                           '**/GifRequestBuilder.class',]
+        )
+
+        additionalSourceDirs = files(coverageSourceDirs)
+        sourceDirectories = files(coverageSourceDirs)
+        executionData = files('build/jacoco/testDebug.exec')
+
+        reports {
+            xml.enabled = true // coveralls plugin depends on xml format report
+            html.enabled = true
+        }
+    }
 
 }
 
