@@ -57,6 +57,20 @@ subprojects { project ->
             options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
         }
     }
+
+//    android {
+//        lintOptions {
+//            abortOnError true
+//            xmlReport false
+//            htmlReport true
+////        lintConfig file("${project.rootDir}/config/quality/lint/lint.xml")
+////        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+////        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+//        }
+//    }
+
+
+
 }
 
 task clean(type: Delete) {

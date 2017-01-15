@@ -20,6 +20,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+//    lintOptions {
+//        xmlReport false
+//        htmlReport true
+//
+//        // is true disable lint progress
+//        quiet false
+//        abortOnError false
+//        ignoreWarnings true
+//
+////        lintConfig file("int.xml")
+//        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+////        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+//        abortOnError true
+//
+//
+//    }
 }
 
 dependencies {
