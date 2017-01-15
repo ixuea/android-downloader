@@ -1,4 +1,9 @@
-<manifest package="cn.woblog.android.downloader">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="cn.woblog.android.downloader">
 
-
+  <service android:name="cn.woblog.android.downloader.DownloadService">
+    <intent-filter>
+      <action android:name="cn.woblog.android.downloader.DOWNLOAD_SERVICE" />
+    </intent-filter>
+  </service>
 </manifest>
