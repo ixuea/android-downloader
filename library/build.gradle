@@ -1,13 +1,18 @@
 apply plugin: 'com.android.library'
 apply plugin: 'findbugs'
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
 
 findbugs {
     toolVersion = FINDBUGS_VERSION
 }
 
 checkstyle {
-    toolVersion = '6.12.1'
+    toolVersion = CHECK_STYLE_VERSION
+}
+
+pmd {
+    toolVersion = PMD_VERSION
 }
 
 android {
@@ -71,6 +76,29 @@ afterEvaluate {
 //    }
 
     check.dependsOn('findbugs')
+
+    task pmd(type: Pmd) {
+        description 'Run pmd'
+        group 'verification'
+
+        // If ruleSets is not empty, it seems to contain some
+        // defaults which override rules in the ruleset file...
+        ignoreFailures = false
+        ruleSets = []
+        ruleSetFiles = files('pmd-ruleset.xml')
+
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+
+    }
+
+    check.dependsOn('pmd')
 
 }
 
