@@ -55,6 +55,8 @@ afterEvaluate {
         description 'Run findbugs'
         group 'verification'
 
+        ignoreFailures = true
+
         classes = fileTree('build/intermediates/classes/debug/')
         source = fileTree('src/main/java')
         classpath = project.configurations.compile

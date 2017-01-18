@@ -115,16 +115,5 @@ public class DownloadInfo {
     return result;
   }
 
-  @Override
-  public String toString() {
-    return "DownloadInfo{" +
-        "downloadId='" + downloadId + '\'' +
-        ", createAt=" + createAt +
-        ", url='" + url + '\'' +
-        ", path='" + path + '\'' +
-        ", size=" + size +
-        ", progress=" + progress +
-        ", name='" + name + '\'' +
-        '}';
-  }
+
 }

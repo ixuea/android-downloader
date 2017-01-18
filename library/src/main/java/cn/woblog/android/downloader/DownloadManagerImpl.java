@@ -1,25 +1,25 @@
 package cn.woblog.android.downloader;
 
 import android.content.Context;
-import cn.woblog.android.downloader.callback.IDownloadManager;
+import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 
 /**
  * Created by renpingqing on 14/01/2017.
  */
 
-public class DownloadManager implements IDownloadManager {
+public final class DownloadManagerImpl implements DownloadManager {
 
-  private static DownloadManager instance;
+  private static DownloadManagerImpl instance;
 
-  public DownloadManager(Context context) {
+  private DownloadManagerImpl(Context context) {
 
   }
 
   public static DownloadManager getInstance(Context context) {
-    synchronized (DownloadManager.class) {
+    synchronized (DownloadManagerImpl.class) {
       if (instance == null) {
-        instance = new DownloadManager(context);
+        instance = new DownloadManagerImpl(context);
       }
     }
     return instance;
