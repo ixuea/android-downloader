@@ -22,6 +22,7 @@ allprojects {
 subprojects { project ->
     repositories {
         jcenter()
+        mavenCentral()
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
@@ -79,11 +80,10 @@ task clean(type: Delete) {
 }
 
 ext {
-    minSdkVersion = 9
+    minSdkVersion = 10
     compileSdkVersion = 24
     buildToolsVersion = '24.0.2'
 
-    minSdkVersion = 9
     targetSdkVersion = 24
 
     androidSupportVersion = '24.2.1'
