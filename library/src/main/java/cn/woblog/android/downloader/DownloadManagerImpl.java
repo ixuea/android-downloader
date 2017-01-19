@@ -25,9 +25,6 @@ public final class DownloadManagerImpl implements DownloadManager {
     return instance;
   }
 
-  public void onDestroy() {
-
-  }
 
   @Override
   public void download(DownloadInfo info) {
@@ -46,6 +43,11 @@ public final class DownloadManagerImpl implements DownloadManager {
 
   @Override
   public void remove(DownloadInfo info) {
+
+  }
+
+  @Override
+  public void onDestroy() {
 
   }
 }
