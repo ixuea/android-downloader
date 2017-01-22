@@ -10,9 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import cn.woblog.android.downloader.DownloadService;
+import cn.woblog.android.downloader.callback.DownloadManager;
+import cn.woblog.android.downloader.domain.Download;
+import cn.woblog.android.downloader.domain.Download.Builder;
 import cn.woblog.android.downloader.simple.R;
+import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
 import com.squareup.picasso.Picasso;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +29,12 @@ import java.util.List;
 public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapter.ViewHolder> {
 
   private final Context context;
+  private final DownloadManager downloadManager;
   private List<MyDownloadInfo> data = new ArrayList<>();
 
   public DownloadListAdapter(Context context) {
     this.context = context;
+    downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
   }
 
   @Override
@@ -70,6 +78,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
     private final ProgressBar pb;
     private final TextView tv_name;
     private final Button bt_action;
+    private Download download;
 
     public ViewHolder(View view) {
       super(view);
@@ -82,9 +91,76 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
       bt_action = (Button) view.findViewById(R.id.bt_action);
     }
 
-    public void bindData(MyDownloadInfo data, int position, Context context) {
+    public void bindData(final MyDownloadInfo data, int position, final Context context) {
       Picasso.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
+
+      download = downloadManager.getDownloadById(data.getUrl());
+
+      bt_action.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Download download = downloadManager.getDownloadById(data.getUrl());
+          if (download != null) {
+            download.setDownloadListeners(new MyDownloadListener(new SoftReference(this)) {
+
+              @Override
+              public void onRefresh() {
+                if (getUserTag() != null && getUserTag().get() != null) {
+                  ViewHolder viewHolder = (ViewHolder) getUserTag().get();
+                  viewHolder.refresh();
+                }
+              }
+            });
+            switch (download.getStatus()) {
+              case Download.STATUS_NONE:
+              case Download.STATUS_PAUSED:
+              case Download.STATUS_ERROR:
+
+                //resume download
+                downloadManager.resume(download);
+                break;
+
+              case Download.STATUS_DOWNLOADING:
+              case Download.STATUS_PREPARE_DOWNLOAD:
+                //pause download
+                downloadManager.pause(download);
+                break;
+            }
+          } else {
+            //create download
+            String path = context.getFilesDir().getAbsolutePath().concat("/")
+                .concat(data.getName());
+            download = new Builder().setUrl(data.getUrl())
+                .setPath(path)
+                .build();
+            downloadManager.download(download);
+          }
+        }
+      });
+
+    }
+
+    private void refresh() {
+      if (download == null) {
+        bt_action.setText("download");
+      } else {
+        switch (download.getStatus()) {
+          case Download.STATUS_NONE:
+            bt_action.setText("download");
+            break;
+          case Download.STATUS_PAUSED:
+          case Download.STATUS_ERROR:
+            bt_action.setText("continue download");
+            break;
+
+          case Download.STATUS_DOWNLOADING:
+          case Download.STATUS_PREPARE_DOWNLOAD:
+            bt_action.setText("pause");
+            break;
+        }
+
+      }
     }
   }
 }

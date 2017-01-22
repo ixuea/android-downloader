@@ -2,7 +2,7 @@ package cn.woblog.android.downloader;
 
 import android.content.Context;
 import cn.woblog.android.downloader.callback.DownloadManager;
-import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.domain.Download;
 
 /**
  * Created by renpingqing on 14/01/2017.
@@ -27,27 +27,32 @@ public final class DownloadManagerImpl implements DownloadManager {
 
 
   @Override
-  public void download(DownloadInfo info) {
+  public void download(Download download) {
 
   }
 
   @Override
-  public void pause(DownloadInfo info) {
+  public void pause(Download download) {
 
   }
 
   @Override
-  public void resume(DownloadInfo info) {
+  public void resume(Download download) {
 
   }
 
   @Override
-  public void remove(DownloadInfo info) {
+  public void remove(Download download) {
 
   }
 
   @Override
   public void onDestroy() {
 
+  }
+
+  @Override
+  public Download getDownloadById(String id) {
+    return null;
   }
 }
