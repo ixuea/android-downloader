@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * Created by renpingqing on 15/01/2017.
@@ -50,8 +51,13 @@ public class Download implements Serializable {
   private String path;
   private long size;
   private long progress;
+  @DownloadStatus
   private int status;
-  private transient DownloadListener downloadListeners;
+  private int key;
+  private boolean isSupportRanges;
+  private List<ThreadInfo> threadInfos;
+
+  private transient DownloadListener downloadListener;
 
   public String getDownloadId() {
     return downloadId;
@@ -101,17 +107,46 @@ public class Download implements Serializable {
     this.progress = progress;
   }
 
-  public void setDownloadListeners(
-      DownloadListener downloadListeners) {
-    this.downloadListeners = downloadListeners;
+  public DownloadListener getDownloadListener() {
+    return downloadListener;
   }
 
+  public void setDownloadListener(
+      DownloadListener downloadListener) {
+    this.downloadListener = downloadListener;
+  }
+
+  @DownloadStatus
   public int getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(@DownloadStatus int status) {
     this.status = status;
+  }
+
+  public int getKey() {
+    return key;
+  }
+
+  public void setKey(int key) {
+    this.key = key;
+  }
+
+  public boolean isSupportRanges() {
+    return isSupportRanges;
+  }
+
+  public void setSupportRanges(boolean supportRanges) {
+    isSupportRanges = supportRanges;
+  }
+
+  public List<ThreadInfo> getThreadInfos() {
+    return threadInfos;
+  }
+
+  public void setThreadInfos(List<ThreadInfo> threadInfos) {
+    this.threadInfos = threadInfos;
   }
 
   @Override
@@ -206,12 +241,16 @@ public class Download implements Serializable {
       Download download = new Download();
 
       if (TextUtils.isEmpty(url)) {
-        throw new DownloadException("url cannot be null.");
+        throw new DownloadException(DownloadException.EXCEPTION_URL_NULL, "url cannot be null.");
       }
 
+      download.setUrl(url);
+
       if (TextUtils.isEmpty(path)) {
-        throw new DownloadException("path cannot be null.");
+        throw new DownloadException(DownloadException.EXCEPTION_PATH_NULL, "path cannot be null.");
       }
+
+      download.setPath(path);
 
       if (TextUtils.isEmpty(downloadId)) {
         try {
@@ -224,6 +263,8 @@ public class Download implements Serializable {
       if (createAt == -1) {
         setCreateAt(System.currentTimeMillis());
       }
+
+      download.setKey(url.hashCode());
 
       return download;
     }
