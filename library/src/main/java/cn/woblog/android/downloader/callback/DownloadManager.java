@@ -1,6 +1,6 @@
 package cn.woblog.android.downloader.callback;
 
-import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.domain.Download;
 
 /**
  * Created by renpingqing on 15/01/2017.
@@ -8,13 +8,16 @@ import cn.woblog.android.downloader.domain.DownloadInfo;
 
 public interface DownloadManager {
 
-  void download(DownloadInfo info);
+  void download(Download download);
 
-  void pause(DownloadInfo info);
+  void pause(Download download);
 
-  void resume(DownloadInfo info);
+  void resume(Download download);
 
-  void remove(DownloadInfo info);
+  void remove(Download download);
 
   void onDestroy();
+
+  Download getDownloadById(String id);
+
 }
