@@ -31,6 +31,9 @@ public class DownloadListener {
   public void onWaited() {
   }
 
+  public void onPaused() {
+  }
+
   public void onDownloading() {
   }
 
