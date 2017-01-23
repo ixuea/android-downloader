@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.core;
 
 import cn.woblog.android.downloader.DownloadException;
-import cn.woblog.android.downloader.domain.Download;
+import cn.woblog.android.downloader.domain.DownloadInfo;
 
 /**
  * Created by renpingqing on 17/1/22.
@@ -9,7 +9,7 @@ import cn.woblog.android.downloader.domain.Download;
 
 public interface DownloadResponse {
 
-  void onStatusChanged(Download download);
+  void onStatusChanged(DownloadInfo downloadInfo);
 
   void handleException(DownloadException exception);
 }

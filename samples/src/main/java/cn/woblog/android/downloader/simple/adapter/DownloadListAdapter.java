@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.simple.adapter;
 
-import static cn.woblog.android.downloader.domain.Download.STATUS_COMPLETED;
-import static cn.woblog.android.downloader.domain.Download.STATUS_REMOVED;
+import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_COMPLETED;
+import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_REMOVED;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import cn.woblog.android.downloader.DownloadService;
 import cn.woblog.android.downloader.callback.DownloadManager;
-import cn.woblog.android.downloader.domain.Download;
-import cn.woblog.android.downloader.domain.Download.Builder;
+import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.domain.DownloadInfo.Builder;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
@@ -83,7 +83,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
     private final ProgressBar pb;
     private final TextView tv_name;
     private final Button bt_action;
-    private Download download;
+    private DownloadInfo downloadInfo;
 
     public ViewHolder(View view) {
       super(view);
@@ -101,40 +101,40 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
       Picasso.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
-      download = downloadManager.getDownloadById(data.getUrl());
+      downloadInfo = downloadManager.getDownloadById(data.getUrl());
 
       bt_action.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-          download = downloadManager.getDownloadById(data.getUrl());
-          if (download != null) {
+          downloadInfo = downloadManager.getDownloadById(data.getUrl());
+          if (downloadInfo != null) {
 
-            switch (download.getStatus()) {
-              case Download.STATUS_NONE:
-              case Download.STATUS_PAUSED:
-              case Download.STATUS_ERROR:
+            switch (downloadInfo.getStatus()) {
+              case DownloadInfo.STATUS_NONE:
+              case DownloadInfo.STATUS_PAUSED:
+              case DownloadInfo.STATUS_ERROR:
 
-                //resume download
-                downloadManager.resume(download);
+                //resume downloadInfo
+                downloadManager.resume(downloadInfo);
                 break;
 
-              case Download.STATUS_DOWNLOADING:
-              case Download.STATUS_PREPARE_DOWNLOAD:
-                //pause download
-                downloadManager.pause(download);
+              case DownloadInfo.STATUS_DOWNLOADING:
+              case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
+                //pause downloadInfo
+                downloadManager.pause(downloadInfo);
                 break;
-              case Download.STATUS_COMPLETED:
-                downloadManager.remove(download);
+              case DownloadInfo.STATUS_COMPLETED:
+                downloadManager.remove(downloadInfo);
                 break;
             }
           } else {
-            //create download
+            //create downloadInfo
             String path = context.getFilesDir().getAbsolutePath().concat("/")
                 .concat(data.getName());
-            download = new Builder().setUrl(data.getUrl())
+            downloadInfo = new Builder().setUrl(data.getUrl())
                 .setPath(path)
                 .build();
-            download
+            downloadInfo
                 .setDownloadListener(new MyDownloadListener(new SoftReference(ViewHolder.this)) {
 
                   @Override
@@ -145,7 +145,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
                     }
                   }
                 });
-            downloadManager.download(download);
+            downloadManager.download(downloadInfo);
           }
         }
       });
@@ -153,49 +153,49 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
     }
 
     private void refresh() {
-      if (download == null) {
-        bt_action.setText("download");
-        tv_status.setText("not download");
+      if (downloadInfo == null) {
+        bt_action.setText("downloadInfo");
+        tv_status.setText("not downloadInfo");
       } else {
-        switch (download.getStatus()) {
-          case Download.STATUS_NONE:
-            bt_action.setText("download");
-            tv_status.setText("not download");
+        switch (downloadInfo.getStatus()) {
+          case DownloadInfo.STATUS_NONE:
+            bt_action.setText("downloadInfo");
+            tv_status.setText("not downloadInfo");
             break;
-          case Download.STATUS_PAUSED:
-          case Download.STATUS_ERROR:
+          case DownloadInfo.STATUS_PAUSED:
+          case DownloadInfo.STATUS_ERROR:
             bt_action.setText("continue");
             tv_status.setText("paused");
             break;
 
-          case Download.STATUS_DOWNLOADING:
-          case Download.STATUS_PREPARE_DOWNLOAD:
+          case DownloadInfo.STATUS_DOWNLOADING:
+          case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
             bt_action.setText("pause");
             try {
-              pb.setProgress((int) (download.getProgress() * 100.0 / download.getSize()));
+              pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
             } catch (Exception e) {
               e.printStackTrace();
             }
-            tv_size.setText(FileUtil.formatFileSize(download.getProgress()) + "/" + FileUtil
-                .formatFileSize(download.getSize()));
+            tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
+                .formatFileSize(downloadInfo.getSize()));
             tv_status.setText("downloading");
             break;
           case STATUS_COMPLETED:
             bt_action.setText("delete");
             try {
-              pb.setProgress((int) (download.getProgress() * 100.0 / download.getSize()));
+              pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
             } catch (Exception e) {
               e.printStackTrace();
             }
-            tv_size.setText(FileUtil.formatFileSize(download.getProgress()) + "/" + FileUtil
-                .formatFileSize(download.getSize()));
+            tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
+                .formatFileSize(downloadInfo.getSize()));
             tv_status.setText("success");
             break;
           case STATUS_REMOVED:
             tv_size.setText("");
             pb.setProgress(0);
-            bt_action.setText("download");
-            tv_status.setText("not download");
+            bt_action.setText("downloadInfo");
+            tv_status.setText("not downloadInfo");
             break;
         }
 

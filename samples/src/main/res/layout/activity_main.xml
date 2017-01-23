@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/activity_main"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
+  android:threadId="@+threadId/activity_main"
   tools:context="cn.woblog.android.downloader.simple.MainActivity">
 
 
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/rv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:threadId="@+threadId/rv">
 
   </android.support.v7.widget.RecyclerView>
 

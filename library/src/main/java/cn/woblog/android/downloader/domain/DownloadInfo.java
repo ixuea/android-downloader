@@ -5,17 +5,15 @@ import android.text.TextUtils;
 import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.callback.DownloadListener;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
  * Created by renpingqing on 15/01/2017.
  */
 
-public class Download implements Serializable {
+public class DownloadInfo implements Serializable {
 
   /**
    *
@@ -51,7 +49,10 @@ public class Download implements Serializable {
    */
   public static final int STATUS_REMOVED = 7;
 
-  private String downloadId;
+
+  private int key;
+  private String id;
+  private int supportRanges;
   private long createAt;
   private String url;
   private String path;
@@ -59,20 +60,10 @@ public class Download implements Serializable {
   private long progress;
   @DownloadStatus
   private int status;
-  private int key;
-  private String id;
-  private boolean isSupportRanges;
-  private List<ThreadInfo> threadInfos;
+
+  private List<DownloadThreadInfo> downloadThreadInfos;
 
   private transient DownloadListener downloadListener;
-
-  public String getDownloadId() {
-    return downloadId;
-  }
-
-  public void setDownloadId(String downloadId) {
-    this.downloadId = downloadId;
-  }
 
   public long getCreateAt() {
     return createAt;
@@ -140,20 +131,28 @@ public class Download implements Serializable {
     this.key = key;
   }
 
+  public int getSupportRanges() {
+    return supportRanges;
+  }
+
+  public void setSupportRanges(int supportRanges) {
+    this.supportRanges = supportRanges;
+  }
+
   public boolean isSupportRanges() {
-    return isSupportRanges;
+    return supportRanges == 0;
   }
 
   public void setSupportRanges(boolean supportRanges) {
-    isSupportRanges = supportRanges;
+    this.supportRanges = supportRanges ? 0 : 1;
   }
 
-  public List<ThreadInfo> getThreadInfos() {
-    return threadInfos;
+  public List<DownloadThreadInfo> getDownloadThreadInfos() {
+    return downloadThreadInfos;
   }
 
-  public void setThreadInfos(List<ThreadInfo> threadInfos) {
-    this.threadInfos = threadInfos;
+  public void setDownloadThreadInfos(List<DownloadThreadInfo> downloadThreadInfos) {
+    this.downloadThreadInfos = downloadThreadInfos;
   }
 
 
@@ -174,9 +173,9 @@ public class Download implements Serializable {
       return false;
     }
 
-    Download download = (Download) o;
+    DownloadInfo downloadInfo = (DownloadInfo) o;
 
-    return id.equals(download.id);
+    return id.equals(downloadInfo.id);
 
   }
 
@@ -186,7 +185,7 @@ public class Download implements Serializable {
   }
 
   public boolean isPause() {
-    return status == Download.STATUS_PAUSED || status == Download.STATUS_ERROR
+    return status == DownloadInfo.STATUS_PAUSED || status == DownloadInfo.STATUS_ERROR
         || status == STATUS_REMOVED;
   }
 
@@ -202,18 +201,12 @@ public class Download implements Serializable {
     private static final String DEFAULT_ENCODE = "utf-8";
 
     private String id;
-    private String downloadId;
     private long createAt = -1;
     private String url;
     private String path;
 
     public Builder() {
 
-    }
-
-    public Builder setDownloadId(String downloadId) {
-      this.downloadId = downloadId;
-      return this;
     }
 
 
@@ -238,40 +231,32 @@ public class Download implements Serializable {
       this.id = id;
     }
 
-    public Download build() {
-      Download download = new Download();
+    public DownloadInfo build() {
+      DownloadInfo downloadInfo = new DownloadInfo();
 
       if (TextUtils.isEmpty(url)) {
         throw new DownloadException(DownloadException.EXCEPTION_URL_NULL, "url cannot be null.");
       }
 
-      download.setUrl(url);
+      downloadInfo.setUrl(url);
 
       if (TextUtils.isEmpty(path)) {
         throw new DownloadException(DownloadException.EXCEPTION_PATH_NULL, "path cannot be null.");
       }
 
-      download.setPath(path);
-
-      if (TextUtils.isEmpty(downloadId)) {
-        try {
-          download.setDownloadId(URLEncoder.encode(url, DEFAULT_ENCODE));
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
-        }
-      }
+      downloadInfo.setPath(path);
 
       if (createAt == -1) {
         setCreateAt(System.currentTimeMillis());
       }
 
-      download.setKey(url.hashCode());
+      downloadInfo.setKey(url.hashCode());
 
       if (TextUtils.isEmpty(id)) {
-        download.setId(url);
+        downloadInfo.setId(url);
       }
 
-      return download;
+      return downloadInfo;
     }
 
   }

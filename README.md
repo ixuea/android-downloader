@@ -3,7 +3,7 @@ AndroidDownloader
 
 [![Build Status](https://travis-ci.org/lifengsofts/AndroidDownloader.svg?branch=master)](https://travis-ci.org/lifengsofts/AndroidDownloader)
 
-Android Downloader is a open source multithread and mulitask download framework for Android.
+Android Downloader is a open source multithread and mulitask downloadInfo framework for Android.
 
 License
 =======

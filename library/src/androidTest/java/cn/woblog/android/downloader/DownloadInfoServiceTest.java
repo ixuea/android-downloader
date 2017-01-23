@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
  * Created by renpingqing on 15/01/2017.
  */
 @RunWith(AndroidJUnit4.class)
-public class DownloadServiceTest {
+public class DownloadInfoServiceTest {
 
   @Test
   public void getDownloadManager() throws Exception {

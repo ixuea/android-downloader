@@ -6,8 +6,8 @@ import android.util.Log;
 import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.DownloadManagerImpl.Config;
 import cn.woblog.android.downloader.core.DownloadResponse;
-import cn.woblog.android.downloader.domain.Download;
-import cn.woblog.android.downloader.domain.ThreadInfo;
+import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.domain.DownloadThreadInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -23,21 +23,22 @@ public class DownloadThread implements Runnable {
 
   public static final String TAG = "DownloadThread";
 
-  private final ThreadInfo threadInfo;
+  private final DownloadThreadInfo downloadThreadInfo;
   private final DownloadResponse downloadResponse;
   private final Config config;
-  private final Download download;
+  private final DownloadInfo downloadInfo;
   private final DownloadProgressListener downloadProgressListener;
   private long lastProgress;
   private InputStream inputStream;
 
-  public DownloadThread(ThreadInfo threadInfo, DownloadResponse downloadResponse, Config config,
-      Download download, DownloadProgressListener downloadProgressListener) {
-    this.threadInfo = threadInfo;
+  public DownloadThread(DownloadThreadInfo downloadThreadInfo, DownloadResponse downloadResponse,
+      Config config,
+      DownloadInfo downloadInfo, DownloadProgressListener downloadProgressListener) {
+    this.downloadThreadInfo = downloadThreadInfo;
     this.downloadResponse = downloadResponse;
     this.config = config;
-    this.download = download;
-    this.lastProgress = threadInfo.getProgress();
+    this.downloadInfo = downloadInfo;
+    this.lastProgress = downloadThreadInfo.getProgress();
     this.downloadProgressListener = downloadProgressListener;
   }
 
@@ -52,8 +53,8 @@ public class DownloadThread implements Runnable {
       if (e.getCode() == DownloadException.EXCEPTION_PAUSE) {
 
       } else {
-        download.setStatus(Download.STATUS_ERROR);
-        downloadResponse.onStatusChanged(download);
+        downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
+        downloadResponse.onStatusChanged(downloadInfo);
       }
       downloadResponse.handleException(e);
     }
@@ -62,20 +63,20 @@ public class DownloadThread implements Runnable {
   private void executeDownload() {
     HttpURLConnection httpConnection = null;
     try {
-      final URL url = new URL(threadInfo.getUri());
+      final URL url = new URL(downloadThreadInfo.getUri());
       httpConnection = (HttpURLConnection) url.openConnection();
       httpConnection.setConnectTimeout(config.getConnectTimeout());
       httpConnection.setReadTimeout(config.getReadTimeout());
       httpConnection.setRequestMethod(config.getMethod());
-      if (download.isSupportRanges()) {
+      if (downloadInfo.isSupportRanges()) {
         httpConnection.setRequestProperty("Range",
-            "bytes=" + threadInfo.getStart() + "-" + threadInfo.getEnd());
+            "bytes=" + downloadThreadInfo.getStart() + "-" + downloadThreadInfo.getEnd());
       }
       final int responseCode = httpConnection.getResponseCode();
       if (responseCode == HttpURLConnection.HTTP_PARTIAL
           || responseCode == HttpURLConnection.HTTP_OK) {
         inputStream = httpConnection.getInputStream();
-        RandomAccessFile raf = new RandomAccessFile(download.getPath(), "rwd");
+        RandomAccessFile raf = new RandomAccessFile(downloadInfo.getPath(), "rwd");
         raf.seek(lastProgress);
         final byte[] bf = new byte[1024 * 8];
         int len = -1;
@@ -90,16 +91,18 @@ public class DownloadThread implements Runnable {
           offset += len;
 
 //          synchronized (downloadProgressListener) {
-          threadInfo.setProgress(lastProgress + offset);
+          downloadThreadInfo.setProgress(lastProgress + offset);
             downloadProgressListener.onProgress();
 //          }
 
           Log.d(TAG,
-              "download thread " + threadInfo.getId() + " progress:" + threadInfo.getProgress()
-                  + ",start:" + threadInfo.getStart() + ",end:" + threadInfo.getEnd());
+              "downloadInfo thread " + downloadThreadInfo.getThreadId() + " progress:"
+                  + downloadThreadInfo.getProgress()
+                  + ",start:" + downloadThreadInfo.getStart() + ",end:" + downloadThreadInfo
+                  .getEnd());
         }
 
-        //download success
+        //downloadInfo success
         downloadProgressListener.onDownloadSuccess();
       } else {
         throw new DownloadException(DownloadException.EXCEPTION_SERVER_SUPPORT_CODE,
@@ -120,7 +123,7 @@ public class DownloadThread implements Runnable {
   }
 
   private void checkIfPause() {
-    if (download.isPause()) {
+    if (downloadInfo.isPause()) {
       throw new DownloadException(DownloadException.EXCEPTION_PAUSE);
     }
   }
