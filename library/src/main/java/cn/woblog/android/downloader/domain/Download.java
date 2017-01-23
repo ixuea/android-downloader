@@ -45,6 +45,12 @@ public class Download implements Serializable {
    *
    */
   public static final int STATUS_ERROR = 6;
+
+  /**
+   *
+   */
+  public static final int STATUS_REMOVED = 7;
+
   private String downloadId;
   private long createAt;
   private String url;
@@ -54,6 +60,7 @@ public class Download implements Serializable {
   @DownloadStatus
   private int status;
   private int key;
+  private String id;
   private boolean isSupportRanges;
   private List<ThreadInfo> threadInfos;
 
@@ -149,6 +156,15 @@ public class Download implements Serializable {
     this.threadInfos = threadInfos;
   }
 
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -160,42 +176,22 @@ public class Download implements Serializable {
 
     Download download = (Download) o;
 
-    if (createAt != download.createAt) {
-      return false;
-    }
-    if (size != download.size) {
-      return false;
-    }
-    if (progress != download.progress) {
-      return false;
-    }
-    if (status != download.status) {
-      return false;
-    }
-    if (!downloadId.equals(download.downloadId)) {
-      return false;
-    }
-    if (!url.equals(download.url)) {
-      return false;
-    }
-    return path.equals(download.path);
+    return id.equals(download.id);
 
   }
 
   @Override
   public int hashCode() {
-    int result = downloadId.hashCode();
-    result = 31 * result + (int) (createAt ^ (createAt >>> 32));
-    result = 31 * result + url.hashCode();
-    result = 31 * result + path.hashCode();
-    result = 31 * result + (int) (size ^ (size >>> 32));
-    result = 31 * result + (int) (progress ^ (progress >>> 32));
-    result = 31 * result + status;
-    return result;
+    return id.hashCode();
+  }
+
+  public boolean isPause() {
+    return status == Download.STATUS_PAUSED || status == Download.STATUS_ERROR
+        || status == STATUS_REMOVED;
   }
 
   @IntDef({STATUS_NONE, STATUS_PREPARE_DOWNLOAD, STATUS_DOWNLOADING, STATUS_WAIT, STATUS_PAUSED,
-      STATUS_COMPLETED, STATUS_ERROR})
+      STATUS_COMPLETED, STATUS_ERROR, STATUS_REMOVED})
   @Retention(RetentionPolicy.SOURCE)
   public @interface DownloadStatus {
 
@@ -205,6 +201,7 @@ public class Download implements Serializable {
 
     private static final String DEFAULT_ENCODE = "utf-8";
 
+    private String id;
     private String downloadId;
     private long createAt = -1;
     private String url;
@@ -237,6 +234,10 @@ public class Download implements Serializable {
       return this;
     }
 
+    public void setId(String id) {
+      this.id = id;
+    }
+
     public Download build() {
       Download download = new Download();
 
@@ -265,6 +266,10 @@ public class Download implements Serializable {
       }
 
       download.setKey(url.hashCode());
+
+      if (TextUtils.isEmpty(id)) {
+        download.setId(url);
+      }
 
       return download;
     }

@@ -5,6 +5,7 @@ import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.core.DownloadResponse;
 import cn.woblog.android.downloader.core.DownloadResponseImpl;
 import cn.woblog.android.downloader.core.DownloadTaskImpl;
+import cn.woblog.android.downloader.core.DownloadTaskImpl.DownloadListener;
 import cn.woblog.android.downloader.core.task.DownloadTask;
 import cn.woblog.android.downloader.domain.Download;
 import java.util.LinkedList;
@@ -17,12 +18,12 @@ import java.util.concurrent.Executors;
  * Created by renpingqing on 14/01/2017.
  */
 
-public final class DownloadManagerImpl implements DownloadManager {
+public final class DownloadManagerImpl implements DownloadManager, DownloadListener {
 
   private static DownloadManagerImpl instance;
   private final ExecutorService executorService;
   private final ConcurrentHashMap<Integer, DownloadTask> cacheDownloadTask;
-  private final List<Download> watingDownloads;
+  private final List<Download> cacheDownloads;
   private final Context context;
 
   private final DownloadResponse downloadResponse;
@@ -36,7 +37,7 @@ public final class DownloadManagerImpl implements DownloadManager {
       this.config = config;
     }
     cacheDownloadTask = new ConcurrentHashMap<>();
-    watingDownloads = new LinkedList<>();
+    cacheDownloads = new LinkedList<>();
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 
@@ -59,13 +60,13 @@ public final class DownloadManagerImpl implements DownloadManager {
 
   @Override
   public void download(Download download) {
+    cacheDownloads.add(download);
     if (cacheDownloadTask.size() >= config.getDownloadThread()) {
-      watingDownloads.add(download);
       download.setStatus(Download.STATUS_WAIT);
       downloadResponse.onStatusChanged(download);
     } else {
       DownloadTaskImpl downloadTask = new DownloadTaskImpl(executorService, downloadResponse,
-          download, config);
+          download, config, this);
       cacheDownloadTask.put(download.getKey(), downloadTask);
       download.setStatus(Download.STATUS_PREPARE_DOWNLOAD);
       downloadResponse.onStatusChanged(download);
@@ -76,17 +77,29 @@ public final class DownloadManagerImpl implements DownloadManager {
 
   @Override
   public void pause(Download download) {
+    download.setStatus(Download.STATUS_PAUSED);
+    cacheDownloadTask.remove(download.getKey());
+    downloadResponse.onStatusChanged(download);
+    prepareDownloadNextTask();
+  }
+
+  private void prepareDownloadNextTask() {
 
   }
 
   @Override
   public void resume(Download download) {
-
+    if (cacheDownloadTask.get(download.getKey()) == null) {
+      download(download);
+    }
   }
 
   @Override
   public void remove(Download download) {
-
+    download.setStatus(Download.STATUS_REMOVED);
+    cacheDownloadTask.remove(download.getKey());
+    cacheDownloads.remove(download);
+    downloadResponse.onStatusChanged(download);
   }
 
   @Override
@@ -96,7 +109,25 @@ public final class DownloadManagerImpl implements DownloadManager {
 
   @Override
   public Download getDownloadById(String id) {
-    return null;
+    Download download = null;
+    for (Download d : cacheDownloads) {
+      if (d.getId().equals(id)) {
+        download = d;
+        break;
+      }
+    }
+
+    if (download == null) {
+
+    }
+    return download;
+  }
+
+  @Override
+  public void onDownloadSuccess(Download download) {
+    cacheDownloadTask.remove(download.getKey());
+    cacheDownloads.remove(download);
+    prepareDownloadNextTask();
   }
 
   public class Config {
@@ -104,7 +135,7 @@ public final class DownloadManagerImpl implements DownloadManager {
     private int connectTimeout = 5000;
     private int readTimeout = 5000;
 
-    private int downloadThread = 5;
+    private int downloadThread = 1;
 
     private int eachDownloadThread = 2;
 
@@ -150,5 +181,6 @@ public final class DownloadManagerImpl implements DownloadManager {
       this.method = method;
     }
   }
+
 
 }

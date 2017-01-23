@@ -49,6 +49,12 @@ public class DownloadThread implements Runnable {
       executeDownload();
     } catch (DownloadException e) {
       e.printStackTrace();
+      if (e.getCode() == DownloadException.EXCEPTION_PAUSE) {
+
+      } else {
+        download.setStatus(Download.STATUS_ERROR);
+        downloadResponse.onStatusChanged(download);
+      }
       downloadResponse.handleException(e);
     }
   }
@@ -114,7 +120,7 @@ public class DownloadThread implements Runnable {
   }
 
   private void checkIfPause() {
-    if (download.getStatus() == Download.STATUS_PAUSED) {
+    if (download.isPause()) {
       throw new DownloadException(DownloadException.EXCEPTION_PAUSE);
     }
   }

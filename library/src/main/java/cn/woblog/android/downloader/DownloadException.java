@@ -82,6 +82,13 @@ public class DownloadException extends RuntimeException {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 
+  public int getCode() {
+    return code;
+  }
+
+  public void setCode(int code) {
+    this.code = code;
+  }
 
   @IntDef({EXCEPTION_URL_NULL, EXCEPTION_PATH_NULL, EXCEPTION_URL_ERROR, EXCEPTION_SERVER_ERROR,
       EXCEPTION_PROTOCOL, EXCEPTION_IO_EXCEPTION, EXCEPTION_FILE_SIZE_ZERO, EXCEPTION_PAUSE,
