@@ -95,7 +95,7 @@ public class GetFileInfoTask implements Runnable {
   }
 
   private void checkIfPause() {
-    if (download.getStatus() == Download.STATUS_PAUSED) {
+    if (download.isPause()) {
       throw new DownloadException(DownloadException.EXCEPTION_PAUSE);
     }
   }

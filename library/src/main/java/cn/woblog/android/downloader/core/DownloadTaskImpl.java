@@ -26,17 +26,19 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
   private final Download download;
   private final Config config;
   private final List<DownloadThread> downloadThreads;
+  private final DownloadListener downloadListener;
   private long lastRefreshTime = System.currentTimeMillis();
   private long progress;
   private volatile AtomicBoolean isComputerDownload = new AtomicBoolean(false);
 //  private volatile boolean isComputerDownload;
 
   public DownloadTaskImpl(ExecutorService executorService, DownloadResponse downloadResponse,
-      Download download, Config config) {
+      Download download, Config config, DownloadListener downloadListener) {
     this.executorService = executorService;
     this.downloadResponse = downloadResponse;
     this.download = download;
     this.config = config;
+    this.downloadListener = downloadListener;
     this.downloadThreads = new ArrayList<>();
 
   }
@@ -139,6 +141,9 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
     if (download.getProgress() == download.getSize()) {
       download.setStatus(Download.STATUS_COMPLETED);
       downloadResponse.onStatusChanged(download);
+      if (downloadListener != null) {
+        downloadListener.onDownloadSuccess(download);
+      }
     }
   }
 
@@ -151,5 +156,10 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
     }
     download.setProgress(progress);
 
+  }
+
+  public interface DownloadListener {
+
+    void onDownloadSuccess(Download download);
   }
 }

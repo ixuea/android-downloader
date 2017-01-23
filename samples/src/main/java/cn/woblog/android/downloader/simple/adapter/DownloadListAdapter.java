@@ -1,6 +1,7 @@
 package cn.woblog.android.downloader.simple.adapter;
 
 import static cn.woblog.android.downloader.domain.Download.STATUS_COMPLETED;
+import static cn.woblog.android.downloader.domain.Download.STATUS_REMOVED;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -122,6 +123,9 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
                 //pause download
                 downloadManager.pause(download);
                 break;
+              case Download.STATUS_COMPLETED:
+                downloadManager.remove(download);
+                break;
             }
           } else {
             //create download
@@ -160,7 +164,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
             break;
           case Download.STATUS_PAUSED:
           case Download.STATUS_ERROR:
-            bt_action.setText("continue download");
+            bt_action.setText("continue");
             tv_status.setText("paused");
             break;
 
@@ -186,6 +190,12 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
             tv_size.setText(FileUtil.formatFileSize(download.getProgress()) + "/" + FileUtil
                 .formatFileSize(download.getSize()));
             tv_status.setText("success");
+            break;
+          case STATUS_REMOVED:
+            tv_size.setText("");
+            pb.setProgress(0);
+            bt_action.setText("download");
+            tv_status.setText("not download");
             break;
         }
 
