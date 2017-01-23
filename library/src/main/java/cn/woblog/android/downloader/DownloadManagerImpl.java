@@ -7,7 +7,9 @@ import cn.woblog.android.downloader.core.DownloadResponseImpl;
 import cn.woblog.android.downloader.core.DownloadTaskImpl;
 import cn.woblog.android.downloader.core.DownloadTaskImpl.DownloadListener;
 import cn.woblog.android.downloader.core.task.DownloadTask;
-import cn.woblog.android.downloader.domain.Download;
+import cn.woblog.android.downloader.db.DefaultDownloadDBController;
+import cn.woblog.android.downloader.db.DownloadDBController;
+import cn.woblog.android.downloader.domain.DownloadInfo;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,10 +25,11 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   private static DownloadManagerImpl instance;
   private final ExecutorService executorService;
   private final ConcurrentHashMap<Integer, DownloadTask> cacheDownloadTask;
-  private final List<Download> cacheDownloads;
+  private final List<DownloadInfo> cacheDownloadInfos;
   private final Context context;
 
   private final DownloadResponse downloadResponse;
+  private final DownloadDBController downloadDBController;
   private final Config config;
 
   private DownloadManagerImpl(Context context, Config config) {
@@ -36,8 +39,9 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
     } else {
       this.config = config;
     }
+    downloadDBController = new DefaultDownloadDBController(context);
     cacheDownloadTask = new ConcurrentHashMap<>();
-    cacheDownloads = new LinkedList<>();
+    cacheDownloadInfos = new LinkedList<>();
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 
@@ -59,27 +63,27 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
 
 
   @Override
-  public void download(Download download) {
-    cacheDownloads.add(download);
+  public void download(DownloadInfo downloadInfo) {
+    cacheDownloadInfos.add(downloadInfo);
     if (cacheDownloadTask.size() >= config.getDownloadThread()) {
-      download.setStatus(Download.STATUS_WAIT);
-      downloadResponse.onStatusChanged(download);
+      downloadInfo.setStatus(DownloadInfo.STATUS_WAIT);
+      downloadResponse.onStatusChanged(downloadInfo);
     } else {
       DownloadTaskImpl downloadTask = new DownloadTaskImpl(executorService, downloadResponse,
-          download, config, this);
-      cacheDownloadTask.put(download.getKey(), downloadTask);
-      download.setStatus(Download.STATUS_PREPARE_DOWNLOAD);
-      downloadResponse.onStatusChanged(download);
+          downloadInfo, config, this);
+      cacheDownloadTask.put(downloadInfo.getKey(), downloadTask);
+      downloadInfo.setStatus(DownloadInfo.STATUS_PREPARE_DOWNLOAD);
+      downloadResponse.onStatusChanged(downloadInfo);
       downloadTask.start();
     }
 
   }
 
   @Override
-  public void pause(Download download) {
-    download.setStatus(Download.STATUS_PAUSED);
-    cacheDownloadTask.remove(download.getKey());
-    downloadResponse.onStatusChanged(download);
+  public void pause(DownloadInfo downloadInfo) {
+    downloadInfo.setStatus(DownloadInfo.STATUS_PAUSED);
+    cacheDownloadTask.remove(downloadInfo.getKey());
+    downloadResponse.onStatusChanged(downloadInfo);
     prepareDownloadNextTask();
   }
 
@@ -88,18 +92,18 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   }
 
   @Override
-  public void resume(Download download) {
-    if (cacheDownloadTask.get(download.getKey()) == null) {
-      download(download);
+  public void resume(DownloadInfo downloadInfo) {
+    if (cacheDownloadTask.get(downloadInfo.getKey()) == null) {
+      download(downloadInfo);
     }
   }
 
   @Override
-  public void remove(Download download) {
-    download.setStatus(Download.STATUS_REMOVED);
-    cacheDownloadTask.remove(download.getKey());
-    cacheDownloads.remove(download);
-    downloadResponse.onStatusChanged(download);
+  public void remove(DownloadInfo downloadInfo) {
+    downloadInfo.setStatus(DownloadInfo.STATUS_REMOVED);
+    cacheDownloadTask.remove(downloadInfo.getKey());
+    cacheDownloadInfos.remove(downloadInfo);
+    downloadResponse.onStatusChanged(downloadInfo);
   }
 
   @Override
@@ -108,25 +112,25 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   }
 
   @Override
-  public Download getDownloadById(String id) {
-    Download download = null;
-    for (Download d : cacheDownloads) {
+  public DownloadInfo getDownloadById(String id) {
+    DownloadInfo downloadInfo = null;
+    for (DownloadInfo d : cacheDownloadInfos) {
       if (d.getId().equals(id)) {
-        download = d;
+        downloadInfo = d;
         break;
       }
     }
 
-    if (download == null) {
+    if (downloadInfo == null) {
 
     }
-    return download;
+    return downloadInfo;
   }
 
   @Override
-  public void onDownloadSuccess(Download download) {
-    cacheDownloadTask.remove(download.getKey());
-    cacheDownloads.remove(download);
+  public void onDownloadSuccess(DownloadInfo downloadInfo) {
+    cacheDownloadTask.remove(downloadInfo.getKey());
+    cacheDownloadInfos.remove(downloadInfo);
     prepareDownloadNextTask();
   }
 

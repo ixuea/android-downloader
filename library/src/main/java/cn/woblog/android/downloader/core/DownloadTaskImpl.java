@@ -7,8 +7,8 @@ import cn.woblog.android.downloader.core.task.GetFileInfoTask;
 import cn.woblog.android.downloader.core.task.GetFileInfoTask.OnGetFileInfoListener;
 import cn.woblog.android.downloader.core.thread.DownloadThread;
 import cn.woblog.android.downloader.core.thread.DownloadThread.DownloadProgressListener;
-import cn.woblog.android.downloader.domain.Download;
-import cn.woblog.android.downloader.domain.ThreadInfo;
+import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.domain.DownloadThreadInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +23,7 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
 
   private final ExecutorService executorService;
   private final DownloadResponse downloadResponse;
-  private final Download download;
+  private final DownloadInfo downloadInfo;
   private final Config config;
   private final List<DownloadThread> downloadThreads;
   private final DownloadListener downloadListener;
@@ -33,10 +33,10 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
 //  private volatile boolean isComputerDownload;
 
   public DownloadTaskImpl(ExecutorService executorService, DownloadResponse downloadResponse,
-      Download download, Config config, DownloadListener downloadListener) {
+      DownloadInfo downloadInfo, Config config, DownloadListener downloadListener) {
     this.executorService = executorService;
     this.downloadResponse = downloadResponse;
-    this.download = download;
+    this.downloadInfo = downloadInfo;
     this.config = config;
     this.downloadListener = downloadListener;
     this.downloadThreads = new ArrayList<>();
@@ -45,37 +45,38 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
 
   @Override
   public void start() {
-    if (download.getSize() <= 0) {
-      //get download info size
+    if (downloadInfo.getSize() <= 0) {
+      //get downloadInfo info size
       getFileInfo();
     } else {
-      List<ThreadInfo> threadInfos = download.getThreadInfos();
-      for (ThreadInfo threadInfo : threadInfos
+      List<DownloadThreadInfo> downloadThreadInfos = downloadInfo.getDownloadThreadInfos();
+      for (DownloadThreadInfo downloadThreadInfo : downloadThreadInfos
           ) {
-        DownloadThread downloadThread = new DownloadThread(threadInfo, downloadResponse, config,
-            download, this);
+        DownloadThread downloadThread = new DownloadThread(downloadThreadInfo, downloadResponse,
+            config,
+            downloadInfo, this);
         executorService.submit(downloadThread);
         downloadThreads.add(downloadThread);
       }
 
-      download.setStatus(Download.STATUS_DOWNLOADING);
-      downloadResponse.onStatusChanged(download);
+      downloadInfo.setStatus(DownloadInfo.STATUS_DOWNLOADING);
+      downloadResponse.onStatusChanged(downloadInfo);
     }
   }
 
   private void getFileInfo() {
-    GetFileInfoTask getFileInfoTask = new GetFileInfoTask(downloadResponse, download, this);
+    GetFileInfoTask getFileInfoTask = new GetFileInfoTask(downloadResponse, downloadInfo, this);
     executorService.submit(getFileInfoTask);
   }
 
   @Override
   public void onSuccess(long size, boolean isSupportRanges) {
-    download.setSupportRanges(isSupportRanges);
-    download.setSize(size);
+    downloadInfo.setSupportRanges(isSupportRanges);
+    downloadInfo.setSize(size);
 
-    List<ThreadInfo> threadInfos = new ArrayList<>();
+    List<DownloadThreadInfo> downloadThreadInfos = new ArrayList<>();
     if (isSupportRanges) {
-      long length = download.getSize();
+      long length = downloadInfo.getSize();
       final int threads = config.getEachDownloadThread();
       final long average = length / threads;
       for (int i = 0; i < threads; i++) {
@@ -86,28 +87,34 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
         } else {
           end = start + average - 1;
         }
-        ThreadInfo threadInfo = new ThreadInfo(i, download.getKey(), download.getUrl(), start,
+        DownloadThreadInfo downloadThreadInfo = new DownloadThreadInfo(i, downloadInfo.getKey(),
+            downloadInfo
+                .getUrl(), start,
             end);
-        threadInfos.add(threadInfo);
+        downloadThreadInfos.add(downloadThreadInfo);
 
-        DownloadThread downloadThread = new DownloadThread(threadInfo, downloadResponse, config,
-            download, this);
+        DownloadThread downloadThread = new DownloadThread(downloadThreadInfo, downloadResponse,
+            config,
+            downloadInfo, this);
         executorService.submit(downloadThread);
         downloadThreads.add(downloadThread);
       }
     } else {
-      ThreadInfo threadInfo = new ThreadInfo(0, download.getKey(), download.getUrl(), 0,
-          download.getSize());
-      threadInfos.add(threadInfo);
+      DownloadThreadInfo downloadThreadInfo = new DownloadThreadInfo(0, downloadInfo.getKey(),
+          downloadInfo
+              .getUrl(), 0,
+          downloadInfo.getSize());
+      downloadThreadInfos.add(downloadThreadInfo);
 
-      DownloadThread downloadThread = new DownloadThread(threadInfo, downloadResponse, config,
-          download, this);
+      DownloadThread downloadThread = new DownloadThread(downloadThreadInfo, downloadResponse,
+          config,
+          downloadInfo, this);
       executorService.submit(downloadThread);
       downloadThreads.add(downloadThread);
     }
-    download.setThreadInfos(threadInfos);
-    download.setStatus(Download.STATUS_DOWNLOADING);
-    downloadResponse.onStatusChanged(download);
+    downloadInfo.setDownloadThreadInfos(downloadThreadInfos);
+    downloadInfo.setStatus(DownloadInfo.STATUS_DOWNLOADING);
+    downloadResponse.onStatusChanged(downloadInfo);
 
   }
 
@@ -125,7 +132,7 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
           long currentTimeMillis = System.currentTimeMillis();
           if ((currentTimeMillis - lastRefreshTime) > 1000) {
             computerDownloadProgress();
-            downloadResponse.onStatusChanged(download);
+            downloadResponse.onStatusChanged(downloadInfo);
             lastRefreshTime = currentTimeMillis;
           }
           isComputerDownload.set(false);
@@ -138,28 +145,28 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
   @Override
   public void onDownloadSuccess() {
     computerDownloadProgress();
-    if (download.getProgress() == download.getSize()) {
-      download.setStatus(Download.STATUS_COMPLETED);
-      downloadResponse.onStatusChanged(download);
+    if (downloadInfo.getProgress() == downloadInfo.getSize()) {
+      downloadInfo.setStatus(DownloadInfo.STATUS_COMPLETED);
+      downloadResponse.onStatusChanged(downloadInfo);
       if (downloadListener != null) {
-        downloadListener.onDownloadSuccess(download);
+        downloadListener.onDownloadSuccess(downloadInfo);
       }
     }
   }
 
   private void computerDownloadProgress() {
     progress = 0;
-    List<ThreadInfo> threadInfos = download.getThreadInfos();
-    for (ThreadInfo info :
-        threadInfos) {
+    List<DownloadThreadInfo> downloadThreadInfos = downloadInfo.getDownloadThreadInfos();
+    for (DownloadThreadInfo info :
+        downloadThreadInfos) {
       progress += info.getProgress();
     }
-    download.setProgress(progress);
+    downloadInfo.setProgress(progress);
 
   }
 
   public interface DownloadListener {
 
-    void onDownloadSuccess(Download download);
+    void onDownloadSuccess(DownloadInfo downloadInfo);
   }
 }

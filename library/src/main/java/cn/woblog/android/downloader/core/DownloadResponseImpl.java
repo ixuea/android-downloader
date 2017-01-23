@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import cn.woblog.android.downloader.DownloadException;
-import cn.woblog.android.downloader.domain.Download;
+import cn.woblog.android.downloader.domain.DownloadInfo;
 
 /**
  * Created by renpingqing on 17/1/22.
@@ -21,39 +21,39 @@ public class DownloadResponseImpl implements DownloadResponse {
       @Override
       public void handleMessage(Message msg) {
         super.handleMessage(msg);
-        Download download = (Download) msg.obj;
-        switch (download.getStatus()) {
-          case Download.STATUS_DOWNLOADING:
-            if (download.getDownloadListener() != null) {
-              download.getDownloadListener().onDownloading();
+        DownloadInfo downloadInfo = (DownloadInfo) msg.obj;
+        switch (downloadInfo.getStatus()) {
+          case DownloadInfo.STATUS_DOWNLOADING:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onDownloading();
             }
 
             break;
-          case Download.STATUS_PREPARE_DOWNLOAD:
-            if (download.getDownloadListener() != null) {
-              download.getDownloadListener().onStart();
+          case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onStart();
             }
             break;
-          case Download.STATUS_WAIT:
-            if (download.getDownloadListener() != null) {
-              download.getDownloadListener().onWaited();
+          case DownloadInfo.STATUS_WAIT:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onWaited();
             }
             break;
-          case Download.STATUS_PAUSED:
-            if (download.getDownloadListener() != null) {
-              download.getDownloadListener().onPaused();
+          case DownloadInfo.STATUS_PAUSED:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onPaused();
             }
             break;
-          case Download.STATUS_COMPLETED:
-            if (download.getDownloadListener() != null) {
-              download.getDownloadListener().onDownloadSuccess();
+          case DownloadInfo.STATUS_COMPLETED:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onDownloadSuccess();
             }
-            //TODO submit next download task
+            //TODO submit next downloadInfo task
 
             break;
-          case Download.STATUS_ERROR:
-            if (download.getDownloadListener() != null) {
-              download.getDownloadListener().onDownloadFailed();
+          case DownloadInfo.STATUS_ERROR:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onDownloadFailed();
             }
             break;
         }
@@ -62,12 +62,12 @@ public class DownloadResponseImpl implements DownloadResponse {
   }
 
   @Override
-  public void onStatusChanged(Download download) {
-    Message message = handler.obtainMessage(download.getKey());
-    message.obj = download;
+  public void onStatusChanged(DownloadInfo downloadInfo) {
+    Message message = handler.obtainMessage(downloadInfo.getKey());
+    message.obj = downloadInfo;
     message.sendToTarget();
 
-    Log.d(TAG, "progress:" + download.getProgress() + ",size:" + download.getSize());
+    Log.d(TAG, "progress:" + downloadInfo.getProgress() + ",size:" + downloadInfo.getSize());
   }
 
   @Override

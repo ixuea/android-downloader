@@ -1,53 +1,55 @@
 package cn.woblog.android.downloader.domain;
 
+import static android.R.attr.key;
+
 import java.io.Serializable;
 
 /**
  * Created by renpingqing on 17/1/22.
  */
 
-public class ThreadInfo implements Serializable {
+public class DownloadThreadInfo implements Serializable {
 
-  private int id;
-  private int key;
-  private String uri;
+  private int threadId;
+  private int downloadKey;
+  private String url;
   private long start;
   private long end;
   private long progress;
 
-  public ThreadInfo(int id, int key, String uri, long start, long end) {
-    this.id = id;
-    this.key = key;
-    this.uri = uri;
+  public DownloadThreadInfo(int threadId, int downloadKey, String uri, long start, long end) {
+    this.threadId = threadId;
+    this.downloadKey = key;
+    this.url = uri;
     this.start = start;
     this.end = end;
   }
 
-  public ThreadInfo() {
+  public DownloadThreadInfo() {
   }
 
-  public int getId() {
-    return id;
+  public int getThreadId() {
+    return threadId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setThreadId(int threadId) {
+    this.threadId = threadId;
   }
 
-  public int getKey() {
-    return key;
+  public int getDownloadKey() {
+    return downloadKey;
   }
 
-  public void setKey(int key) {
-    this.key = key;
+  public void setDownloadKey(int downloadKey) {
+    this.downloadKey = downloadKey;
   }
 
   public String getUri() {
-    return uri;
+    return url;
   }
 
   public void setUri(String uri) {
-    this.uri = uri;
+    this.url = uri;
   }
 
   public long getStart() {

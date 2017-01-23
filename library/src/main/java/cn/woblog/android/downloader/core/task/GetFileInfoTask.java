@@ -4,7 +4,7 @@ import android.os.Process;
 import android.text.TextUtils;
 import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.core.DownloadResponse;
-import cn.woblog.android.downloader.domain.Download;
+import cn.woblog.android.downloader.domain.DownloadInfo;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -18,13 +18,13 @@ import java.net.URL;
 public class GetFileInfoTask implements Runnable {
 
   private final DownloadResponse downloadResponse;
-  private final Download download;
+  private final DownloadInfo downloadInfo;
   private final OnGetFileInfoListener onGetFileInfoListener;
 
-  public GetFileInfoTask(DownloadResponse downloadResponse, Download download,
+  public GetFileInfoTask(DownloadResponse downloadResponse, DownloadInfo downloadInfo,
       OnGetFileInfoListener onGetFileInfoListener) {
     this.downloadResponse = downloadResponse;
-    this.download = download;
+    this.downloadInfo = downloadInfo;
     this.onGetFileInfoListener = onGetFileInfoListener;
   }
 
@@ -43,7 +43,7 @@ public class GetFileInfoTask implements Runnable {
     HttpURLConnection httpConnection = null;
     final URL url;
     try {
-      url = new URL(download.getUrl());
+      url = new URL(downloadInfo.getUrl());
     } catch (MalformedURLException e) {
       throw new DownloadException(DownloadException.EXCEPTION_URL_ERROR, "Bad url.", e);
     }
@@ -95,7 +95,7 @@ public class GetFileInfoTask implements Runnable {
   }
 
   private void checkIfPause() {
-    if (download.isPause()) {
+    if (downloadInfo.isPause()) {
       throw new DownloadException(DownloadException.EXCEPTION_PAUSE);
     }
   }
