@@ -45,7 +45,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 
-    downloadResponse = new DownloadResponseImpl();
+    downloadResponse = new DownloadResponseImpl(downloadDBController);
   }
 
   public static DownloadManager getInstance(Context context) {
@@ -139,7 +139,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
     private int connectTimeout = 5000;
     private int readTimeout = 5000;
 
-    private int downloadThread = 1;
+    private int downloadThread = 10;
 
     private int eachDownloadThread = 2;
 

@@ -12,7 +12,7 @@ public class DownloadThreadInfo implements Serializable {
 
   private int threadId;
   private int downloadKey;
-  private String url;
+  private String uri;
   private long start;
   private long end;
   private long progress;
@@ -20,7 +20,7 @@ public class DownloadThreadInfo implements Serializable {
   public DownloadThreadInfo(int threadId, int downloadKey, String uri, long start, long end) {
     this.threadId = threadId;
     this.downloadKey = key;
-    this.url = uri;
+    this.uri = uri;
     this.start = start;
     this.end = end;
   }
@@ -45,11 +45,11 @@ public class DownloadThreadInfo implements Serializable {
   }
 
   public String getUri() {
-    return url;
+    return uri;
   }
 
   public void setUri(String uri) {
-    this.url = uri;
+    this.uri = uri;
   }
 
   public long getStart() {
