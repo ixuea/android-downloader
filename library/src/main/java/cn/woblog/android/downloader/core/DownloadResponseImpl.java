@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import cn.woblog.android.downloader.DownloadException;
+import cn.woblog.android.downloader.db.DownloadDBController;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 
 /**
@@ -15,8 +16,11 @@ public class DownloadResponseImpl implements DownloadResponse {
 
   private static final String TAG = "DownloadResponseImpl";
   private final Handler handler;
+  private final DownloadDBController downloadDBController;
 
-  public DownloadResponseImpl() {
+  public DownloadResponseImpl(DownloadDBController downloadDBController) {
+    this.downloadDBController = downloadDBController;
+
     handler = new Handler(Looper.getMainLooper()) {
       @Override
       public void handleMessage(Message msg) {
@@ -59,10 +63,22 @@ public class DownloadResponseImpl implements DownloadResponse {
         }
       }
     };
+
+
   }
 
   @Override
   public void onStatusChanged(DownloadInfo downloadInfo) {
+//    downloadDBController.createOrUpdate(downloadInfo);
+//
+//    if (downloadInfo.getDownloadThreadInfos() != null) {
+//      for (DownloadThreadInfo threadInfo :
+//          downloadInfo.getDownloadThreadInfos()) {
+//        downloadDBController.createOrUpdate(threadInfo);
+//      }
+//    }
+
+
     Message message = handler.obtainMessage(downloadInfo.getKey());
     message.obj = downloadInfo;
     message.sendToTarget();

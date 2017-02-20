@@ -32,9 +32,23 @@ public class DefaultDownloadDBController implements DownloadDBController {
             downloadInfo.getSize(), downloadInfo.getProgress(), downloadInfo.getStatus()});
   }
 
+//  private int threadId;
+//  private int downloadKey;
+//  private String url;
+//  private long start;
+//  private long end;
+//  private long progress;
+
   @Override
   public void createOrUpdate(DownloadThreadInfo downloadThreadInfo) {
-
+//    _id=id+threadId
+    writableDatabase.execSQL(
+        "REPLACE INTO download_info(_id,threadId,downloadKey,uri,start,end,progress) VALUES(?,?,?,?,?,?,?);",
+        new Object[]{
+            downloadThreadInfo.getDownloadKey() + downloadThreadInfo.getThreadId(),
+            downloadThreadInfo.getThreadId(), downloadThreadInfo.getUri(),
+            downloadThreadInfo.getStart(), downloadThreadInfo.getEnd(),
+            downloadThreadInfo.getProgress()});
   }
 
   @Override

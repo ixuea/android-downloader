@@ -36,18 +36,18 @@ public class GetFileInfoTask implements Runnable {
     } catch (DownloadException e) {
       e.printStackTrace();
       downloadResponse.handleException(e);
+    } catch (Exception e) {
+      e.printStackTrace();
+//      downloadResponse.handleException(e);
     }
   }
 
   private void executeConnection() throws DownloadException {
     HttpURLConnection httpConnection = null;
+
     final URL url;
     try {
       url = new URL(downloadInfo.getUrl());
-    } catch (MalformedURLException e) {
-      throw new DownloadException(DownloadException.EXCEPTION_URL_ERROR, "Bad url.", e);
-    }
-    try {
       httpConnection = (HttpURLConnection) url.openConnection();
 //      httpConnection.setConnectTimeout(Constants.HTTP.CONNECT_TIME_OUT);
 //      httpConnection.setReadTimeout(Constants.HTTP.READ_TIME_OUT);
@@ -62,10 +62,15 @@ public class GetFileInfoTask implements Runnable {
         throw new DownloadException(DownloadException.EXCEPTION_SERVER_ERROR,
             "UnSupported response code:" + responseCode);
       }
+    } catch (MalformedURLException e) {
+      throw new DownloadException(DownloadException.EXCEPTION_URL_ERROR, "Bad url.", e);
     } catch (ProtocolException e) {
       throw new DownloadException(DownloadException.EXCEPTION_PROTOCOL, "Protocol error", e);
     } catch (IOException e) {
       throw new DownloadException(DownloadException.EXCEPTION_IO_EXCEPTION, "IO error", e);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new DownloadException(DownloadException.EXCEPTION_IO_EXCEPTION, "Unknown error", e);
     } finally {
       if (httpConnection != null) {
         httpConnection.disconnect();
