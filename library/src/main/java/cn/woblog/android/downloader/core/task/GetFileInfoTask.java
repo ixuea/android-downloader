@@ -49,8 +49,8 @@ public class GetFileInfoTask implements Runnable {
     try {
       url = new URL(downloadInfo.getUrl());
       httpConnection = (HttpURLConnection) url.openConnection();
-//      httpConnection.setConnectTimeout(Constants.HTTP.CONNECT_TIME_OUT);
-//      httpConnection.setReadTimeout(Constants.HTTP.READ_TIME_OUT);
+      httpConnection.setConnectTimeout(10000);
+      httpConnection.setReadTimeout(10000);
       httpConnection.setRequestMethod("GET");
       httpConnection.setRequestProperty("Range", "bytes=" + 0 + "-");
       final int responseCode = httpConnection.getResponseCode();
@@ -72,9 +72,9 @@ public class GetFileInfoTask implements Runnable {
       e.printStackTrace();
       throw new DownloadException(DownloadException.EXCEPTION_IO_EXCEPTION, "Unknown error", e);
     } finally {
-      if (httpConnection != null) {
-        httpConnection.disconnect();
-      }
+//      if (httpConnection != null) {
+//        httpConnection.disconnect();
+//      }
     }
   }
 
