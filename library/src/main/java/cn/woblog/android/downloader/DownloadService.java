@@ -24,7 +24,7 @@ public class DownloadService extends Service {
       context.startService(downloadSvr);
     }
     if (DownloadService.downloadManager == null) {
-      DownloadService.downloadManager = DownloadTaskManagerImpl.getInstance(context);
+      DownloadService.downloadManager = DownloadManagerImpl.getInstance(context);
     }
     return downloadManager;
   }

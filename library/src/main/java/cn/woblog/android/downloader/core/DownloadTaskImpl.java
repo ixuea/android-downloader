@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.core;
 
 import cn.woblog.android.downloader.DownloadException;
-import cn.woblog.android.downloader.DownloadTaskManagerImpl.Config;
+import cn.woblog.android.downloader.DownloadManagerImpl.Config;
 import cn.woblog.android.downloader.core.task.DownloadTask;
 import cn.woblog.android.downloader.core.task.GetFileInfoTask;
 import cn.woblog.android.downloader.core.task.GetFileInfoTask.OnGetFileInfoListener;

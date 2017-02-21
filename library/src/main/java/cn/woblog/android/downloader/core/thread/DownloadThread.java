@@ -4,7 +4,7 @@ package cn.woblog.android.downloader.core.thread;
 import android.os.Process;
 import android.util.Log;
 import cn.woblog.android.downloader.DownloadException;
-import cn.woblog.android.downloader.DownloadTaskManagerImpl.Config;
+import cn.woblog.android.downloader.DownloadManagerImpl.Config;
 import cn.woblog.android.downloader.core.DownloadResponse;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
