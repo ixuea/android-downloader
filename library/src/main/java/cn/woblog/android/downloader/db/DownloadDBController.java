@@ -2,12 +2,15 @@ package cn.woblog.android.downloader.db;
 
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
+import java.util.List;
 
 /**
  * Created by renpingqing on 17/1/23.
  */
 
 public interface DownloadDBController {
+
+  List<DownloadInfo> findAllDownloading();
 
   void createOrUpdate(DownloadInfo downloadInfo);
 

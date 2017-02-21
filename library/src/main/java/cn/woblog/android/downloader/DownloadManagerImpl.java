@@ -20,19 +20,19 @@ import java.util.concurrent.Executors;
  * Created by renpingqing on 14/01/2017.
  */
 
-public final class DownloadTaskManagerImpl implements DownloadManager, DownloadTaskListener {
+public final class DownloadManagerImpl implements DownloadManager, DownloadTaskListener {
 
-  private static DownloadTaskManagerImpl instance;
+  private static DownloadManagerImpl instance;
   private final ExecutorService executorService;
   private final ConcurrentHashMap<Integer, DownloadTask> cacheDownloadTask;
-  private final List<DownloadInfo> cacheDownloadInfos;
+  private final List<DownloadInfo> downloadingCaches;
   private final Context context;
 
   private final DownloadResponse downloadResponse;
   private final DownloadDBController downloadDBController;
   private final Config config;
 
-  private DownloadTaskManagerImpl(Context context, Config config) {
+  private DownloadManagerImpl(Context context, Config config) {
     this.context = context;
     if (config == null) {
       this.config = new Config();
@@ -41,7 +41,7 @@ public final class DownloadTaskManagerImpl implements DownloadManager, DownloadT
     }
     downloadDBController = new DefaultDownloadDBController(context);
     cacheDownloadTask = new ConcurrentHashMap<>();
-    cacheDownloadInfos = new LinkedList<>();
+    downloadingCaches = new LinkedList<>();
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 
@@ -53,9 +53,9 @@ public final class DownloadTaskManagerImpl implements DownloadManager, DownloadT
   }
 
   public static DownloadManager getInstance(Context context, Config config) {
-    synchronized (DownloadTaskManagerImpl.class) {
+    synchronized (DownloadManagerImpl.class) {
       if (instance == null) {
-        instance = new DownloadTaskManagerImpl(context, config);
+        instance = new DownloadManagerImpl(context, config);
       }
     }
     return instance;
@@ -64,7 +64,7 @@ public final class DownloadTaskManagerImpl implements DownloadManager, DownloadT
 
   @Override
   public void download(DownloadInfo downloadInfo) {
-    cacheDownloadInfos.add(downloadInfo);
+    downloadingCaches.add(downloadInfo);
     if (cacheDownloadTask.size() >= config.getDownloadThread()) {
       downloadInfo.setStatus(DownloadInfo.STATUS_WAIT);
       downloadResponse.onStatusChanged(downloadInfo);
@@ -102,7 +102,7 @@ public final class DownloadTaskManagerImpl implements DownloadManager, DownloadT
   public void remove(DownloadInfo downloadInfo) {
     downloadInfo.setStatus(DownloadInfo.STATUS_REMOVED);
     cacheDownloadTask.remove(downloadInfo.getId());
-    cacheDownloadInfos.remove(downloadInfo);
+    downloadingCaches.remove(downloadInfo);
     downloadResponse.onStatusChanged(downloadInfo);
   }
 
@@ -114,7 +114,7 @@ public final class DownloadTaskManagerImpl implements DownloadManager, DownloadT
   @Override
   public DownloadInfo getDownloadById(int id) {
     DownloadInfo downloadInfo = null;
-    for (DownloadInfo d : cacheDownloadInfos) {
+    for (DownloadInfo d : downloadingCaches) {
       if (d.getId() == id) {
         downloadInfo = d;
         break;
@@ -130,7 +130,7 @@ public final class DownloadTaskManagerImpl implements DownloadManager, DownloadT
   @Override
   public void onDownloadSuccess(DownloadInfo downloadInfo) {
     cacheDownloadTask.remove(downloadInfo.getId());
-    cacheDownloadInfos.remove(downloadInfo);
+    downloadingCaches.remove(downloadInfo);
     prepareDownloadNextTask();
   }
 

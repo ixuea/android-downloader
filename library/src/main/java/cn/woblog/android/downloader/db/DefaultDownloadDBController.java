@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
+import java.util.List;
 
 /**
  * Created by renpingqing on 17/1/23.
@@ -15,11 +16,19 @@ public class DefaultDownloadDBController implements DownloadDBController {
   private final Context context;
   private final DefaultDownloadHelper dbHelper;
   private final SQLiteDatabase writableDatabase;
+  private final SQLiteDatabase readableDatabase;
 
   public DefaultDownloadDBController(Context context) {
     this.context = context;
     dbHelper = new DefaultDownloadHelper(context);
     writableDatabase = dbHelper.getWritableDatabase();
+    readableDatabase = dbHelper.getReadableDatabase();
+  }
+
+  @Override
+  public List<DownloadInfo> findAllDownloading() {
+//    readableDatabase.query
+    return null;
   }
 
   @Override
