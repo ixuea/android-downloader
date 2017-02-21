@@ -139,7 +139,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
     private int connectTimeout = 5000;
     private int readTimeout = 5000;
 
-    private int downloadThread = 10;
+    private int downloadThread = 5;
 
     private int eachDownloadThread = 2;
 
