@@ -101,12 +101,12 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
       Picasso.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
-      downloadInfo = downloadManager.getDownloadById(data.getUrl());
+      downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
 
       bt_action.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-          downloadInfo = downloadManager.getDownloadById(data.getUrl());
+          downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
           if (downloadInfo != null) {
 
             switch (downloadInfo.getStatus()) {

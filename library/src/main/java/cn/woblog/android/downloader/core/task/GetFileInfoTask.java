@@ -47,7 +47,7 @@ public class GetFileInfoTask implements Runnable {
 
     final URL url;
     try {
-      url = new URL(downloadInfo.getUrl());
+      url = new URL(downloadInfo.getUri());
       httpConnection = (HttpURLConnection) url.openConnection();
       httpConnection.setConnectTimeout(10000);
       httpConnection.setReadTimeout(10000);

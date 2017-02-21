@@ -7,6 +7,7 @@ import android.util.Log;
 import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.db.DownloadDBController;
 import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.domain.DownloadThreadInfo;
 
 /**
  * Created by renpingqing on 17/1/22.
@@ -69,17 +70,16 @@ public class DownloadResponseImpl implements DownloadResponse {
 
   @Override
   public void onStatusChanged(DownloadInfo downloadInfo) {
-//    downloadDBController.createOrUpdate(downloadInfo);
-//
-//    if (downloadInfo.getDownloadThreadInfos() != null) {
-//      for (DownloadThreadInfo threadInfo :
-//          downloadInfo.getDownloadThreadInfos()) {
-//        downloadDBController.createOrUpdate(threadInfo);
-//      }
-//    }
+    downloadDBController.createOrUpdate(downloadInfo);
 
+    if (downloadInfo.getDownloadThreadInfos() != null) {
+      for (DownloadThreadInfo threadInfo :
+          downloadInfo.getDownloadThreadInfos()) {
+        downloadDBController.createOrUpdate(threadInfo);
+      }
+    }
 
-    Message message = handler.obtainMessage(downloadInfo.getKey());
+    Message message = handler.obtainMessage(downloadInfo.getId());
     message.obj = downloadInfo;
     message.sendToTarget();
 

@@ -1,7 +1,5 @@
 package cn.woblog.android.downloader.domain;
 
-import static android.R.attr.key;
-
 import java.io.Serializable;
 
 /**
@@ -10,16 +8,22 @@ import java.io.Serializable;
 
 public class DownloadThreadInfo implements Serializable {
 
+  /**
+   * Each download thread id
+   */
+  private int id;
   private int threadId;
-  private int downloadKey;
+  private int downloadInfoId;
   private String uri;
   private long start;
   private long end;
   private long progress;
 
-  public DownloadThreadInfo(int threadId, int downloadKey, String uri, long start, long end) {
+  public DownloadThreadInfo(int threadId, int downloadInfoId, String uri, long start,
+      long end) {
+    this.id = downloadInfoId + threadId;
     this.threadId = threadId;
-    this.downloadKey = key;
+    this.downloadInfoId = downloadInfoId;
     this.uri = uri;
     this.start = start;
     this.end = end;
@@ -28,20 +32,28 @@ public class DownloadThreadInfo implements Serializable {
   public DownloadThreadInfo() {
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getDownloadInfoId() {
+    return downloadInfoId;
+  }
+
+  public void setDownloadInfoId(int downloadInfoId) {
+    this.downloadInfoId = downloadInfoId;
+  }
+
   public int getThreadId() {
     return threadId;
   }
 
   public void setThreadId(int threadId) {
     this.threadId = threadId;
-  }
-
-  public int getDownloadKey() {
-    return downloadKey;
-  }
-
-  public void setDownloadKey(int downloadKey) {
-    this.downloadKey = downloadKey;
   }
 
   public String getUri() {

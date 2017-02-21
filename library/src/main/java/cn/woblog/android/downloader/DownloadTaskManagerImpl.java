@@ -5,7 +5,7 @@ import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.core.DownloadResponse;
 import cn.woblog.android.downloader.core.DownloadResponseImpl;
 import cn.woblog.android.downloader.core.DownloadTaskImpl;
-import cn.woblog.android.downloader.core.DownloadTaskImpl.DownloadListener;
+import cn.woblog.android.downloader.core.DownloadTaskImpl.DownloadTaskListener;
 import cn.woblog.android.downloader.core.task.DownloadTask;
 import cn.woblog.android.downloader.db.DefaultDownloadDBController;
 import cn.woblog.android.downloader.db.DownloadDBController;
@@ -20,9 +20,9 @@ import java.util.concurrent.Executors;
  * Created by renpingqing on 14/01/2017.
  */
 
-public final class DownloadManagerImpl implements DownloadManager, DownloadListener {
+public final class DownloadTaskManagerImpl implements DownloadManager, DownloadTaskListener {
 
-  private static DownloadManagerImpl instance;
+  private static DownloadTaskManagerImpl instance;
   private final ExecutorService executorService;
   private final ConcurrentHashMap<Integer, DownloadTask> cacheDownloadTask;
   private final List<DownloadInfo> cacheDownloadInfos;
@@ -32,7 +32,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   private final DownloadDBController downloadDBController;
   private final Config config;
 
-  private DownloadManagerImpl(Context context, Config config) {
+  private DownloadTaskManagerImpl(Context context, Config config) {
     this.context = context;
     if (config == null) {
       this.config = new Config();
@@ -53,9 +53,9 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   }
 
   public static DownloadManager getInstance(Context context, Config config) {
-    synchronized (DownloadManagerImpl.class) {
+    synchronized (DownloadTaskManagerImpl.class) {
       if (instance == null) {
-        instance = new DownloadManagerImpl(context, config);
+        instance = new DownloadTaskManagerImpl(context, config);
       }
     }
     return instance;
@@ -71,7 +71,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
     } else {
       DownloadTaskImpl downloadTask = new DownloadTaskImpl(executorService, downloadResponse,
           downloadInfo, config, this);
-      cacheDownloadTask.put(downloadInfo.getKey(), downloadTask);
+      cacheDownloadTask.put(downloadInfo.getId(), downloadTask);
       downloadInfo.setStatus(DownloadInfo.STATUS_PREPARE_DOWNLOAD);
       downloadResponse.onStatusChanged(downloadInfo);
       downloadTask.start();
@@ -82,7 +82,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   @Override
   public void pause(DownloadInfo downloadInfo) {
     downloadInfo.setStatus(DownloadInfo.STATUS_PAUSED);
-    cacheDownloadTask.remove(downloadInfo.getKey());
+    cacheDownloadTask.remove(downloadInfo.getId());
     downloadResponse.onStatusChanged(downloadInfo);
     prepareDownloadNextTask();
   }
@@ -93,7 +93,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
 
   @Override
   public void resume(DownloadInfo downloadInfo) {
-    if (cacheDownloadTask.get(downloadInfo.getKey()) == null) {
+    if (cacheDownloadTask.get(downloadInfo.getId()) == null) {
       download(downloadInfo);
     }
   }
@@ -101,7 +101,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   @Override
   public void remove(DownloadInfo downloadInfo) {
     downloadInfo.setStatus(DownloadInfo.STATUS_REMOVED);
-    cacheDownloadTask.remove(downloadInfo.getKey());
+    cacheDownloadTask.remove(downloadInfo.getId());
     cacheDownloadInfos.remove(downloadInfo);
     downloadResponse.onStatusChanged(downloadInfo);
   }
@@ -112,10 +112,10 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
   }
 
   @Override
-  public DownloadInfo getDownloadById(String id) {
+  public DownloadInfo getDownloadById(int id) {
     DownloadInfo downloadInfo = null;
     for (DownloadInfo d : cacheDownloadInfos) {
-      if (d.getId().equals(id)) {
+      if (d.getId() == id) {
         downloadInfo = d;
         break;
       }
@@ -129,7 +129,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadListe
 
   @Override
   public void onDownloadSuccess(DownloadInfo downloadInfo) {
-    cacheDownloadTask.remove(downloadInfo.getKey());
+    cacheDownloadTask.remove(downloadInfo.getId());
     cacheDownloadInfos.remove(downloadInfo);
     prepareDownloadNextTask();
   }

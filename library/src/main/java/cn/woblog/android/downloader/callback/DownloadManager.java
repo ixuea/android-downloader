@@ -18,6 +18,6 @@ public interface DownloadManager {
 
   void onDestroy();
 
-  DownloadInfo getDownloadById(String id);
+  DownloadInfo getDownloadById(int id);
 
 }
