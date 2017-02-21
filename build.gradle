@@ -81,12 +81,12 @@ task clean(type: Delete) {
 
 ext {
     minSdkVersion = 10
-    compileSdkVersion = 24
-    buildToolsVersion = '24.0.2'
+    compileSdkVersion = 22
+    buildToolsVersion = '22.0.1'
 
     targetSdkVersion = 22
 
-    androidSupportVersion = '24.2.1'
+    androidSupportVersion = '22.2.0'
 
 //    gradle
     androidGradleVersion='2.2.2'

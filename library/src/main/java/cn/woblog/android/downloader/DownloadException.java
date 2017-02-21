@@ -1,8 +1,6 @@
 package cn.woblog.android.downloader;
 
-import android.os.Build.VERSION_CODES;
 import android.support.annotation.IntDef;
-import android.support.annotation.RequiresApi;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -75,12 +73,6 @@ public class DownloadException extends RuntimeException {
     this.code = code;
   }
 
-
-  @RequiresApi(api = VERSION_CODES.N)
-  public DownloadException(String message, Throwable cause, boolean enableSuppression,
-      boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
-  }
 
   public int getCode() {
     return code;

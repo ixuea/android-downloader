@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import cn.woblog.android.downloader.simple.adapter.DownloadListAdapter;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
     myDownloadInfos.add(new MyDownloadInfo("美颜相机",
         "http://img.wdjimg.com/mms/icon/v1/7/7b/eb6b7905241f22b54077cbd632fe87b7_256_256.png",
         "http://wdj-qn-apk.wdjcdn.com/a/e9/618d265197a43dab6277c41ec5f72e9a.apk"));
-    myDownloadInfos.add(new MyDownloadInfo("陆金所",
-        "http://img.wdjimg.com/mms/icon/v1/7/7b/eb6b7905241f22b54077cbd632fe87b7_256_256.png",
-        "http://125.39.134.47/r/a.gdown.baidu.com/data/wisegame/78b6992f6a40d0bd/lujinsuo_3050500.apk?from=a1101"));
     return myDownloadInfos;
   }
 
@@ -63,4 +64,28 @@ public class MainActivity extends AppCompatActivity {
   }
 
 
+  public void test(View view) {
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          URL url = new URL(
+              "http://wdj-qn-apk.wdjcdn.com/a/e9/618d265197a43dab6277c41ec5f72e9a.apk");
+          HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+          httpConnection.setConnectTimeout(10000);
+          httpConnection.setReadTimeout(10000);
+          httpConnection.setRequestMethod("GET");
+//        httpConnection.setRequestProperty("Range", "bytes=" + 0 + "-");
+          final int responseCode = httpConnection.getResponseCode();
+          if (responseCode == HttpURLConnection.HTTP_OK) {
+            Log.d("TAG", "ok");
+          } else {
+            Log.d("TAG", "fail");
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }).start();
+  }
 }
