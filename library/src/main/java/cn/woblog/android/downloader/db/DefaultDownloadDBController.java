@@ -25,28 +25,22 @@ public class DefaultDownloadDBController implements DownloadDBController {
   @Override
   public void createOrUpdate(DownloadInfo downloadInfo) {
     writableDatabase.execSQL(
-        "REPLACE INTO download_info(_id,id,supportRanges,createAt,url,path,size,progress,status) VALUES(?,?,?,?,?,?,?,?,?);",
+        "REPLACE INTO download_info(_id,supportRanges,createAt,uri,path,size,progress,status) VALUES(?,?,?,?,?,?,?,?);",
         new Object[]{
-            downloadInfo.getKey(), downloadInfo.getId(), downloadInfo.getSupportRanges(),
-            downloadInfo.getCreateAt(), downloadInfo.getUrl(), downloadInfo.getPath(),
+            downloadInfo.getId(), downloadInfo.getSupportRanges(),
+            downloadInfo.getCreateAt(), downloadInfo.getUri(), downloadInfo.getPath(),
             downloadInfo.getSize(), downloadInfo.getProgress(), downloadInfo.getStatus()});
   }
 
-//  private int threadId;
-//  private int downloadKey;
-//  private String url;
-//  private long start;
-//  private long end;
-//  private long progress;
-
   @Override
   public void createOrUpdate(DownloadThreadInfo downloadThreadInfo) {
-//    _id=id+threadId
     writableDatabase.execSQL(
-        "REPLACE INTO download_info(_id,threadId,downloadKey,uri,start,end,progress) VALUES(?,?,?,?,?,?,?);",
+        "REPLACE INTO download_thread_info(_id,threadId,downloadInfoId,uri,start,end,progress) VALUES(?,?,?,?,?,?,?);",
         new Object[]{
-            downloadThreadInfo.getDownloadKey() + downloadThreadInfo.getThreadId(),
-            downloadThreadInfo.getThreadId(), downloadThreadInfo.getUri(),
+            downloadThreadInfo.getId(),
+            downloadThreadInfo.getThreadId(),
+            downloadThreadInfo.getDownloadInfoId(),
+            downloadThreadInfo.getUri(),
             downloadThreadInfo.getStart(), downloadThreadInfo.getEnd(),
             downloadThreadInfo.getProgress()});
   }

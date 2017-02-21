@@ -14,8 +14,8 @@ import android.support.annotation.RequiresApi;
 
 public class DefaultDownloadHelper extends SQLiteOpenHelper {
 
-  private static final String CREATE_DOWNLOAD_TABLE_SQL = "CREATE TABLE download_info (_id INTEGER PRIMARY key,id VARCHAR(255),supportRanges INTEGER,createAt LONG,url VARCHAR(255),path VARCHAR(255),size LONG, progress LONG,status INT);";
-  private static final String CREATE_DOWNLOAD_THREAD_TABLE_SQL = "CREATE TABLE download_thread (_id INTEGER PRIMARY KEY,downloadkey INTEGER,threadId INTEGER,url VARCHAR(255),start LONG,end LONG,progress LONG);";
+  private static final String CREATE_DOWNLOAD_TABLE_SQL = "CREATE TABLE download_info (_id integer PRIMARY KEY NOT NULL,supportRanges integer NOT NULL,createAt long NOT NULL,uri varchar(255) NOT NULL,path varchar(255) NOT NULL,size long NOT NULL, progress long NOT NULL,status integer NOT NULL);";
+  private static final String CREATE_DOWNLOAD_THREAD_TABLE_SQL = "CREATE TABLE download_thread_info (_id integer PRIMARY KEY NOT NULL,threadId integer NOT NULL,downloadInfoId integer NOT NULL,uri varchar(255) NOT NULL,start long NOT NULL,end long NOT NULL,progress long NOT NULL);";
   private static final int DB_VERSION = 1;
   private static final String DB_NAME = "/sdcard/download_info.db";
 //  private static final String DB_NAME = "download_info.db";
@@ -46,25 +46,25 @@ public class DefaultDownloadHelper extends SQLiteOpenHelper {
   }
 
 //  CREATE TABLE download_info (
-//      _id INTEGER PRIMARY key,
-//      id VARCHAR(255),
-//      supportRanges INTEGER,
-//      createAt LONG,
-//      url VARCHAR(255),
-//      path VARCHAR(255),
-//      size LONG,
-//      progress LONG,
-//      status INT
+//      _id integer PRIMARY KEY   NOT NULL,
+//      id varchar(255)   NOT NULL,
+//      supportRanges integer   NOT NULL,
+//      createAt long   NOT NULL,
+//      url varchar(255)   NOT NULL,
+//      path varchar(255)  NOT NULL,
+//      size long  NOT NULL,
+//      progress long  NOT NULL,
+//      status integer  NOT NULL
 //  );
 
 //  CREATE TABLE download_thread (
-//      _id INTEGER PRIMARY KEY,
-//      downloadkey INTEGER,
-//      threadId INTEGER,
-//      url VARCHAR(255),
-//      start LONG,
-//      end LONG,
-//      progress LONG
+//      _id integer PRIMARY KEY  NOT NULL,
+//      downloadkey integer  NOT NULL,
+//      threadId integer  NOT NULL,
+//      url varchar(255)  NOT NULL,
+//      start long  NOT NULL DEFAULT(0),
+//      end long  NOT NULL,
+//      progress long  NOT NULL DEFAULT(0)
 //  );
 
 }

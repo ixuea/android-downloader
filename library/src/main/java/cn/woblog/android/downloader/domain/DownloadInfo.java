@@ -43,26 +43,29 @@ public class DownloadInfo implements Serializable {
    *
    */
   public static final int STATUS_ERROR = 6;
-
   /**
    *
    */
   public static final int STATUS_REMOVED = 7;
-
-
-  private int key;
-  private String id;
+  /**
+   * Each download task id
+   */
+  private int id;
+  /**
+   * Support multi-threaded download
+   */
   private int supportRanges;
+  /**
+   * Time to create a download task
+   */
   private long createAt;
-  private String url;
+  private String uri;
   private String path;
   private long size;
   private long progress;
   @DownloadStatus
   private int status;
-
   private List<DownloadThreadInfo> downloadThreadInfos;
-
   private transient DownloadListener downloadListener;
 
   public long getCreateAt() {
@@ -73,12 +76,12 @@ public class DownloadInfo implements Serializable {
     this.createAt = createAt;
   }
 
-  public String getUrl() {
-    return url;
+  public String getUri() {
+    return uri;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
+  public void setUri(String uri) {
+    this.uri = uri;
   }
 
   public String getPath() {
@@ -123,12 +126,12 @@ public class DownloadInfo implements Serializable {
     this.status = status;
   }
 
-  public int getKey() {
-    return key;
+  public int getId() {
+    return id;
   }
 
-  public void setKey(int key) {
-    this.key = key;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public int getSupportRanges() {
@@ -155,15 +158,6 @@ public class DownloadInfo implements Serializable {
     this.downloadThreadInfos = downloadThreadInfos;
   }
 
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -175,20 +169,19 @@ public class DownloadInfo implements Serializable {
 
     DownloadInfo downloadInfo = (DownloadInfo) o;
 
-    return id.equals(downloadInfo.id);
+    return id == downloadInfo.id;
 
   }
 
   @Override
   public int hashCode() {
-    return id.hashCode();
+    return id;
   }
 
   public boolean isPause() {
     return status == DownloadInfo.STATUS_PAUSED || status == DownloadInfo.STATUS_ERROR
         || status == STATUS_REMOVED;
   }
-
   @IntDef({STATUS_NONE, STATUS_PREPARE_DOWNLOAD, STATUS_DOWNLOADING, STATUS_WAIT, STATUS_PAUSED,
       STATUS_COMPLETED, STATUS_ERROR, STATUS_REMOVED})
   @Retention(RetentionPolicy.SOURCE)
@@ -235,10 +228,10 @@ public class DownloadInfo implements Serializable {
       DownloadInfo downloadInfo = new DownloadInfo();
 
       if (TextUtils.isEmpty(url)) {
-        throw new DownloadException(DownloadException.EXCEPTION_URL_NULL, "url cannot be null.");
+        throw new DownloadException(DownloadException.EXCEPTION_URL_NULL, "uri cannot be null.");
       }
 
-      downloadInfo.setUrl(url);
+      downloadInfo.setUri(url);
 
       if (TextUtils.isEmpty(path)) {
         throw new DownloadException(DownloadException.EXCEPTION_PATH_NULL, "path cannot be null.");
@@ -250,10 +243,10 @@ public class DownloadInfo implements Serializable {
         setCreateAt(System.currentTimeMillis());
       }
 
-      downloadInfo.setKey(url.hashCode());
+      downloadInfo.setId(url.hashCode());
 
       if (TextUtils.isEmpty(id)) {
-        downloadInfo.setId(url);
+        downloadInfo.setId(url.hashCode());
       }
 
       return downloadInfo;
