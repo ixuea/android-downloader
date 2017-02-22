@@ -14,8 +14,14 @@ import android.support.annotation.RequiresApi;
 
 public class DefaultDownloadHelper extends SQLiteOpenHelper {
 
-  private static final String CREATE_DOWNLOAD_TABLE_SQL = "CREATE TABLE download_info (_id integer PRIMARY KEY NOT NULL,supportRanges integer NOT NULL,createAt long NOT NULL,uri varchar(255) NOT NULL,path varchar(255) NOT NULL,size long NOT NULL, progress long NOT NULL,status integer NOT NULL);";
-  private static final String CREATE_DOWNLOAD_THREAD_TABLE_SQL = "CREATE TABLE download_thread_info (_id integer PRIMARY KEY NOT NULL,threadId integer NOT NULL,downloadInfoId integer NOT NULL,uri varchar(255) NOT NULL,start long NOT NULL,end long NOT NULL,progress long NOT NULL);";
+  public static final String TABLE_NAME_DOWNLOAD_INFO = "download_info";
+  public static final String TABLE_NAME_DOWNLOAD_THREAD_INFO = "download_thread_info";
+  private static final String SQL_CREATE_DOWNLOAD_TABLE = String.format(
+      "CREATE TABLE %s (_id integer PRIMARY KEY NOT NULL,supportRanges integer NOT NULL,createAt long NOT NULL,uri varchar(255) NOT NULL,path varchar(255) NOT NULL,size long NOT NULL, progress long NOT NULL,status integer NOT NULL);",
+      TABLE_NAME_DOWNLOAD_INFO);
+  private static final String SQL_CREATE_DOWNLOAD_THREAD_TABLE = String.format(
+      "CREATE TABLE %s (_id integer PRIMARY KEY NOT NULL,threadId integer NOT NULL,downloadInfoId integer NOT NULL,uri varchar(255) NOT NULL,start long NOT NULL,end long NOT NULL,progress long NOT NULL);",
+      TABLE_NAME_DOWNLOAD_THREAD_INFO);
   private static final int DB_VERSION = 1;
   private static final String DB_NAME = "/sdcard/download_info.db";
 //  private static final String DB_NAME = "download_info.db";
@@ -36,8 +42,8 @@ public class DefaultDownloadHelper extends SQLiteOpenHelper {
   }
 
   private void createTable(SQLiteDatabase db) {
-    db.execSQL(CREATE_DOWNLOAD_TABLE_SQL);
-    db.execSQL(CREATE_DOWNLOAD_THREAD_TABLE_SQL);
+    db.execSQL(SQL_CREATE_DOWNLOAD_TABLE);
+    db.execSQL(SQL_CREATE_DOWNLOAD_THREAD_TABLE);
   }
 
   @Override

@@ -21,7 +21,6 @@ import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
 import cn.woblog.android.downloader.simple.util.FileUtil;
-import com.squareup.picasso.Picasso;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +97,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
     @SuppressWarnings("unchecked")
     public void bindData(final MyDownloadInfo data, int position, final Context context) {
-      Picasso.with(context).load(data.getIcon()).into(iv_icon);
+//      Picasso.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
       downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());

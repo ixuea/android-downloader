@@ -37,9 +37,6 @@ public class DownloadListener {
   public void onDownloading() {
   }
 
-  public void onCancelled() {
-  }
-
   public void onRemoved() {
   }
 

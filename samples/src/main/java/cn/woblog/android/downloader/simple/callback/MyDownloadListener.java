@@ -38,12 +38,6 @@ public abstract class MyDownloadListener extends DownloadListener {
   }
 
   @Override
-  public void onCancelled() {
-    super.onCancelled();
-    onRefresh();
-  }
-
-  @Override
   public void onRemoved() {
     super.onRemoved();
     onRefresh();
