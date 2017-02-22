@@ -17,6 +17,15 @@ import java.util.List;
 public class DefaultDownloadDBController implements DownloadDBController {
 
 
+  public static final String[] DOWNLOAD_INFO_COLUMNS = new String[]{"_id", "supportRanges",
+      "createAt", "uri",
+      "path", "size", "progress",
+      "status"};
+
+  public static final String[] DOWNLOAD_THREAD_INFO_COLUMNS = new String[]{"_id", "threadId",
+      "downloadInfoId", "uri",
+      "start", "end", "progress"};
+
   private final Context context;
   private final DefaultDownloadHelper dbHelper;
   private final SQLiteDatabase writableDatabase;
@@ -33,19 +42,43 @@ public class DefaultDownloadDBController implements DownloadDBController {
   @Override
   public List<DownloadInfo> findAllDownloading() {
     Cursor cursor = readableDatabase.query("download_info",
-        new String[]{"_id", "supportRanges", "createAt", "uri", "path", "size", "progress",
-            "status"}, "status!=?", new String[]{
+        DOWNLOAD_INFO_COLUMNS, "status!=?", new String[]{
             String.valueOf(STATUS_COMPLETED)}, null, null, "createAt desc");
 
     List<DownloadInfo> downloads = new ArrayList<>();
+    Cursor downloadCursor;
     while (cursor.moveToNext()) {
       DownloadInfo downloadInfo = new DownloadInfo();
       downloads.add(downloadInfo);
 
       inflateDownloadInfo(cursor, downloadInfo);
 
+      //query download thread info
+      downloadCursor = readableDatabase.query("download_thread_info",
+          DOWNLOAD_THREAD_INFO_COLUMNS, "downloadInfoId=?", new String[]{
+              String.valueOf(downloadInfo.getId())}, null, null, null);
+      List<DownloadThreadInfo> downloadThreads = new ArrayList<>();
+      while (downloadCursor.moveToNext()) {
+        DownloadThreadInfo downloadThreadInfo = new DownloadThreadInfo();
+        downloadThreads.add(downloadThreadInfo);
+        inflateDownloadThreadInfo(downloadCursor, downloadThreadInfo);
+      }
+
+      downloadInfo.setDownloadThreadInfos(downloadThreads);
+
     }
     return downloads;
+  }
+
+  private void inflateDownloadThreadInfo(Cursor cursor,
+      DownloadThreadInfo downloadThreadInfo) {
+    downloadThreadInfo.setId(cursor.getInt(0));
+    downloadThreadInfo.setThreadId(cursor.getInt(1));
+    downloadThreadInfo.setDownloadInfoId(cursor.getInt(2));
+    downloadThreadInfo.setUri(cursor.getString(3));
+    downloadThreadInfo.setStart(cursor.getLong(4));
+    downloadThreadInfo.setEnd(cursor.getLong(5));
+    downloadThreadInfo.setProgress(cursor.getLong(6));
   }
 
   private void inflateDownloadInfo(Cursor cursor, DownloadInfo downloadInfo) {
@@ -61,9 +94,9 @@ public class DefaultDownloadDBController implements DownloadDBController {
 
   @Override
   public DownloadInfo findDownloadedInfoById(int id) {
-    Cursor cursor = readableDatabase.query("download_info",
-        new String[]{"_id", "supportRanges", "createAt", "uri", "path", "size", "progress",
-            "status"}, "_id=?", new String[]{String.valueOf(id)}, null, null, "createAt desc");
+    Cursor cursor = readableDatabase
+        .query("download_info", DOWNLOAD_INFO_COLUMNS, "_id=?", new String[]{String.valueOf(id)},
+            null, null, "createAt desc");
     if (cursor.moveToNext()) {
       DownloadInfo downloadInfo = new DownloadInfo();
 
