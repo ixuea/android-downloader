@@ -10,7 +10,6 @@ import cn.woblog.android.downloader.core.task.DownloadTask;
 import cn.woblog.android.downloader.db.DefaultDownloadDBController;
 import cn.woblog.android.downloader.db.DownloadDBController;
 import cn.woblog.android.downloader.domain.DownloadInfo;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +40,8 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     }
     downloadDBController = new DefaultDownloadDBController(context);
     cacheDownloadTask = new ConcurrentHashMap<>();
-    downloadingCaches = new LinkedList<>();
+
+    downloadingCaches = downloadDBController.findAllDownloading();
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 
@@ -122,7 +122,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     }
 
     if (downloadInfo == null) {
-
+      downloadInfo = downloadDBController.findDownloadedInfoById(id);
     }
     return downloadInfo;
   }

@@ -102,6 +102,20 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
       tv_name.setText(data.getName());
 
       downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
+      if (downloadInfo != null) {
+        downloadInfo
+            .setDownloadListener(new MyDownloadListener(new SoftReference(ViewHolder.this)) {
+
+              @Override
+              public void onRefresh() {
+                if (getUserTag() != null && getUserTag().get() != null) {
+                  ViewHolder viewHolder = (ViewHolder) getUserTag().get();
+                  viewHolder.refresh();
+                }
+              }
+            });
+        refresh();
+      }
 
       bt_action.setOnClickListener(new OnClickListener() {
         @Override
