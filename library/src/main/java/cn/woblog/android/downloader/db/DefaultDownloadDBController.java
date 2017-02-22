@@ -25,6 +25,12 @@ public class DefaultDownloadDBController implements DownloadDBController {
   public static final String[] DOWNLOAD_THREAD_INFO_COLUMNS = new String[]{"_id", "threadId",
       "downloadInfoId", "uri",
       "start", "end", "progress"};
+  public static final String SQL_UPDATE_DOWNLOAD_THREAD_INFO = String.format(
+      "REPLACE INTO %s (_id,threadId,downloadInfoId,uri,start,end,progress) VALUES(?,?,?,?,?,?,?);",
+      DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_THREAD_INFO);
+  public static final String SQL_UPDATE_DOWNLOAD_INFO = String.format(
+      "REPLACE INTO %s (_id,supportRanges,createAt,uri,path,size,progress,status) VALUES(?,?,?,?,?,?,?,?);",
+      DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO);
 
   private final Context context;
   private final DefaultDownloadHelper dbHelper;
@@ -41,7 +47,7 @@ public class DefaultDownloadDBController implements DownloadDBController {
   @SuppressWarnings("No problem")
   @Override
   public List<DownloadInfo> findAllDownloading() {
-    Cursor cursor = readableDatabase.query("download_info",
+    Cursor cursor = readableDatabase.query(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO,
         DOWNLOAD_INFO_COLUMNS, "status!=?", new String[]{
             String.valueOf(STATUS_COMPLETED)}, null, null, "createAt desc");
 
@@ -54,7 +60,7 @@ public class DefaultDownloadDBController implements DownloadDBController {
       inflateDownloadInfo(cursor, downloadInfo);
 
       //query download thread info
-      downloadCursor = readableDatabase.query("download_thread_info",
+      downloadCursor = readableDatabase.query(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_THREAD_INFO,
           DOWNLOAD_THREAD_INFO_COLUMNS, "downloadInfoId=?", new String[]{
               String.valueOf(downloadInfo.getId())}, null, null, null);
       List<DownloadThreadInfo> downloadThreads = new ArrayList<>();
@@ -95,7 +101,8 @@ public class DefaultDownloadDBController implements DownloadDBController {
   @Override
   public DownloadInfo findDownloadedInfoById(int id) {
     Cursor cursor = readableDatabase
-        .query("download_info", DOWNLOAD_INFO_COLUMNS, "_id=?", new String[]{String.valueOf(id)},
+        .query(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO, DOWNLOAD_INFO_COLUMNS, "_id=?",
+            new String[]{String.valueOf(id)},
             null, null, "createAt desc");
     if (cursor.moveToNext()) {
       DownloadInfo downloadInfo = new DownloadInfo();
@@ -110,7 +117,7 @@ public class DefaultDownloadDBController implements DownloadDBController {
   @Override
   public void createOrUpdate(DownloadInfo downloadInfo) {
     writableDatabase.execSQL(
-        "REPLACE INTO download_info(_id,supportRanges,createAt,uri,path,size,progress,status) VALUES(?,?,?,?,?,?,?,?);",
+        SQL_UPDATE_DOWNLOAD_INFO,
         new Object[]{
             downloadInfo.getId(), downloadInfo.getSupportRanges(),
             downloadInfo.getCreateAt(), downloadInfo.getUri(), downloadInfo.getPath(),
@@ -120,7 +127,7 @@ public class DefaultDownloadDBController implements DownloadDBController {
   @Override
   public void createOrUpdate(DownloadThreadInfo downloadThreadInfo) {
     writableDatabase.execSQL(
-        "REPLACE INTO download_thread_info(_id,threadId,downloadInfoId,uri,start,end,progress) VALUES(?,?,?,?,?,?,?);",
+        SQL_UPDATE_DOWNLOAD_THREAD_INFO,
         new Object[]{
             downloadThreadInfo.getId(),
             downloadThreadInfo.getThreadId(),
@@ -132,7 +139,11 @@ public class DefaultDownloadDBController implements DownloadDBController {
 
   @Override
   public void delete(DownloadInfo downloadInfo) {
-
+    writableDatabase.delete(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO, "_id=?",
+        new String[]{String.valueOf(downloadInfo.getId())});
+    writableDatabase
+        .delete(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_THREAD_INFO, "downloadInfoId=?",
+            new String[]{String.valueOf(downloadInfo.getId())});
   }
 
   @Override

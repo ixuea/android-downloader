@@ -61,6 +61,11 @@ public class DownloadResponseImpl implements DownloadResponse {
               downloadInfo.getDownloadListener().onDownloadFailed();
             }
             break;
+          case DownloadInfo.STATUS_REMOVED:
+            if (downloadInfo.getDownloadListener() != null) {
+              downloadInfo.getDownloadListener().onRemoved();
+            }
+            break;
         }
       }
     };
@@ -70,12 +75,13 @@ public class DownloadResponseImpl implements DownloadResponse {
 
   @Override
   public void onStatusChanged(DownloadInfo downloadInfo) {
-    downloadDBController.createOrUpdate(downloadInfo);
-
-    if (downloadInfo.getDownloadThreadInfos() != null) {
-      for (DownloadThreadInfo threadInfo :
-          downloadInfo.getDownloadThreadInfos()) {
-        downloadDBController.createOrUpdate(threadInfo);
+    if (downloadInfo.getStatus() != DownloadInfo.STATUS_REMOVED) {
+      downloadDBController.createOrUpdate(downloadInfo);
+      if (downloadInfo.getDownloadThreadInfos() != null) {
+        for (DownloadThreadInfo threadInfo :
+            downloadInfo.getDownloadThreadInfos()) {
+          downloadDBController.createOrUpdate(threadInfo);
+        }
       }
     }
 
