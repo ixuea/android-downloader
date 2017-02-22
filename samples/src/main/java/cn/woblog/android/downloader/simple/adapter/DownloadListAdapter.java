@@ -180,6 +180,13 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
           case DownloadInfo.STATUS_ERROR:
             bt_action.setText("continue");
             tv_status.setText("paused");
+            try {
+              pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+            tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
+                .formatFileSize(downloadInfo.getSize()));
             break;
 
           case DownloadInfo.STATUS_DOWNLOADING:
