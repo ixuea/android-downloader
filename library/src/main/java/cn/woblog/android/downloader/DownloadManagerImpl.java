@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 
 public final class DownloadManagerImpl implements DownloadManager, DownloadTaskListener {
 
+  private static final int MIN_EXECUTE_INTERVAL = 500;
   private static DownloadManagerImpl instance;
   private final ExecutorService executorService;
   private final ConcurrentHashMap<Integer, DownloadTask> cacheDownloadTask;
@@ -30,6 +31,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   private final DownloadResponse downloadResponse;
   private final DownloadDBController downloadDBController;
   private final Config config;
+  private long lastExecuteTime;
 
   private DownloadManagerImpl(Context context, Config config) {
     this.context = context;
@@ -81,10 +83,12 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
 
   @Override
   public void pause(DownloadInfo downloadInfo) {
-    downloadInfo.setStatus(DownloadInfo.STATUS_PAUSED);
-    cacheDownloadTask.remove(downloadInfo.getId());
-    downloadResponse.onStatusChanged(downloadInfo);
-    prepareDownloadNextTask();
+    if (isExecute()) {
+      downloadInfo.setStatus(DownloadInfo.STATUS_PAUSED);
+      cacheDownloadTask.remove(downloadInfo.getId());
+      downloadResponse.onStatusChanged(downloadInfo);
+      prepareDownloadNextTask();
+    }
   }
 
   private void prepareDownloadNextTask() {
@@ -93,7 +97,9 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
 
   @Override
   public void resume(DownloadInfo downloadInfo) {
-    if (cacheDownloadTask.get(downloadInfo.getId()) == null) {
+    if (isExecute()) {
+      downloadInfo.setStatus(DownloadInfo.STATUS_PAUSED);
+      cacheDownloadTask.remove(downloadInfo.getId());
       download(downloadInfo);
     }
   }
@@ -134,10 +140,18 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     prepareDownloadNextTask();
   }
 
+  public boolean isExecute() {
+    if (System.currentTimeMillis() - lastExecuteTime > MIN_EXECUTE_INTERVAL) {
+      lastExecuteTime = System.currentTimeMillis();
+      return true;
+    }
+    return false;
+  }
+
   public class Config {
 
-    private int connectTimeout = 5000;
-    private int readTimeout = 5000;
+    private int connectTimeout = 10000;
+    private int readTimeout = 10000;
 
     private int downloadThread = 5;
 

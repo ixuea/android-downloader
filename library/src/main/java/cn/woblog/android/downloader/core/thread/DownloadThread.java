@@ -45,7 +45,7 @@ public class DownloadThread implements Runnable {
   @Override
   public void run() {
     Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-    checkIfPause();
+    checkPause();
     try {
       executeDownload();
     } catch (DownloadException e) {
@@ -78,11 +78,11 @@ public class DownloadThread implements Runnable {
         inputStream = httpConnection.getInputStream();
         RandomAccessFile raf = new RandomAccessFile(downloadInfo.getPath(), "rwd");
         raf.seek(lastProgress);
-        final byte[] bf = new byte[1024 * 8];
+        final byte[] bf = new byte[1024 * 4];
         int len = -1;
         int offset = 0;
         while (true) {
-          checkIfPause();
+          checkPause();
           len = inputStream.read(bf);
           if (len == -1) {
             break;
@@ -108,7 +108,7 @@ public class DownloadThread implements Runnable {
         throw new DownloadException(DownloadException.EXCEPTION_SERVER_SUPPORT_CODE,
             "UnSupported response code:" + responseCode);
       }
-      checkIfPause();
+      checkPause();
     } catch (ProtocolException e) {
       throw new DownloadException(DownloadException.EXCEPTION_PROTOCOL, "Protocol error", e);
     } catch (IOException e) {
@@ -122,7 +122,7 @@ public class DownloadThread implements Runnable {
     }
   }
 
-  private void checkIfPause() {
+  private void checkPause() {
     if (downloadInfo.isPause()) {
       throw new DownloadException(DownloadException.EXCEPTION_PAUSE);
     }
