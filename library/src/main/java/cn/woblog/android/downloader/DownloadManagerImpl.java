@@ -156,7 +156,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
 
     private int downloadThread = 5;
 
-    private int eachDownloadThread = 2;
+    private int eachDownloadThread = 1;
 
     private String method = "GET";
 

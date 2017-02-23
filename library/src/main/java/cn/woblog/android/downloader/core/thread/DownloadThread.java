@@ -68,16 +68,18 @@ public class DownloadThread implements Runnable {
       httpConnection.setConnectTimeout(config.getConnectTimeout());
       httpConnection.setReadTimeout(config.getReadTimeout());
       httpConnection.setRequestMethod(config.getMethod());
+      long lastStart = downloadThreadInfo.getStart() + lastProgress;
       if (downloadInfo.isSupportRanges()) {
         httpConnection.setRequestProperty("Range",
-            "bytes=" + downloadThreadInfo.getStart() + "-" + downloadThreadInfo.getEnd());
+            "bytes=" + lastStart + "-" + downloadThreadInfo.getEnd());
       }
       final int responseCode = httpConnection.getResponseCode();
       if (responseCode == HttpURLConnection.HTTP_PARTIAL
           || responseCode == HttpURLConnection.HTTP_OK) {
         inputStream = httpConnection.getInputStream();
         RandomAccessFile raf = new RandomAccessFile(downloadInfo.getPath(), "rwd");
-        raf.seek(lastProgress);
+
+        raf.seek(lastStart);
         final byte[] bf = new byte[1024 * 4];
         int len = -1;
         int offset = 0;
