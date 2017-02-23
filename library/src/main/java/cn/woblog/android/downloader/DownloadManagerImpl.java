@@ -155,9 +155,9 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     private int connectTimeout = 10000;
     private int readTimeout = 10000;
 
-    private int downloadThread = 5;
+    private int downloadThread = 2;
 
-    private int eachDownloadThread = 3;
+    private int eachDownloadThread = 2;
 
     private String method = "GET";
 

@@ -5,6 +5,10 @@ AndroidDownloader
 
 Android Downloader is a open source multithread and mulitask downloadInfo framework for Android.
 
+Try out the sample application [on the Apk file][20].
+
+![AndroidDownloader Sample Screenshots][30]
+
 License
 =======
 
@@ -21,3 +25,8 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+
+[20]: https://i.woblog.cn
+[30]: https://i.woblog.cn
