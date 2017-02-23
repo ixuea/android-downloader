@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+#for android downloader
+-keep public interface org.xutils.** {
+    public protected *;
+}
+#end for android downloader

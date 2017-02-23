@@ -8,16 +8,11 @@
   tools:context="cn.woblog.android.downloader.simple.MainActivity">
 
 
-  <Button
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/rv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:onClick="downloadAFile"
-    android:text="Download a file" />
+    android:layout_height="match_parent">
 
-  <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:onClick="useInList"
-    android:text="Use in list" />
+  </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
