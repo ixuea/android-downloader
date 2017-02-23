@@ -29,4 +29,4 @@ License
 
 
 [20]: https://i.woblog.cn
-[30]: https://i.woblog.cn
+[30]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/screenshot.png
