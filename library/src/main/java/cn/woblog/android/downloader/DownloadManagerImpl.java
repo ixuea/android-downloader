@@ -43,6 +43,8 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     downloadDBController = new DefaultDownloadDBController(context);
     cacheDownloadTask = new ConcurrentHashMap<>();
 
+    downloadDBController.pauseAllDownloading();
+
     downloadingCaches = downloadDBController.findAllDownloading();
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
@@ -98,7 +100,6 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   @Override
   public void resume(DownloadInfo downloadInfo) {
     if (isExecute()) {
-      downloadInfo.setStatus(DownloadInfo.STATUS_PAUSED);
       cacheDownloadTask.remove(downloadInfo.getId());
       download(downloadInfo);
     }
@@ -156,7 +157,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
 
     private int downloadThread = 5;
 
-    private int eachDownloadThread = 1;
+    private int eachDownloadThread = 3;
 
     private String method = "GET";
 

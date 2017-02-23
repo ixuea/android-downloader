@@ -1,6 +1,7 @@
 package cn.woblog.android.downloader.db;
 
 import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_COMPLETED;
+import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_PAUSED;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -28,8 +29,13 @@ public class DefaultDownloadDBController implements DownloadDBController {
   public static final String SQL_UPDATE_DOWNLOAD_THREAD_INFO = String.format(
       "REPLACE INTO %s (_id,threadId,downloadInfoId,uri,start,end,progress) VALUES(?,?,?,?,?,?,?);",
       DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_THREAD_INFO);
+
   public static final String SQL_UPDATE_DOWNLOAD_INFO = String.format(
       "REPLACE INTO %s (_id,supportRanges,createAt,uri,path,size,progress,status) VALUES(?,?,?,?,?,?,?,?);",
+      DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO);
+
+  public static final String SQL_UPDATE_DOWNLOADING_INFO_STATUS = String.format(
+      "UPDATE %s SET status=? WHERE status!=?;",
       DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO);
 
   private final Context context;
@@ -112,6 +118,13 @@ public class DefaultDownloadDBController implements DownloadDBController {
       return downloadInfo;
     }
     return null;
+  }
+
+  @Override
+  public void pauseAllDownloading() {
+    writableDatabase.execSQL(
+        SQL_UPDATE_DOWNLOADING_INFO_STATUS,
+        new Object[]{STATUS_PAUSED, STATUS_COMPLETED});
   }
 
   @Override

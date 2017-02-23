@@ -14,6 +14,8 @@ public interface DownloadDBController {
 
   DownloadInfo findDownloadedInfoById(int id);
 
+  void pauseAllDownloading();
+
   void createOrUpdate(DownloadInfo downloadInfo);
 
   void createOrUpdate(DownloadThreadInfo downloadThreadInfo);
