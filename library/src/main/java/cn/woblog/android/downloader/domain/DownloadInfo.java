@@ -122,7 +122,7 @@ public class DownloadInfo implements Serializable {
     return status;
   }
 
-  public void setStatus(@DownloadStatus int status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 

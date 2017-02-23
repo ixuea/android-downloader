@@ -4,6 +4,7 @@ import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_COMPLETED;
 import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_REMOVED;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
 import cn.woblog.android.downloader.simple.util.FileUtil;
+import java.io.File;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,13 +115,14 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
                 }
               }
             });
-        refresh();
+
       }
+      refresh();
 
       bt_action.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-          downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
+//          downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
           if (downloadInfo != null) {
 
             switch (downloadInfo.getStatus()) {
@@ -142,8 +145,13 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
             }
           } else {
             //create downloadInfo
-            String path = context.getFilesDir().getAbsolutePath().concat("/")
-                .concat(data.getName());
+//            String path = context.getFilesDir().getAbsolutePath().concat("/")
+//                .concat(data.getName());
+            File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "d");
+            if (!d.exists()) {
+              d.mkdirs();
+            }
+            String path = d.getAbsolutePath().concat("/").concat(data.getName());
             downloadInfo = new Builder().setUrl(data.getUrl())
                 .setPath(path)
                 .build();
@@ -167,7 +175,9 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
     private void refresh() {
       if (downloadInfo == null) {
-        bt_action.setText("downloadInfo");
+        tv_size.setText("");
+        pb.setProgress(0);
+        bt_action.setText("download");
         tv_status.setText("not downloadInfo");
       } else {
         switch (downloadInfo.getStatus()) {
@@ -214,7 +224,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
           case STATUS_REMOVED:
             tv_size.setText("");
             pb.setProgress(0);
-            bt_action.setText("downloadInfo");
+            bt_action.setText("download");
             tv_status.setText("not downloadInfo");
             break;
         }
