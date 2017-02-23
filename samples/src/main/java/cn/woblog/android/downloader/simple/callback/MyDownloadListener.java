@@ -48,4 +48,9 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   public void onDownloadFailed() {
     onRefresh();
   }
+
+  @Override
+  public void onPaused() {
+    onRefresh();
+  }
 }

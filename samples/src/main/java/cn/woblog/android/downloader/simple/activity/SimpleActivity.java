@@ -8,26 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import cn.woblog.android.downloader.callback.DownloadListener;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadInfo.Builder;
 import cn.woblog.android.downloader.simple.R;
+import cn.woblog.android.downloader.simple.util.FileUtil;
 import java.io.File;
 
 public class SimpleActivity extends AppCompatActivity {
 
   public static final String DEFAULT_URL = "http://m.shouji.360tpcdn.com/170223/2e08d26f5e838b54470deec30c1565d2/com.facebook.katana_50465869.apk";
 
-  private ImageView iv_icon;
-  private TextView tv_size;
-  private TextView tv_status;
-  private ProgressBar pb;
-  private TextView tv_name;
-  private Button bt_action;
-  private DownloadInfo downloadInfo;
+
+  private TextView tv_download_info;
+  private Button bt_download_button;
 
 
   @Override
@@ -40,69 +35,74 @@ public class SimpleActivity extends AppCompatActivity {
   }
 
   private void initData() {
-    bt_action.setOnClickListener(new OnClickListener() {
+    bt_download_button.setOnClickListener(new OnClickListener() {
 
 
       @Override
       public void onClick(View v) {
-        File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "d");
-        if (!d.exists()) {
-          d.mkdirs();
-        }
-        String path = d.getAbsolutePath().concat("/").concat("a.apk");
-        downloadInfo = new Builder().setUrl(DEFAULT_URL)
-            .setPath(path)
-            .build();
-        downloadInfo
-            .setDownloadListener(new DownloadListener() {
-
-              @Override
-              public void onStart() {
-
-              }
-
-              @Override
-              public void onWaited() {
-
-              }
-
-              @Override
-              public void onPaused() {
-
-              }
-
-              @Override
-              public void onDownloading() {
-
-              }
-
-              @Override
-              public void onRemoved() {
-
-              }
-
-              @Override
-              public void onDownloadSuccess() {
-
-              }
-
-              @Override
-              public void onDownloadFailed() {
-
-              }
-            });
-        downloadManager.download(downloadInfo);
+        downloadFile();
       }
+
+
     });
   }
 
+  private void downloadFile() {
+    File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "d");
+    if (!d.exists()) {
+      d.mkdirs();
+    }
+    String path = d.getAbsolutePath().concat("/").concat("a.apk");
+    final DownloadInfo downloadInfo = new Builder().setUrl(DEFAULT_URL)
+        .setPath(path)
+        .build();
+    downloadInfo
+        .setDownloadListener(new DownloadListener() {
+
+          @Override
+          public void onStart() {
+            tv_download_info.setText("Prepare downloading");
+          }
+
+          @Override
+          public void onWaited() {
+            tv_download_info.setText("Waiting");
+          }
+
+          @Override
+          public void onPaused() {
+            tv_download_info.setText("Paused");
+          }
+
+          @Override
+          public void onDownloading() {
+            tv_download_info
+                .setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
+                    .formatFileSize(downloadInfo.getSize()));
+          }
+
+          @Override
+          public void onRemoved() {
+          }
+
+          @Override
+          public void onDownloadSuccess() {
+            tv_download_info.setText("Download success");
+          }
+
+          @Override
+          public void onDownloadFailed() {
+            tv_download_info.setText("Download fail");
+          }
+        });
+    downloadManager.download(downloadInfo);
+  }
+
   private void initView() {
-    iv_icon = (ImageView) findViewById(R.id.iv_icon);
-    tv_size = (TextView) findViewById(R.id.tv_size);
-    tv_status = (TextView) findViewById(R.id.tv_status);
-    pb = (ProgressBar) findViewById(R.id.pb);
-    tv_name = (TextView) findViewById(R.id.tv_name);
-    bt_action = (Button) findViewById(R.id.bt_action);
+    tv_download_info = (TextView) findViewById(R.id.tv_download_info);
+    bt_download_button = (Button) findViewById(R.id.bt_download_button);
+
+
   }
 
 //  class ViewHolder extends RecyclerView.ViewHolder {

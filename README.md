@@ -46,20 +46,66 @@ If your project uses ProGuard, you need to add the following configuration to yo
 How do I use Android Downloader?
 =======
 
-Simple use as follows
-
-Create a DownloadManager instance
+1.Create a DownloadManager instance
 -------
 
 ```java
 downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
 ```
 
-Download a file
+Simple use as follows
+
+2.Download a file
 -------
 
 ```java
+//create download info set download uri and save path.
+final DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl("http://example.com/a.apk")
+    .setPath("/sdcard/a.apk")
+    .build();
 
+//set download callback.
+downloadInfo
+    .setDownloadListener(new DownloadListener() {
+
+      @Override
+      public void onStart() {
+        tv_download_info.setText("Prepare downloading");
+      }
+
+      @Override
+      public void onWaited() {
+        tv_download_info.setText("Waiting");
+      }
+
+      @Override
+      public void onPaused() {
+        tv_download_info.setText("Paused");
+      }
+
+      @Override
+      public void onDownloading() {
+        tv_download_info.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
+            .formatFileSize(downloadInfo.getSize()));
+      }
+
+      @Override
+      public void onRemoved() {
+      }
+
+      @Override
+      public void onDownloadSuccess() {
+        tv_download_info.setText("Download success");
+      }
+
+      @Override
+      public void onDownloadFailed() {
+        tv_download_info.setText("Download fail");
+      }
+    });
+
+//submit download info to download manager.
+downloadManager.download(downloadInfo);
 ```
 
 License
