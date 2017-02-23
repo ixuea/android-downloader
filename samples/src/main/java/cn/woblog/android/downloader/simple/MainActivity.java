@@ -52,9 +52,12 @@ public class MainActivity extends AppCompatActivity {
     myDownloadInfos.add(new MyDownloadInfo("美颜相机",
         "http://img.wdjimg.com/mms/icon/v1/7/7b/eb6b7905241f22b54077cbd632fe87b7_256_256.png",
         "http://wdj-qn-apk.wdjcdn.com/a/e9/618d265197a43dab6277c41ec5f72e9a.apk"));
-    myDownloadInfos.add(new MyDownloadInfo("陆金所",
-        "http://img.wdjimg.com/mms/icon/v1/7/7b/eb6b7905241f22b54077cbd632fe87b7_256_256.png",
-        "http://125.39.134.47/r/a.gdown.baidu.com/data/wisegame/78b6992f6a40d0bd/lujinsuo_3050500.apk?from=a1101"));
+    myDownloadInfos.add(new MyDownloadInfo("Chrome",
+        "http://img.wdjimg.com/mms/icon/v1/d/fd/914f576f9fa3e9e7aab08ad0a003cfdd_256_256.png",
+        "http://wdj-qn-apk.wdjcdn.com/6/0d/6e93a829b97d671ee56190aec78400d6.apk"));
+    myDownloadInfos.add(new MyDownloadInfo("Facebook",
+        "http://img.wdjimg.com/mms/icon/v1/b/d0/ac5196fbf245580eee113296dff14d0b_256_256.png",
+        "http://m.shouji.360tpcdn.com/170223/2e08d26f5e838b54470deec30c1565d2/com.facebook.katana_50465869.apk"));
     return myDownloadInfos;
   }
 
