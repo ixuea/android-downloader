@@ -11,5 +11,15 @@
   android:orientation="vertical"
   tools:context="cn.woblog.android.downloader.simple.activity.SimpleActivity">
 
-  <include layout="@layout/item_download_info" />
+  <Button
+    android:id="@+id/bt_download_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:onClick="Download"
+    android:text="Download" />
+
+  <TextView
+    android:id="@+id/tv_download_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 </LinearLayout>
