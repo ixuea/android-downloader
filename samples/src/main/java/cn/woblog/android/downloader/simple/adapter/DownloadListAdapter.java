@@ -99,7 +99,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
     @SuppressWarnings("unchecked")
     public void bindData(final MyDownloadInfo data, int position, final Context context) {
-//      Picasso.with(context).load(data.getIcon()).into(iv_icon);
+//      Glide.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
       downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
