@@ -2,6 +2,7 @@ package cn.woblog.android.downloader.simple.adapter;
 
 import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_COMPLETED;
 import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_REMOVED;
+import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_WAIT;
 
 import android.content.Context;
 import android.os.Environment;
@@ -22,6 +23,7 @@ import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
 import cn.woblog.android.downloader.simple.util.FileUtil;
+import com.bumptech.glide.Glide;
 import java.io.File;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
@@ -99,7 +101,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
     @SuppressWarnings("unchecked")
     public void bindData(final MyDownloadInfo data, int position, final Context context) {
-//      Glide.with(context).load(data.getIcon()).into(iv_icon);
+      Glide.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
       downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
@@ -136,6 +138,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
               case DownloadInfo.STATUS_DOWNLOADING:
               case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
+              case STATUS_WAIT:
                 //pause downloadInfo
                 downloadManager.pause(downloadInfo);
                 break;
@@ -177,17 +180,17 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
       if (downloadInfo == null) {
         tv_size.setText("");
         pb.setProgress(0);
-        bt_action.setText("download");
+        bt_action.setText("Download");
         tv_status.setText("not downloadInfo");
       } else {
         switch (downloadInfo.getStatus()) {
           case DownloadInfo.STATUS_NONE:
-            bt_action.setText("downloadInfo");
+            bt_action.setText("Download");
             tv_status.setText("not downloadInfo");
             break;
           case DownloadInfo.STATUS_PAUSED:
           case DownloadInfo.STATUS_ERROR:
-            bt_action.setText("continue");
+            bt_action.setText("Continue");
             tv_status.setText("paused");
             try {
               pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
@@ -200,7 +203,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
           case DownloadInfo.STATUS_DOWNLOADING:
           case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
-            bt_action.setText("pause");
+            bt_action.setText("Pause");
             try {
               pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
             } catch (Exception e) {
@@ -211,7 +214,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
             tv_status.setText("downloading");
             break;
           case STATUS_COMPLETED:
-            bt_action.setText("delete");
+            bt_action.setText("Delete");
             try {
               pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
             } catch (Exception e) {
@@ -224,8 +227,13 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
           case STATUS_REMOVED:
             tv_size.setText("");
             pb.setProgress(0);
-            bt_action.setText("download");
+            bt_action.setText("Download");
             tv_status.setText("not downloadInfo");
+          case STATUS_WAIT:
+            tv_size.setText("");
+            pb.setProgress(0);
+            bt_action.setText("Pause");
+            tv_status.setText("Waiting");
             break;
         }
 
