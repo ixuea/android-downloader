@@ -9,6 +9,59 @@ Try out the sample application [on the Apk file][20].
 
 ![AndroidDownloader Sample Screenshots][30]
 
+Download
+=======
+
+You can download a jar from GitHub's [releases page][40].
+
+Or use Gradle:
+
+```gradle
+dependencies {
+  compile 'cn.woblog.android:downloader:1.0.0'
+}
+```
+
+Or Maven:
+
+```xml
+<dependency>
+  <groupId>cn.woblog.android</groupId>
+  <artifactId>downloader</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+For info on using the bleeding edge, see the [Snapshots][50] wiki page.
+
+ProGuard
+=======
+
+If your project uses ProGuard, you need to add the following configuration to your project proguard-rules.pro file
+
+```pro
+-keep public class * implements cn.woblog.android.downloader.db.DownloadDBController
+```
+
+How do I use Android Downloader?
+=======
+
+Simple use as follows
+
+Create a DownloadManager instance
+-------
+
+```java
+downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
+```
+
+Download a file
+-------
+
+```java
+
+```
+
 License
 =======
 
@@ -30,3 +83,5 @@ License
 
 [20]: https://i.woblog.cn
 [30]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/screenshot.png
+[40]: https://github.com/lifengsofts/AndroidDownloader/releases
+[50]: https://github.com/lifengsofts/AndroidDownloader/releases

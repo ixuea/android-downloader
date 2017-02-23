@@ -1,50 +1,22 @@
 package cn.woblog.android.downloader.callback;
 
-import java.lang.ref.SoftReference;
-
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by renpingqing on 17/2/23.
  */
 
-public class DownloadListener {
+public interface DownloadListener {
 
-  private SoftReference<Object> userTag;
+  void onStart();
 
-  public DownloadListener() {
-  }
+  void onWaited();
 
-  public DownloadListener(SoftReference<Object> userTag) {
-    this.userTag = userTag;
-  }
+  void onPaused();
 
-  public SoftReference<Object> getUserTag() {
-    return userTag;
-  }
+  void onDownloading();
 
-  public void setUserTag(SoftReference<Object> userTag) {
-    this.userTag = userTag;
-  }
+  void onRemoved();
 
-  public void onStart() {
-  }
+  void onDownloadSuccess();
 
-  public void onWaited() {
-  }
-
-  public void onPaused() {
-  }
-
-  public void onDownloading() {
-  }
-
-  public void onRemoved() {
-  }
-
-  public void onDownloadSuccess() {
-
-  }
-
-  public void onDownloadFailed() {
-
-  }
+  void onDownloadFailed();
 }
