@@ -7,19 +7,19 @@ package cn.woblog.android.downloader.exception;
 public class DownloadPauseException extends DownloadException {
 
 
-  public DownloadPauseException(@EXCEPTION_TYPE int code) {
+  public DownloadPauseException(@ExceptionType int code) {
     super(code);
   }
 
-  public DownloadPauseException(@EXCEPTION_TYPE int code, String message) {
+  public DownloadPauseException(@ExceptionType int code, String message) {
     super(code, message);
   }
 
-  public DownloadPauseException(@EXCEPTION_TYPE int code, String message, Throwable cause) {
+  public DownloadPauseException(@ExceptionType int code, String message, Throwable cause) {
     super(code, message, cause);
   }
 
-  public DownloadPauseException(@EXCEPTION_TYPE int code, Throwable cause) {
+  public DownloadPauseException(@ExceptionType int code, Throwable cause) {
     super(code, cause);
   }
 }

@@ -72,7 +72,6 @@ subprojects { project ->
 //    }
 
 
-
 }
 
 task clean(type: Delete) {
@@ -89,5 +88,5 @@ ext {
     androidSupportVersion = '22.2.0'
 
 //    gradle
-    androidGradleVersion='2.2.2'
+    androidGradleVersion = '2.2.2'
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class DownloadThreadInfo implements Serializable {
 
   /**
-   * Each download thread id
+   * Each download thread id.
    */
   private int id;
   private int threadId;

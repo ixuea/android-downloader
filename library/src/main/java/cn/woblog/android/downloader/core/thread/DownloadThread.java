@@ -50,7 +50,6 @@ public class DownloadThread implements Runnable {
     try {
       executeDownload();
     } catch (DownloadException e) {
-      e.printStackTrace();
       downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
       downloadInfo.setException(e);
       downloadResponse.onStatusChanged(downloadInfo);
@@ -92,7 +91,7 @@ public class DownloadThread implements Runnable {
 
 //          synchronized (downloadProgressListener) {
           downloadThreadInfo.setProgress(lastProgress + offset);
-            downloadProgressListener.onProgress();
+          downloadProgressListener.onProgress();
 //          }
 
           Log.d(TAG,
@@ -130,6 +129,9 @@ public class DownloadThread implements Runnable {
     }
   }
 
+  /**
+   * Download thread progress listener.
+   */
   public interface DownloadProgressListener {
 
     void onProgress();

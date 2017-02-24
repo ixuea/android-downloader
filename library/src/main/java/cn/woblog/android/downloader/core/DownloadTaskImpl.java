@@ -157,14 +157,18 @@ public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,
   private void computerDownloadProgress() {
     progress = 0;
     List<DownloadThreadInfo> downloadThreadInfos = downloadInfo.getDownloadThreadInfos();
-    for (DownloadThreadInfo info :
-        downloadThreadInfos) {
+    for (DownloadThreadInfo info : downloadThreadInfos) {
       progress += info.getProgress();
     }
     downloadInfo.setProgress(progress);
 
   }
 
+  /***
+   * Download task listener.
+   *
+   * Use in download thread
+   */
   public interface DownloadTaskListener {
 
     void onDownloadSuccess(DownloadInfo downloadInfo);

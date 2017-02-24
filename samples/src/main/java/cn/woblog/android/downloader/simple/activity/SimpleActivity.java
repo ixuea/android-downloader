@@ -21,6 +21,9 @@ import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import java.io.File;
 
+/**
+ * How to download a file sample.
+ */
 public class SimpleActivity extends AppCompatActivity implements OnClickListener {
 
   public static final String DEFAULT_URL = "http://wdj-qn-apk.wdjcdn.com/d/c0/3311e7a27b2d3b209bf8d02aca26ac0d.apk";
@@ -145,7 +148,6 @@ public class SimpleActivity extends AppCompatActivity implements OnClickListener
 
       @Override
       public void onDownloadFailed(DownloadException e) {
-        e.printStackTrace();
         tv_download_info.setText("Download fail:" + e.getMessage());
       }
     });

@@ -48,15 +48,15 @@ public class DownloadInfo implements Serializable {
    */
   public static final int STATUS_REMOVED = 7;
   /**
-   * Each download task id
+   * Each download task id.
    */
   private int id;
   /**
-   * Support multi-threaded download
+   * Support multi-threaded download.
    */
   private int supportRanges;
   /**
-   * Time to create a download task
+   * Time to create a download task.
    */
   private long createAt;
   private String uri;
@@ -191,6 +191,10 @@ public class DownloadInfo implements Serializable {
     return status == DownloadInfo.STATUS_PAUSED || status == DownloadInfo.STATUS_ERROR
         || status == STATUS_REMOVED;
   }
+
+  /**
+   * Download info status.
+   */
   @IntDef({STATUS_NONE, STATUS_PREPARE_DOWNLOAD, STATUS_DOWNLOADING, STATUS_WAIT, STATUS_PAUSED,
       STATUS_COMPLETED, STATUS_ERROR, STATUS_REMOVED})
   @Retention(RetentionPolicy.SOURCE)
@@ -198,6 +202,9 @@ public class DownloadInfo implements Serializable {
 
   }
 
+  /**
+   * Download info builder.
+   */
   public static final class Builder {
 
     private static final String DEFAULT_ENCODE = "utf-8";

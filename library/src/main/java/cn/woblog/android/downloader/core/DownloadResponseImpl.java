@@ -79,8 +79,7 @@ public class DownloadResponseImpl implements DownloadResponse {
     if (downloadInfo.getStatus() != DownloadInfo.STATUS_REMOVED) {
       downloadDBController.createOrUpdate(downloadInfo);
       if (downloadInfo.getDownloadThreadInfos() != null) {
-        for (DownloadThreadInfo threadInfo :
-            downloadInfo.getDownloadThreadInfos()) {
+        for (DownloadThreadInfo threadInfo : downloadInfo.getDownloadThreadInfos()) {
           downloadDBController.createOrUpdate(threadInfo);
         }
       }
