@@ -129,3 +129,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:support-annotations:24.2.1'
 }
+
+
+
+apply from: "${rootProject.projectDir}/scripts/upload.gradle"
