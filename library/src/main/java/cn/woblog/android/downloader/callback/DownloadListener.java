@@ -14,7 +14,7 @@ public interface DownloadListener {
 
   void onPaused();
 
-  void onDownloading();
+  void onDownloading(long progress, long size);
 
   void onRemoved();
 

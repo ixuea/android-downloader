@@ -30,7 +30,8 @@ public class DownloadResponseImpl implements DownloadResponse {
         switch (downloadInfo.getStatus()) {
           case DownloadInfo.STATUS_DOWNLOADING:
             if (downloadInfo.getDownloadListener() != null) {
-              downloadInfo.getDownloadListener().onDownloading();
+              downloadInfo.getDownloadListener()
+                  .onDownloading(downloadInfo.getProgress(), downloadInfo.getSize());
             }
 
             break;
