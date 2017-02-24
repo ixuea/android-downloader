@@ -132,4 +132,4 @@ dependencies {
 
 
 
-apply from: "${rootProject.projectDir}/scripts/upload.gradle"
+apply from: "${rootProject.projectDir}/gradle/gradle-mvn-push.gradle"
