@@ -1,5 +1,7 @@
 package cn.woblog.android.downloader.core.task;
 
+import static cn.woblog.android.downloader.exception.DownloadException.EXCEPTION_OTHER;
+
 import android.os.Process;
 import android.text.TextUtils;
 import cn.woblog.android.downloader.core.DownloadResponse;
@@ -34,11 +36,9 @@ public class GetFileInfoTask implements Runnable {
     try {
       executeConnection();
     } catch (DownloadException e) {
-      e.printStackTrace();
       downloadResponse.handleException(e);
     } catch (Exception e) {
-      e.printStackTrace();
-//      downloadResponse.handleException(e);
+      downloadResponse.handleException(new DownloadException(EXCEPTION_OTHER, e));
     }
   }
 
@@ -69,7 +69,6 @@ public class GetFileInfoTask implements Runnable {
     } catch (IOException e) {
       throw new DownloadException(DownloadException.EXCEPTION_IO_EXCEPTION, "IO error", e);
     } catch (Exception e) {
-      e.printStackTrace();
       throw new DownloadException(DownloadException.EXCEPTION_IO_EXCEPTION, "Unknown error", e);
     } finally {
 //      if (httpConnection != null) {
@@ -105,6 +104,9 @@ public class GetFileInfoTask implements Runnable {
     }
   }
 
+  /**
+   * Get file info listener.
+   */
   public interface OnGetFileInfoListener {
 
     void onSuccess(long size, boolean isSupportRanges);

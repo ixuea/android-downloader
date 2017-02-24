@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE module PUBLIC
+  "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+  "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name="Checker">
-  <module name="FileLength"/>
-  <module name="FileTabCharacter"/>
+  <module name="FileLength" />
+  <module name="FileTabCharacter" />
 
   <module name="SuppressionFilter">
     <property name="file" value="${checkStyleConfigDir}/checkstyle_suppressions.xml" />
@@ -10,8 +11,8 @@
 
   <!-- Trailing spaces -->
   <module name="RegexpSingleline">
-    <property name="format" value="\s+$"/>
-    <property name="message" value="Line has trailing spaces."/>
+    <property name="format" value="\s+$" />
+    <property name="message" value="Line has trailing spaces." />
   </module>
 
   <!-- Ensure trailling newline for compatibility -->
@@ -19,14 +20,14 @@
 
   <!-- Space after 'for' and 'if' -->
   <module name="RegexpSingleline">
-    <property name="format" value="^\s*(for|if)\b[^ ]"/>
-    <property name="message" value="Space needed before opening parenthesis."/>
+    <property name="format" value="^\s*(for|if)\b[^ ]" />
+    <property name="message" value="Space needed before opening parenthesis." />
   </module>
 
   <!-- For each spacing -->
   <module name="RegexpSingleline">
-    <property name="format" value="^\s*for \(.*?([^ ]:|:[^ ])"/>
-    <property name="message" value="Space needed around ':' character."/>
+    <property name="format" value="^\s*for \(.*?([^ ]:|:[^ ])" />
+    <property name="message" value="Space needed around ':' character." />
   </module>
 
   <module name="TreeWalker">
@@ -47,7 +48,7 @@
     <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocStyle -->
     <module name="JavadocStyle" />
     <module name="JavadocType">
-      <property name="scope" value="public"/>
+      <property name="scope" value="public" />
     </module>
 
     <!-- Each of these naming modules validates identifiers for particular
@@ -61,8 +62,8 @@
     <module name="MemberName">
       <property name="format" value="^[a-z][a-zA-Z0-9_\$]*$" />
     </module>
-    <module name="MethodName" >
-      <property name="format" value="^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$"/>
+    <module name="MethodName">
+      <property name="format" value="^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$" />
     </module>
     <module name="PackageName" />
     <module name="ParameterName" />
@@ -73,36 +74,36 @@
 
     <!-- Checks for imports. -->
     <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
-    <module name="AvoidStarImport"/>
-    <module name="RedundantImport"/>
-    <module name="UnusedImports"/>
+    <module name="AvoidStarImport" />
+    <module name="RedundantImport" />
+    <module name="UnusedImports" />
     <!-- Default sun.* packages -->
     <module name="IllegalImport">
       <property name="illegalPkgs" value="sun" />
-      <message downloadKey="import.illegal"
+      <message key="import.illegal"
         value="Import from illegal package - {0}. Programs that contain direct calls to the sun.* packages are not 100% Pure Java." />
     </module>
     <!-- Prevent importing JUnit 3 classes and Assert methods -->
     <module name="IllegalImport">
       <property name="illegalPkgs" value="junit" />
-      <message downloadKey="import.illegal"
+      <message key="import.illegal"
         value="Import from illegal package - {0}. Tests are written in JUnit 4, use org.junit.* equivalents." />
     </module>
     <!-- Prevent importing Mockito matchers directly -->
     <module name="IllegalImport">
       <property name="illegalPkgs" value="org.mockito.internal" />
-      <message downloadKey="import.illegal"
+      <message key="import.illegal"
         value="Import from illegal package - {0}. Use org.mockito.Matchers to instantiate argument matchers; or org.hamcrest.Matchers for assertThat." />
     </module>
     <module name="ImportOrder">
       <!-- Checks for out of order import statements. -->
 
-      <property name="sortStaticImportsAlphabetically" value="true"/>
-      <property name="severity" value="error"/>
-      <property name="groups" value="*"/>
+      <property name="sortStaticImportsAlphabetically" value="true" />
+      <property name="severity" value="error" />
+      <property name="groups" value="*" />
       <!-- This ensures that static imports go first. -->
-      <property name="option" value="top"/>
-      <property name="tokens" value="STATIC_IMPORT, IMPORT"/>
+      <property name="option" value="top" />
+      <property name="tokens" value="STATIC_IMPORT, IMPORT" />
     </module>
 
     <!-- Checks for whitespace. -->
@@ -110,8 +111,7 @@
     <module name="GenericWhitespace" />
     <module name="MethodParamPad" />
     <module name="NoWhitespaceAfter">
-      <property name="tokens"
-        value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS" />
+      <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS" />
     </module>
     <module name="NoWhitespaceBefore" />
     <module name="OperatorWrap" />
@@ -128,15 +128,14 @@
     <!-- Checks for blocks. -->
     <!-- See http://checkstyle.sourceforge.net/config_blocks.html -->
     <module name="AvoidNestedBlocks" />
-    <module name="EmptyBlock" >
-      <property name="option" value="text"/>
+    <module name="EmptyBlock">
+      <property name="option" value="text" />
     </module>
-    <module name="NeedBraces"/>
+    <module name="NeedBraces" />
 
     <module name="LeftCurly" />
     <module name="RightCurly">
-      <property name="tokens"
-        value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_ELSE" />
+      <property name="tokens" value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_ELSE" />
     </module>
 
     <!-- Checks for common coding problems. -->
@@ -148,13 +147,13 @@
     <module name="NoClone" />
     <module name="NoFinalizer" />
     <module name="OneStatementPerLine" />
-    <module name="IllegalInstantiation"/>
+    <module name="IllegalInstantiation" />
     <module name="SimplifyBooleanExpression" />
     <module name="SimplifyBooleanReturn" />
     <module name="StringLiteralEquality" />
     <module name="UnnecessaryParentheses" />
     <module name="LineLength">
-      <property name="max" value="100" />
+      <property name="max" value="250" />
     </module>
 
     <!-- Checks for class design. -->

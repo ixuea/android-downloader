@@ -150,16 +150,18 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     return false;
   }
 
+  /**
+   * Download manager config.
+   *
+   * Can configure Timeout,Concurrent downloads task number, Each Download thread number
+   */
   public class Config {
 
+    private final String method = "GET";
     private int connectTimeout = 10000;
     private int readTimeout = 10000;
-
     private int downloadThread = 2;
-
     private int eachDownloadThread = 2;
-
-    private String method = "GET";
 
     public int getConnectTimeout() {
       return connectTimeout;
@@ -197,9 +199,6 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
       return method;
     }
 
-    public void setMethod(String method) {
-      this.method = method;
-    }
   }
 
 

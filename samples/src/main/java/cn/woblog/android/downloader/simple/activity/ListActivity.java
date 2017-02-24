@@ -10,6 +10,9 @@ import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * How to use Android Downloader in RecyclerView.
+ */
 public class ListActivity extends AppCompatActivity {
 
   private RecyclerView rv;

@@ -54,21 +54,21 @@ public class DownloadException extends RuntimeException {
 
   private int code;
 
-  public DownloadException(@EXCEPTION_TYPE int code) {
+  public DownloadException(@ExceptionType int code) {
     this.code = code;
   }
 
-  public DownloadException(@EXCEPTION_TYPE int code, String message) {
+  public DownloadException(@ExceptionType int code, String message) {
     super(message);
     this.code = code;
   }
 
-  public DownloadException(@EXCEPTION_TYPE int code, String message, Throwable cause) {
+  public DownloadException(@ExceptionType int code, String message, Throwable cause) {
     super(message, cause);
     this.code = code;
   }
 
-  public DownloadException(@EXCEPTION_TYPE int code, Throwable cause) {
+  public DownloadException(@ExceptionType int code, Throwable cause) {
     super(cause);
     this.code = code;
   }
@@ -82,11 +82,14 @@ public class DownloadException extends RuntimeException {
     this.code = code;
   }
 
+  /**
+   * Download exception type.
+   */
   @IntDef({EXCEPTION_URL_NULL, EXCEPTION_PATH_NULL, EXCEPTION_URL_ERROR, EXCEPTION_SERVER_ERROR,
       EXCEPTION_PROTOCOL, EXCEPTION_IO_EXCEPTION, EXCEPTION_FILE_SIZE_ZERO, EXCEPTION_PAUSE,
       EXCEPTION_SERVER_SUPPORT_CODE, EXCEPTION_OTHER})
   @Retention(RetentionPolicy.SOURCE)
-  public @interface EXCEPTION_TYPE {
+  public @interface ExceptionType {
 
   }
 

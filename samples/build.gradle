@@ -21,7 +21,7 @@ android {
         }
     }
 
-//    lintOptions {
+    lintOptions {
 //        xmlReport false
 //        htmlReport true
 //
@@ -33,10 +33,11 @@ android {
 ////        lintConfig file("int.xml")
 //        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
 ////        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
-//        abortOnError true
-//
-//
-//    }
+        abortOnError false
+
+    }
+
+
 }
 
 dependencies {
