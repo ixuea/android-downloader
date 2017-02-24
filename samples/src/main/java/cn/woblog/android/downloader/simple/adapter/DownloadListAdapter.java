@@ -104,11 +104,14 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
       Glide.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
+      // Get download task status
       downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
+
+      // Set a download listener
       if (downloadInfo != null) {
         downloadInfo
             .setDownloadListener(new MyDownloadListener(new SoftReference(ViewHolder.this)) {
-
+              //  Call interval about one second
               @Override
               public void onRefresh() {
                 if (getUserTag() != null && getUserTag().get() != null) {
@@ -119,12 +122,13 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
             });
 
       }
+
       refresh();
 
+//      Download button
       bt_action.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-//          downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
           if (downloadInfo != null) {
 
             switch (downloadInfo.getStatus()) {
@@ -147,9 +151,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
                 break;
             }
           } else {
-            //create downloadInfo
-//            String path = context.getFilesDir().getAbsolutePath().concat("/")
-//                .concat(data.getName());
+//            Create new download task
             File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "d");
             if (!d.exists()) {
               d.mkdirs();

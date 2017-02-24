@@ -31,7 +31,7 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   }
 
   @Override
-  public void onDownloading() {
+  public void onDownloading(long progress, long size) {
     onRefresh();
   }
 
