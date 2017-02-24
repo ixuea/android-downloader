@@ -2,8 +2,8 @@ package cn.woblog.android.downloader.domain;
 
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
-import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.callback.DownloadListener;
+import cn.woblog.android.downloader.exception.DownloadException;
 import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -67,6 +67,15 @@ public class DownloadInfo implements Serializable {
   private int status;
   private List<DownloadThreadInfo> downloadThreadInfos;
   private transient DownloadListener downloadListener;
+  private DownloadException exception;
+
+  public DownloadException getException() {
+    return exception;
+  }
+
+  public void setException(DownloadException exception) {
+    this.exception = exception;
+  }
 
   public long getCreateAt() {
     return createAt;

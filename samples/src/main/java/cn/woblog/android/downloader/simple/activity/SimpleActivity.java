@@ -16,6 +16,7 @@ import cn.woblog.android.downloader.callback.DownloadListener;
 import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadInfo.Builder;
+import cn.woblog.android.downloader.exception.DownloadException;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import java.io.File;
@@ -143,8 +144,9 @@ public class SimpleActivity extends AppCompatActivity implements OnClickListener
       }
 
       @Override
-      public void onDownloadFailed() {
-        tv_download_info.setText("Download fail");
+      public void onDownloadFailed(DownloadException e) {
+        e.printStackTrace();
+        tv_download_info.setText("Download fail:" + e.getMessage());
       }
     });
     downloadManager.download(downloadInfo);
