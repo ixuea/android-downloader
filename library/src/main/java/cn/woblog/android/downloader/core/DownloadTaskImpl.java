@@ -1,6 +1,5 @@
 package cn.woblog.android.downloader.core;
 
-import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.DownloadManagerImpl.Config;
 import cn.woblog.android.downloader.core.task.DownloadTask;
 import cn.woblog.android.downloader.core.task.GetFileInfoTask;
@@ -9,6 +8,7 @@ import cn.woblog.android.downloader.core.thread.DownloadThread;
 import cn.woblog.android.downloader.core.thread.DownloadThread.DownloadProgressListener;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
+import cn.woblog.android.downloader.exception.DownloadException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

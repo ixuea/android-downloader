@@ -3,11 +3,12 @@ package cn.woblog.android.downloader.core.thread;
 
 import android.os.Process;
 import android.util.Log;
-import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.DownloadManagerImpl.Config;
 import cn.woblog.android.downloader.core.DownloadResponse;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
+import cn.woblog.android.downloader.exception.DownloadException;
+import cn.woblog.android.downloader.exception.DownloadPauseException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -50,12 +51,9 @@ public class DownloadThread implements Runnable {
       executeDownload();
     } catch (DownloadException e) {
       e.printStackTrace();
-      if (e.getCode() == DownloadException.EXCEPTION_PAUSE) {
-
-      } else {
-        downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
-        downloadResponse.onStatusChanged(downloadInfo);
-      }
+      downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
+      downloadInfo.setException(e);
+      downloadResponse.onStatusChanged(downloadInfo);
       downloadResponse.handleException(e);
     }
   }
@@ -115,6 +113,8 @@ public class DownloadThread implements Runnable {
       throw new DownloadException(DownloadException.EXCEPTION_PROTOCOL, "Protocol error", e);
     } catch (IOException e) {
       throw new DownloadException(DownloadException.EXCEPTION_IO_EXCEPTION, "IO error", e);
+    } catch (DownloadPauseException e) {
+      //TODO process pause logic
     } catch (Exception e) {
       throw new DownloadException(DownloadException.EXCEPTION_OTHER, "other error", e);
     } finally {
@@ -126,7 +126,7 @@ public class DownloadThread implements Runnable {
 
   private void checkPause() {
     if (downloadInfo.isPause()) {
-      throw new DownloadException(DownloadException.EXCEPTION_PAUSE);
+      throw new DownloadPauseException(DownloadException.EXCEPTION_PAUSE);
     }
   }
 

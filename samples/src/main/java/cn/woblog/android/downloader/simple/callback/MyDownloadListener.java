@@ -1,6 +1,7 @@
 package cn.woblog.android.downloader.simple.callback;
 
 import cn.woblog.android.downloader.callback.AbsDownloadListener;
+import cn.woblog.android.downloader.exception.DownloadException;
 import java.lang.ref.SoftReference;
 
 /**
@@ -45,7 +46,7 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   }
 
   @Override
-  public void onDownloadFailed() {
+  public void onDownloadFailed(DownloadException e) {
     onRefresh();
   }
 

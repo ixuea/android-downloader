@@ -4,10 +4,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.db.DownloadDBController;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
+import cn.woblog.android.downloader.exception.DownloadException;
 
 /**
  * Created by renpingqing on 17/1/22.
@@ -58,7 +58,7 @@ public class DownloadResponseImpl implements DownloadResponse {
             break;
           case DownloadInfo.STATUS_ERROR:
             if (downloadInfo.getDownloadListener() != null) {
-              downloadInfo.getDownloadListener().onDownloadFailed();
+              downloadInfo.getDownloadListener().onDownloadFailed(downloadInfo.getException());
             }
             break;
           case DownloadInfo.STATUS_REMOVED:

@@ -2,9 +2,9 @@ package cn.woblog.android.downloader.core.task;
 
 import android.os.Process;
 import android.text.TextUtils;
-import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.core.DownloadResponse;
 import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.exception.DownloadException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;

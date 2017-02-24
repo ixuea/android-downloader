@@ -1,4 +1,4 @@
-package cn.woblog.android.downloader;
+package cn.woblog.android.downloader.exception;
 
 import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;

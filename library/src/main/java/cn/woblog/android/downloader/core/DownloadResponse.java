@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.core;
 
-import cn.woblog.android.downloader.DownloadException;
 import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.exception.DownloadException;
 
 /**
  * Created by renpingqing on 17/1/22.
