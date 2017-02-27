@@ -304,7 +304,7 @@ Samples
 Author
 =======
 
-Li feng - @lifengsofts on GitHub, Email is lifengsofts@gmail.com.
+Patsy - @Patsysoft on GitHub, Email is patsysoft@gmail.com.
 
 
 License
