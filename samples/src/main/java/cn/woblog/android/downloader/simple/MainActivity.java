@@ -2,20 +2,16 @@ package cn.woblog.android.downloader.simple;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import cn.woblog.android.common.activity.BaseActivity;
 import cn.woblog.android.downloader.simple.activity.ListActivity;
 import cn.woblog.android.downloader.simple.activity.SimpleActivity;
-import cn.woblog.android.downloader.simple.adapter.DownloadListAdapter;
 
 /**
  * sample main activity.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-  private RecyclerView rv;
-  private DownloadListAdapter downloadListAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

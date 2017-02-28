@@ -1,9 +1,11 @@
 package cn.woblog.android.downloader.simple.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by renpingqing on 17/1/19.
  */
-public class MyDownloadInfo {
+public class MyDownloadInfo implements Serializable {
 
   private String name;
   private String icon;

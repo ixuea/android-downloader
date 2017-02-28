@@ -6,11 +6,11 @@ import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_WAIT;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import cn.woblog.android.common.activity.BaseActivity;
 import cn.woblog.android.downloader.DownloadService;
 import cn.woblog.android.downloader.callback.DownloadListener;
 import cn.woblog.android.downloader.callback.DownloadManager;
@@ -24,7 +24,7 @@ import java.io.File;
 /**
  * How to download a file sample.
  */
-public class SimpleActivity extends AppCompatActivity implements OnClickListener {
+public class SimpleActivity extends BaseActivity implements OnClickListener {
 
   public static final String DEFAULT_URL = "http://wdj-qn-apk.wdjcdn.com/d/c0/3311e7a27b2d3b209bf8d02aca26ac0d.apk";
 
@@ -40,16 +40,16 @@ public class SimpleActivity extends AppCompatActivity implements OnClickListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_simple);
 
-    initView();
-    initData();
-    initListener();
+
   }
 
-  private void initListener() {
+  @Override
+  public void initListener() {
     bt_download_button.setOnClickListener(this);
   }
 
-  private void initData() {
+  @Override
+  public void initData() {
     downloadManager = DownloadService.getDownloadManager(getApplicationContext());
 
     downloadInfo = downloadManager.getDownloadById(DEFAULT_URL.hashCode());
@@ -154,7 +154,8 @@ public class SimpleActivity extends AppCompatActivity implements OnClickListener
     downloadManager.download(downloadInfo);
   }
 
-  private void initView() {
+  @Override
+  public void initView() {
     tv_download_info = (TextView) findViewById(R.id.tv_download_info);
     bt_download_button = (Button) findViewById(R.id.bt_download_button);
 

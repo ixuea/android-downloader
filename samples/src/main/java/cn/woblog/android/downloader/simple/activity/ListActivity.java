@@ -1,9 +1,11 @@
 package cn.woblog.android.downloader.simple.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import cn.woblog.android.common.activity.BaseActivity;
+import cn.woblog.android.common.adapter.BaseRecyclerViewAdapter.OnItemClickListener;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.adapter.DownloadListAdapter;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
@@ -13,7 +15,9 @@ import java.util.List;
 /**
  * How to use Android Downloader in RecyclerView.
  */
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends BaseActivity implements OnItemClickListener {
+
+  private static final int REQUEST_DOWNLOAD_DETAIL_PAGE = 100;
 
   private RecyclerView rv;
   private DownloadListAdapter downloadListAdapter;
@@ -23,11 +27,16 @@ public class ListActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list);
 
-    initView();
-    initData();
+
   }
 
-  private void initData() {
+  @Override
+  public void initListener() {
+    downloadListAdapter.setOnItemClickListener(this);
+  }
+
+  @Override
+  public void initData() {
     downloadListAdapter = new DownloadListAdapter(this);
 
     rv.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +71,22 @@ public class ListActivity extends AppCompatActivity {
     return myDownloadInfos;
   }
 
-  private void initView() {
+  @Override
+  public void initView() {
     rv = (RecyclerView) findViewById(R.id.rv);
+  }
+
+  @Override
+  public void onItemClick(int position) {
+    MyDownloadInfo data = downloadListAdapter.getData(position);
+    Intent intent = new Intent(this, DownloadDetailActivity.class);
+    intent.putExtra(DownloadDetailActivity.DATA, data);
+    startActivityForResult(intent, REQUEST_DOWNLOAD_DETAIL_PAGE);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    downloadListAdapter.notifyDataSetChanged();
   }
 }
