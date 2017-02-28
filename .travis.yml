@@ -19,7 +19,7 @@ sudo: false
 script: 'travis_retry ./gradlew build'
 
 after_success:
-#- .buildscript/deploy_snapshot.sh
+- .buildscript/deploy_snapshot.sh
 #  - ./gradlew jacocoTestReport coveralls
 
 before_cache:
