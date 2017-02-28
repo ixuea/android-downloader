@@ -46,8 +46,26 @@ If your project uses ProGuard, you need to add the following configuration to yo
 How do I use Android Downloader?
 =======
 
-1.Create a DownloadManager instance
+0.Add network network permissions()
 -------
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+1.Configuration download service
+--------------------------------
+
+```xml
+<service android:name="cn.woblog.android.downloader.DownloadService">
+  <intent-filter>
+    <action android:name="cn.woblog.android.downloader.DOWNLOAD_SERVICE" />
+  </intent-filter>
+</service>
+```
+
+2.Create a DownloadManager instance
+-----------------------------------
 
 ```java
 downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
@@ -55,8 +73,8 @@ downloadManager = DownloadService.getDownloadManager(context.getApplicationConte
 
 Simple use as follows
 
-2.Download a file
--------
+3.Download a file
+-----------------
 
 ```java
 //create download info set download uri and save path.
@@ -116,8 +134,8 @@ downloadInfo.setDownloadListener(new DownloadListener() {
 downloadManager.download(downloadInfo);
 ```
 
-3.Use in list
--------
+4.Use in list
+-------------
 
 The default is to use the RecyclerView.
 
