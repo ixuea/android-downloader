@@ -51,74 +51,72 @@ android {
 
 }
 
-
-
-afterEvaluate {
-    task findbugs(type: FindBugs, dependsOn: assembleDebug) {
-
-        description 'Run findbugs'
-        group 'verification'
-
-        ignoreFailures = true
-
-        classes = fileTree('build/intermediates/classes/debug/')
-        source = fileTree('src/main/java')
-        classpath = project.configurations.compile
-
-        effort = 'max'
-
-        excludeFilter = file("findbugs-exclude.xml")
-
-        reports {
-            xml.enabled = false
-            html.enabled = true
-
-            xml {
-                destination "$project.buildDir/findbugs.xml"
-            }
-            html {
-                destination "$project.buildDir/findbugs.html"
-            }
-        }
-    }
-
-    check.dependsOn('findbugs')
-
-//    task checkstyle(type: Checkstyle) {
-//        configFile = rootProject.file('checkstyle.xml')
-//        configProperties.checkStyleConfigDir = rootProject.rootDir
-////        configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/quality/checkstyle/suppressions.xml").absolutePath
+//afterEvaluate {
+//    task findbugs(type: FindBugs, dependsOn: assembleDebug) {
+//
+//        description 'Run findbugs'
+//        group 'verification'
+//
+//        ignoreFailures = true
+//
+//        classes = fileTree('build/intermediates/classes/debug/')
+//        source = fileTree('src/main/java')
+//        classpath = project.configurations.compile
+//
+//        effort = 'max'
+//
+//        excludeFilter = file("findbugs-exclude.xml")
+//
+//        reports {
+//            xml.enabled = false
+//            html.enabled = true
+//
+//            xml {
+//                destination "$project.buildDir/findbugs.xml"
+//            }
+//            html {
+//                destination "$project.buildDir/findbugs.html"
+//            }
+//        }
+//    }
+//
+//    check.dependsOn('findbugs')
+//
+////    task checkstyle(type: Checkstyle) {
+////        configFile = rootProject.file('checkstyle.xml')
+////        configProperties.checkStyleConfigDir = rootProject.rootDir
+//////        configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/quality/checkstyle/suppressions.xml").absolutePath
+////        source 'src'
+////        include '**/*.java'
+////        exclude '**/gen/**'
+////        classpath = files()
+////    }
+//
+//
+//    task pmd(type: Pmd) {
+//        description 'Run pmd'
+//        group 'verification'
+//
+//        // If ruleSets is not empty, it seems to contain some
+//        // defaults which override rules in the ruleset file...
+//        ignoreFailures = false
+//        ruleSets = []
+//        ruleSetFiles = files('pmd-ruleset.xml')
+//
 //        source 'src'
 //        include '**/*.java'
 //        exclude '**/gen/**'
-//        classpath = files()
+//
+//        reports {
+//            xml.enabled = false
+//            html.enabled = true
+//        }
+//
 //    }
-
-
-    task pmd(type: Pmd) {
-        description 'Run pmd'
-        group 'verification'
-
-        // If ruleSets is not empty, it seems to contain some
-        // defaults which override rules in the ruleset file...
-        ignoreFailures = false
-        ruleSets = []
-        ruleSetFiles = files('pmd-ruleset.xml')
-
-        source 'src'
-        include '**/*.java'
-        exclude '**/gen/**'
-
-        reports {
-            xml.enabled = false
-            html.enabled = true
-        }
-
-    }
-
-    check.dependsOn('pmd')
-
-}
+//
+//    check.dependsOn('pmd')
+//
+//}
 
 
 dependencies {

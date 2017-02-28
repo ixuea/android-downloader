@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import cn.woblog.android.common.adapter.BaseRecyclerViewAdapter;
 import cn.woblog.android.downloader.DownloadService;
 import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.domain.DownloadInfo;
@@ -26,21 +27,19 @@ import cn.woblog.android.downloader.simple.util.FileUtil;
 import com.bumptech.glide.Glide;
 import java.io.File;
 import java.lang.ref.SoftReference;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by renpingqing on 17/1/19.
  */
-
-public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapter.ViewHolder> {
+public class DownloadListAdapter extends
+    BaseRecyclerViewAdapter<MyDownloadInfo, DownloadListAdapter.ViewHolder> {
 
   private static final String TAG = "DownloadListAdapter";
   private final Context context;
   private final DownloadManager downloadManager;
-  private List<MyDownloadInfo> data = new ArrayList<>();
 
   public DownloadListAdapter(Context context) {
+    super(context);
     this.context = context;
     downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
   }
@@ -52,30 +51,23 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
   }
 
   @Override
-  public void onBindViewHolder(DownloadListAdapter.ViewHolder holder, int position) {
+  public void onBindViewHolder(DownloadListAdapter.ViewHolder holder, final int position) {
     holder.bindData(getData(position), position, context);
+
     holder.itemView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-
+        if (onItemClickListener != null) {
+          onItemClickListener.onItemClick(position);
+        }
       }
     });
   }
 
-  private MyDownloadInfo getData(int position) {
-    return data.get(position);
-  }
 
+  public interface OnItemClickListener {
 
-  @Override
-  public int getItemCount() {
-    return data.size();
-  }
-
-  public void setData(List<MyDownloadInfo> data) {
-    this.data.clear();
-    this.data.addAll(data);
-    notifyDataSetChanged();
+    void onItemClick(int position);
   }
 
   class ViewHolder extends RecyclerView.ViewHolder {
@@ -90,7 +82,7 @@ public class DownloadListAdapter extends RecyclerView.Adapter<DownloadListAdapte
 
     public ViewHolder(View view) {
       super(view);
-
+      itemView.setClickable(true);
       iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
       tv_size = (TextView) view.findViewById(R.id.tv_size);
       tv_status = (TextView) view.findViewById(R.id.tv_status);
