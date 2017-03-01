@@ -19,8 +19,10 @@ import cn.woblog.android.common.adapter.BaseRecyclerViewAdapter;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
+import cn.woblog.android.downloader.simple.event.DownloadStatusChanged;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import java.lang.ref.SoftReference;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by renpingqing on 17/3/1.
@@ -180,12 +182,16 @@ public class DownloadAdapter extends
             tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
                 .formatFileSize(downloadInfo.getSize()));
             tv_status.setText("success");
+
+            notifyDownloadStatus();
             break;
           case STATUS_REMOVED:
             tv_size.setText("");
             pb.setProgress(0);
             bt_action.setText("Download");
             tv_status.setText("not downloadInfo");
+
+            notifyDownloadStatus();
           case STATUS_WAIT:
             tv_size.setText("");
             pb.setProgress(0);
@@ -195,6 +201,11 @@ public class DownloadAdapter extends
         }
 
       }
+    }
+
+    private void notifyDownloadStatus() {
+      //publish download success info.
+      EventBus.getDefault().post(new DownloadStatusChanged(downloadInfo));
     }
   }
 }
