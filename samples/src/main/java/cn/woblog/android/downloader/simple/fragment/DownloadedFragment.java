@@ -11,6 +11,9 @@ import cn.woblog.android.downloader.DownloadService;
 import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.adapter.DownloadAdapter;
+import cn.woblog.android.downloader.simple.event.DownloadStatusChanged;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by renpingqing on 17/3/1.
@@ -49,6 +52,8 @@ public class DownloadedFragment extends BaseFragment {
   @Override
   protected void initData() {
     super.initData();
+    EventBus.getDefault().register(this);
+
     downloadManager = DownloadService
         .getDownloadManager(getActivity().getApplicationContext());
 
@@ -57,6 +62,21 @@ public class DownloadedFragment extends BaseFragment {
 
     //downloading info
 
+    setData();
+  }
+
+  private void setData() {
     downloadAdapter.setData(downloadManager.findAllDownloaded());
+  }
+
+  @Subscribe
+  public void onEventMainThread(DownloadStatusChanged event) {
+    setData();
+  }
+
+  @Override
+  public void onDestroy() {
+    EventBus.getDefault().unregister(this);
+    super.onDestroy();
   }
 }
