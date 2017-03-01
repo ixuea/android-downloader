@@ -1,6 +1,7 @@
 package cn.woblog.android.downloader.callback;
 
 import cn.woblog.android.downloader.domain.DownloadInfo;
+import java.util.List;
 
 /**
  * Created by renpingqing on 15/01/2017.
@@ -19,5 +20,9 @@ public interface DownloadManager {
   void onDestroy();
 
   DownloadInfo getDownloadById(int id);
+
+  List<DownloadInfo> findAllDownloading();
+
+  List<DownloadInfo> findAllDownloaded();
 
 }

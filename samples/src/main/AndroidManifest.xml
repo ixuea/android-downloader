@@ -21,7 +21,8 @@
     </activity>
     <activity android:name=".activity.ListActivity" />
     <activity android:name=".activity.SimpleActivity" />
-    <activity android:name=".activity.DownloadDetailActivity"></activity>
+    <activity android:name=".activity.DownloadDetailActivity" />
+    <activity android:name=".activity.DownloadManagerActivity"></activity>
   </application>
 
 </manifest>

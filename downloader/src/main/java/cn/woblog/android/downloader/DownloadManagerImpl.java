@@ -69,6 +69,10 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   @Override
   public void download(DownloadInfo downloadInfo) {
     downloadingCaches.add(downloadInfo);
+    prepareDownload(downloadInfo);
+  }
+
+  private void prepareDownload(DownloadInfo downloadInfo) {
     if (cacheDownloadTask.size() >= config.getDownloadThread()) {
       downloadInfo.setStatus(DownloadInfo.STATUS_WAIT);
       downloadResponse.onStatusChanged(downloadInfo);
@@ -80,7 +84,6 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
       downloadResponse.onStatusChanged(downloadInfo);
       downloadTask.start();
     }
-
   }
 
   @Override
@@ -101,7 +104,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   public void resume(DownloadInfo downloadInfo) {
     if (isExecute()) {
       cacheDownloadTask.remove(downloadInfo.getId());
-      download(downloadInfo);
+      prepareDownload(downloadInfo);
     }
   }
 
@@ -133,6 +136,16 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
       downloadInfo = downloadDBController.findDownloadedInfoById(id);
     }
     return downloadInfo;
+  }
+
+  @Override
+  public List<DownloadInfo> findAllDownloading() {
+    return downloadingCaches;
+  }
+
+  @Override
+  public List<DownloadInfo> findAllDownloaded() {
+    return downloadDBController.findAllDownloaded();
   }
 
   @Override

@@ -82,6 +82,21 @@ public class DefaultDownloadDBController implements DownloadDBController {
     return downloads;
   }
 
+  @Override
+  public List<DownloadInfo> findAllDownloaded() {
+    Cursor cursor = readableDatabase.query(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO,
+        DOWNLOAD_INFO_COLUMNS, "status=?", new String[]{
+            String.valueOf(STATUS_COMPLETED)}, null, null, "createAt desc");
+
+    List<DownloadInfo> downloads = new ArrayList<>();
+    while (cursor.moveToNext()) {
+      DownloadInfo downloadInfo = new DownloadInfo();
+      downloads.add(downloadInfo);
+      inflateDownloadInfo(cursor, downloadInfo);
+    }
+    return downloads;
+  }
+
   private void inflateDownloadThreadInfo(Cursor cursor,
       DownloadThreadInfo downloadThreadInfo) {
     downloadThreadInfo.setId(cursor.getInt(0));
