@@ -12,6 +12,8 @@ public interface DownloadDBController {
 
   List<DownloadInfo> findAllDownloading();
 
+  List<DownloadInfo> findAllDownloaded();
+
   DownloadInfo findDownloadedInfoById(int id);
 
   void pauseAllDownloading();

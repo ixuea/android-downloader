@@ -23,8 +23,8 @@ public class DefaultDownloadHelper extends SQLiteOpenHelper {
       "CREATE TABLE %s (_id integer PRIMARY KEY NOT NULL,threadId integer NOT NULL,downloadInfoId integer NOT NULL,uri varchar(255) NOT NULL,start long NOT NULL,end long NOT NULL,progress long NOT NULL);",
       TABLE_NAME_DOWNLOAD_THREAD_INFO);
   private static final int DB_VERSION = 1;
-  //  private static final String DB_NAME = "/sdcard/download_info.db";
-  private static final String DB_NAME = "download_info.db";
+  private static final String DB_NAME = "/sdcard/download_info.db";
+//  private static final String DB_NAME = "download_info.db";
 
   public DefaultDownloadHelper(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
