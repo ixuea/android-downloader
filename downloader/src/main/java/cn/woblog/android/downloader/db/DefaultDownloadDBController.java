@@ -176,7 +176,9 @@ public class DefaultDownloadDBController implements DownloadDBController {
   }
 
   @Override
-  public void delete(DownloadThreadInfo download) {
-
+  public void delete(DownloadThreadInfo downloadThreadInfo) {
+    writableDatabase
+        .delete(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_THREAD_INFO, "id=?",
+            new String[]{String.valueOf(downloadThreadInfo.getId())});
   }
 }

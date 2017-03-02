@@ -1,5 +1,6 @@
 package cn.woblog.android.downloader.callback;
 
+import cn.woblog.android.downloader.db.DownloadDBController;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface DownloadManager {
   List<DownloadInfo> findAllDownloading();
 
   List<DownloadInfo> findAllDownloaded();
+
+  DownloadDBController getDownloadDBController();
 
 }
