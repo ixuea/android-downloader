@@ -22,11 +22,14 @@ import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadInfo.Builder;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
+import cn.woblog.android.downloader.simple.db.DBController;
 import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
+import cn.woblog.android.downloader.simple.domain.MyDownloadInfoLocal;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import com.bumptech.glide.Glide;
 import java.io.File;
 import java.lang.ref.SoftReference;
+import java.sql.SQLException;
 
 /**
  * Created by renpingqing on 17/1/19.
@@ -37,11 +40,17 @@ public class DownloadListAdapter extends
   private static final String TAG = "DownloadListAdapter";
   private final Context context;
   private final DownloadManager downloadManager;
+  private DBController dbController;
 
   public DownloadListAdapter(Context context) {
     super(context);
     this.context = context;
     downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
+    try {
+      dbController = DBController.getInstance(context.getApplicationContext());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -157,6 +166,8 @@ public class DownloadListAdapter extends
 
                   @Override
                   public void onRefresh() {
+                    notifyDownloadStatus();
+
                     if (getUserTag() != null && getUserTag().get() != null) {
                       ViewHolder viewHolder = (ViewHolder) getUserTag().get();
                       viewHolder.refresh();
@@ -164,9 +175,29 @@ public class DownloadListAdapter extends
                   }
                 });
             downloadManager.download(downloadInfo);
+
+            //save extra info to my database.
+            MyDownloadInfoLocal myDownloadInfoLocal = new MyDownloadInfoLocal(
+                data.getUrl().hashCode(), data.getName(), data.getIcon(), data.getUrl());
+            try {
+              dbController.createOrUpdateMyDownloadInfo(myDownloadInfoLocal);
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
           }
         }
       });
+
+    }
+
+    private void notifyDownloadStatus() {
+      if (downloadInfo.getStatus() == STATUS_REMOVED) {
+        try {
+          dbController.deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
 
     }
 

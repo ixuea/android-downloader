@@ -59,6 +59,7 @@ public class DownloadingFragment extends BaseFragment {
     downloadAdapter = new DownloadAdapter(getActivity());
     rv.setAdapter(downloadAdapter);
 
+    setData();
   }
 
   @Subscribe
