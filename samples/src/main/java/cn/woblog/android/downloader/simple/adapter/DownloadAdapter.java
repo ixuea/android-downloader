@@ -203,6 +203,8 @@ public class DownloadAdapter extends
             tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
                 .formatFileSize(downloadInfo.getSize()));
             tv_status.setText("success");
+
+            publishDownloadSuccessStatus();
             break;
           case STATUS_REMOVED:
             tv_size.setText("");
@@ -210,6 +212,7 @@ public class DownloadAdapter extends
             bt_action.setText("Download");
             tv_status.setText("not downloadInfo");
 
+            publishDownloadSuccessStatus();
           case STATUS_WAIT:
             tv_size.setText("");
             pb.setProgress(0);
@@ -221,14 +224,17 @@ public class DownloadAdapter extends
       }
     }
 
+    private void publishDownloadSuccessStatus() {
+      //publish download success info.
+      EventBus.getDefault().post(new DownloadStatusChanged(downloadInfo));
+    }
+
     public void bindBaseInfo(MyDownloadInfoLocal myDownloadInfoLocal) {
       Glide.with(context).load(myDownloadInfoLocal.getIcon()).into(iv_icon);
       tv_name.setText(myDownloadInfoLocal.getName());
     }
 
     private void notifyDownloadStatus() {
-      //publish download success info.
-      EventBus.getDefault().post(new DownloadStatusChanged(downloadInfo));
 
       if (downloadInfo.getStatus() == STATUS_REMOVED) {
         try {
