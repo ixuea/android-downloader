@@ -34,22 +34,16 @@ public abstract class BaseFragment extends Fragment {
     return view;
   }
 
-  /**
-   * 手动bindview,请在合适的位置手动调用
-   */
+
   protected void bindView(View view) {
   }
 
-  /**
-   * 是否手动绑定view
-   */
+
   protected boolean isAutoBind() {
     return true;
   }
 
-  /**
-   * set fragment layout
-   */
+
   protected abstract View getLayoutView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState);
 
@@ -62,33 +56,24 @@ public abstract class BaseFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
   }
 
-  /**
-   * 找控件
-   */
+
   protected void initView() {
 
   }
 
-  /**
-   * 动态设置样式，颜色，宽高，背景
-   */
+
   protected void initStyle() {
   }
 
-  /**
-   * 设置数据
-   */
+
   protected void initData() {
 
   }
 
-  /**
-   * 绑定监听器
-   */
+
   protected void initListener() {
   }
 
-  //activity 条转方法
   public void toActivity(Class<?> clazz) {
     toActivity(new Intent(getActivity(), clazz));
   }
@@ -115,7 +100,7 @@ public abstract class BaseFragment extends Fragment {
   @Override
   public void onDestroyView() {
     super.onDestroyView();
-//		ButterKnife.unbind(this);
+// ButterKnife.unbind(this);
   }
 
 }

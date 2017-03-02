@@ -28,37 +28,37 @@ subprojects { project ->
         }
     }
 
-//    apply plugin: 'checkstyle'
-//
-//    checkstyle {
-//        toolVersion = '6.12.1'
-//    }
-//
-//    checkstyle {
-//        configFile rootProject.file('checkstyle.xml')
-//        configProperties.checkStyleConfigDir = rootProject.rootDir
-//    }
-//
-//    task checkstyle(type: Checkstyle) {
-//        source 'src'
-//        include '**/*.java'
-//        exclude '**/gen/**'
-//
-//        // empty classpath
-//        classpath = files()
-//    }
-//
-//    afterEvaluate {
-//        if (project.tasks.findByName('check')) {
-//            check.dependsOn('checkstyle')
-//        }
-//    }
-//
-//    gradle.projectsEvaluated {
-//        tasks.withType(JavaCompile) {
-//            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
-//        }
-//    }
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        toolVersion = '6.12.1'
+    }
+
+    checkstyle {
+        configFile rootProject.file('checkstyle.xml')
+        configProperties.checkStyleConfigDir = rootProject.rootDir
+    }
+
+    task checkstyle(type: Checkstyle) {
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        // empty classpath
+        classpath = files()
+    }
+
+    afterEvaluate {
+        if (project.tasks.findByName('check')) {
+            check.dependsOn('checkstyle')
+        }
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+        }
+    }
 
 //    android {
 //        lintOptions {
