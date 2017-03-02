@@ -6,8 +6,11 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by renpingqing on 21/01/2017.
+ * @param <D>
+ * @param <VH>
  */
 public abstract class BaseRecyclerViewAdapter<D, VH extends ViewHolder> extends
     RecyclerView.Adapter<VH> {
@@ -40,11 +43,18 @@ public abstract class BaseRecyclerViewAdapter<D, VH extends ViewHolder> extends
     notifyDataSetChanged();
   }
 
+  /**
+   *
+   * @param onItemClickListener
+   */
   public void setOnItemClickListener(
       OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 
+  /**
+   * Item click listener.
+   */
   public interface OnItemClickListener {
 
     void onItemClick(int position);

@@ -9,6 +9,9 @@ import cn.woblog.android.downloader.simple.adapter.DownloadManagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Download manager page.
+ */
 public class DownloadManagerActivity extends BaseActivity {
 
   private TabLayout tl;

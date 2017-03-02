@@ -74,11 +74,6 @@ public class DownloadListAdapter extends
   }
 
 
-  public interface OnItemClickListener {
-
-    void onItemClick(int position);
-  }
-
   class ViewHolder extends RecyclerView.ViewHolder {
 
     private final ImageView iv_icon;
