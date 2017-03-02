@@ -2,6 +2,7 @@ package cn.woblog.android.downloader;
 
 import android.content.Context;
 import cn.woblog.android.downloader.callback.DownloadManager;
+import cn.woblog.android.downloader.config.Config;
 import cn.woblog.android.downloader.core.DownloadResponse;
 import cn.woblog.android.downloader.core.DownloadResponseImpl;
 import cn.woblog.android.downloader.core.DownloadTaskImpl;
@@ -40,7 +41,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     } else {
       this.config = config;
     }
-    downloadDBController = new DefaultDownloadDBController(context);
+    downloadDBController = new DefaultDownloadDBController(context, this.config);
     cacheDownloadTask = new ConcurrentHashMap<>();
 
     downloadDBController.pauseAllDownloading();
@@ -50,10 +51,6 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 
     downloadResponse = new DownloadResponseImpl(downloadDBController);
-  }
-
-  public static DownloadManager getInstance(Context context) {
-    return getInstance(context, null);
   }
 
   public static DownloadManager getInstance(Context context, Config config) {
@@ -168,56 +165,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     return false;
   }
 
-  /**
-   * Download manager config.
-   *
-   * Can configure Timeout,Concurrent downloads task number, Each Download thread number
-   */
-  public class Config {
 
-    private final String method = "GET";
-    private int connectTimeout = 10000;
-    private int readTimeout = 10000;
-    private int downloadThread = 2;
-    private int eachDownloadThread = 2;
-
-    public int getConnectTimeout() {
-      return connectTimeout;
-    }
-
-    public void setConnectTimeout(int connectTimeout) {
-      this.connectTimeout = connectTimeout;
-    }
-
-    public int getReadTimeout() {
-      return readTimeout;
-    }
-
-    public void setReadTimeout(int readTimeout) {
-      this.readTimeout = readTimeout;
-    }
-
-    public int getDownloadThread() {
-      return downloadThread;
-    }
-
-    public void setDownloadThread(int downloadThread) {
-      this.downloadThread = downloadThread;
-    }
-
-    public int getEachDownloadThread() {
-      return eachDownloadThread;
-    }
-
-    public void setEachDownloadThread(int eachDownloadThread) {
-      this.eachDownloadThread = eachDownloadThread;
-    }
-
-    public String getMethod() {
-      return method;
-    }
-
-  }
 
 
 }
