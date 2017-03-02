@@ -319,6 +319,14 @@ Build
 Samples
 =======
 
+Follow the steps in the [Build][60] section to setup the project and then:
+
+```gradle
+./gradlew :samples:run
+```
+
+You may also find precompiled APKs on the releases page.
+
 Author
 =======
 
@@ -348,3 +356,4 @@ License
 [30]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/screenshot.png
 [40]: https://github.com/lifengsofts/AndroidDownloader/releases
 [50]: https://github.com/lifengsofts/AndroidDownloader/releases
+[60]: https://github.com/lifengsofts/AndroidDownloader#build
