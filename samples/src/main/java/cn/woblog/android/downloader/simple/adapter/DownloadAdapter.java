@@ -19,9 +19,13 @@ import cn.woblog.android.common.adapter.BaseRecyclerViewAdapter;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
+import cn.woblog.android.downloader.simple.db.DBController;
+import cn.woblog.android.downloader.simple.domain.MyDownloadInfoLocal;
 import cn.woblog.android.downloader.simple.event.DownloadStatusChanged;
 import cn.woblog.android.downloader.simple.util.FileUtil;
+import com.bumptech.glide.Glide;
 import java.lang.ref.SoftReference;
+import java.sql.SQLException;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -31,8 +35,15 @@ import org.greenrobot.eventbus.EventBus;
 public class DownloadAdapter extends
     BaseRecyclerViewAdapter<DownloadInfo, DownloadAdapter.ViewHolder> {
 
+  private DBController dbController;
+
   public DownloadAdapter(Context context) {
     super(context);
+    try {
+      dbController = DBController.getInstance(context.getApplicationContext());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -43,7 +54,15 @@ public class DownloadAdapter extends
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.bindData(getData(position), position, context);
+
+    DownloadInfo data = getData(position);
+    try {
+      holder.bindBaseInfo(dbController.findMyDownloadInfoById(data.getUri().hashCode()));
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    holder.bindData(data, position, context);
 
 //    holder.itemView.setOnClickListener(new OnClickListener() {
 //      @Override
@@ -92,6 +111,8 @@ public class DownloadAdapter extends
                   //  Call interval about one second
                   @Override
                   public void onRefresh() {
+                    notifyDownloadStatus();
+
                     if (getUserTag() != null && getUserTag().get() != null) {
                       DownloadAdapter.ViewHolder viewHolder = (DownloadAdapter.ViewHolder) getUserTag()
                           .get();
@@ -182,8 +203,6 @@ public class DownloadAdapter extends
             tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
                 .formatFileSize(downloadInfo.getSize()));
             tv_status.setText("success");
-
-            notifyDownloadStatus();
             break;
           case STATUS_REMOVED:
             tv_size.setText("");
@@ -191,7 +210,6 @@ public class DownloadAdapter extends
             bt_action.setText("Download");
             tv_status.setText("not downloadInfo");
 
-            notifyDownloadStatus();
           case STATUS_WAIT:
             tv_size.setText("");
             pb.setProgress(0);
@@ -203,9 +221,24 @@ public class DownloadAdapter extends
       }
     }
 
+    public void bindBaseInfo(MyDownloadInfoLocal myDownloadInfoLocal) {
+      Glide.with(context).load(myDownloadInfoLocal.getIcon()).into(iv_icon);
+      tv_name.setText(myDownloadInfoLocal.getName());
+    }
+
     private void notifyDownloadStatus() {
       //publish download success info.
       EventBus.getDefault().post(new DownloadStatusChanged(downloadInfo));
+
+      if (downloadInfo.getStatus() == STATUS_REMOVED) {
+        try {
+          dbController.deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+
+
   }
 }

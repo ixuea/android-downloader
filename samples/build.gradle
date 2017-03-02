@@ -51,6 +51,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.greenrobot:eventbus:3.0.0'
 
+//    ormlite
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile 'com.j256.ormlite:ormlite-core:5.0'
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
