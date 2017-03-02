@@ -31,6 +31,7 @@ public class DownloadThread implements Runnable {
   private final DownloadProgressListener downloadProgressListener;
   private long lastProgress;
   private InputStream inputStream;
+  private int retryDownloadCount = 0;
 
   public DownloadThread(DownloadThreadInfo downloadThreadInfo, DownloadResponse downloadResponse,
       Config config,
@@ -47,13 +48,15 @@ public class DownloadThread implements Runnable {
   public void run() {
     Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
     checkPause();
-    try {
-      executeDownload();
-    } catch (DownloadException e) {
-      downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
-      downloadInfo.setException(e);
-      downloadResponse.onStatusChanged(downloadInfo);
-      downloadResponse.handleException(e);
+    while (!downloadInfo.isPause()) {
+      try {
+        executeDownload();
+      } catch (DownloadException e) {
+        downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
+        downloadInfo.setException(e);
+        downloadResponse.onStatusChanged(downloadInfo);
+        downloadResponse.handleException(e);
+      }
     }
   }
 
@@ -105,8 +108,12 @@ public class DownloadThread implements Runnable {
         //downloadInfo success
         downloadProgressListener.onDownloadSuccess();
       } else {
-        throw new DownloadException(DownloadException.EXCEPTION_SERVER_SUPPORT_CODE,
-            "UnSupported response code:" + responseCode);
+        if (retryDownloadCount >= config.getRetryDownloadCount()) {
+          throw new DownloadException(DownloadException.EXCEPTION_SERVER_SUPPORT_CODE,
+              "UnSupported response code:" + responseCode);
+        }
+
+        retryDownloadCount++;
       }
       checkPause();
     } catch (ProtocolException e) {
