@@ -6,6 +6,7 @@ import static cn.woblog.android.downloader.domain.DownloadInfo.STATUS_PAUSED;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import cn.woblog.android.downloader.config.Config;
 import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadThreadInfo;
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ public class DefaultDownloadDBController implements DownloadDBController {
   private final SQLiteDatabase writableDatabase;
   private final SQLiteDatabase readableDatabase;
 
-  public DefaultDownloadDBController(Context context) {
+  public DefaultDownloadDBController(Context context, Config config) {
     this.context = context;
-    dbHelper = new DefaultDownloadHelper(context);
+    dbHelper = new DefaultDownloadHelper(context, config);
     writableDatabase = dbHelper.getWritableDatabase();
     readableDatabase = dbHelper.getReadableDatabase();
   }

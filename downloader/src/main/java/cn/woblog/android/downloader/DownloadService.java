@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import cn.woblog.android.downloader.callback.DownloadManager;
+import cn.woblog.android.downloader.config.Config;
 import java.util.List;
 
 /**
@@ -19,12 +20,16 @@ public class DownloadService extends Service {
   public static DownloadManager downloadManager;
 
   public static DownloadManager getDownloadManager(Context context) {
+    return getDownloadManager(context, null);
+  }
+
+  public static DownloadManager getDownloadManager(Context context, Config config) {
     if (!isServiceRunning(context)) {
       Intent downloadSvr = new Intent(context, DownloadService.class);
       context.startService(downloadSvr);
     }
     if (DownloadService.downloadManager == null) {
-      DownloadService.downloadManager = DownloadManagerImpl.getInstance(context);
+      DownloadService.downloadManager = DownloadManagerImpl.getInstance(context, config);
     }
     return downloadManager;
   }
