@@ -100,7 +100,7 @@ public class DownloadAdapter extends
 //      Glide.with(context).load(data.getIcon()).into(iv_icon);
 //      tv_name.setText(data.getName());
 
-      // Get download task status
+      // Get download task status.
       downloadInfo = data;
 
       // Set a download listener
@@ -108,7 +108,7 @@ public class DownloadAdapter extends
         downloadInfo
             .setDownloadListener(
                 new MyDownloadListener(new SoftReference(DownloadAdapter.ViewHolder.this)) {
-                  //  Call interval about one second
+                  //  Call interval about one second.
                   @Override
                   public void onRefresh() {
                     notifyDownloadStatus();
