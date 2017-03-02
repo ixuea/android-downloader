@@ -95,7 +95,8 @@ public class DownloadThread implements Runnable {
 //          }
 
           Log.d(TAG,
-              "downloadInfo thread " + downloadThreadInfo.getThreadId() + " progress:"
+              "downloadInfo:" + downloadInfo.getId() + " thread:" + downloadThreadInfo.getThreadId()
+                  + " progress:"
                   + downloadThreadInfo.getProgress()
                   + ",start:" + downloadThreadInfo.getStart() + ",end:" + downloadThreadInfo
                   .getEnd());

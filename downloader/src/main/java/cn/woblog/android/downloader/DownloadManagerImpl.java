@@ -97,7 +97,12 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   }
 
   private void prepareDownloadNextTask() {
-
+    for (DownloadInfo downloadInfo : downloadingCaches) {
+      if (downloadInfo.getStatus() == DownloadInfo.STATUS_WAIT) {
+        prepareDownload(downloadInfo);
+        break;
+      }
+    }
   }
 
   @Override
