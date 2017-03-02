@@ -151,6 +151,11 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   }
 
   @Override
+  public DownloadDBController getDownloadDBController() {
+    return downloadDBController;
+  }
+
+  @Override
   public void onDownloadSuccess(DownloadInfo downloadInfo) {
     cacheDownloadTask.remove(downloadInfo.getId());
     downloadingCaches.remove(downloadInfo);
