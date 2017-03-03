@@ -19,7 +19,7 @@ public class Config {
   private String databaseName = "download_info.db";
   //  private String databaseName = "/sdcard/d/download_info.db";
   private int databaseVersion = 1;
-  private int retryDownloadCount = 3;
+//  private int retryDownloadCount = 3;
 
   public int getConnectTimeout() {
     return connectTimeout;
@@ -73,11 +73,11 @@ public class Config {
     this.databaseVersion = databaseVersion;
   }
 
-  public int getRetryDownloadCount() {
-    return retryDownloadCount;
-  }
-
-  public void setRetryDownloadCount(int retryDownloadCount) {
-    this.retryDownloadCount = retryDownloadCount;
-  }
+//  public int getRetryDownloadCount() {
+//    return retryDownloadCount;
+//  }
+//
+//  public void setRetryDownloadCount(int retryDownloadCount) {
+//    this.retryDownloadCount = retryDownloadCount;
+//  }
 }
