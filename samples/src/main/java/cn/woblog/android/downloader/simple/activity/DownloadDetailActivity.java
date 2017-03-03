@@ -60,6 +60,7 @@ public class DownloadDetailActivity extends BaseActivity {
     bt_action = (Button) findViewById(R.id.bt_action);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   protected void initData() {
     super.initData();

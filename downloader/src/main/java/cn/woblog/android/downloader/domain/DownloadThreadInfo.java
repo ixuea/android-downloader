@@ -87,4 +87,8 @@ public class DownloadThreadInfo implements Serializable {
   public void setProgress(long progress) {
     this.progress = progress;
   }
+
+  public boolean isThreadDownloadSuccess() {
+    return progress >= (end - start);
+  }
 }
