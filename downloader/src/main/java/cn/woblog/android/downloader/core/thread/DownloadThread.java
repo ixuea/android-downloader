@@ -31,6 +31,7 @@ public class DownloadThread implements Runnable {
   private final DownloadProgressListener downloadProgressListener;
   private long lastProgress;
   private InputStream inputStream;
+  private int retryDownloadCount = 0;
 
   public DownloadThread(DownloadThreadInfo downloadThreadInfo, DownloadResponse downloadResponse,
       Config config,
@@ -46,15 +47,24 @@ public class DownloadThread implements Runnable {
   @Override
   public void run() {
     Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+//    while (!(downloadInfo.isPause() || downloadThreadInfo.isThreadDownloadSuccess())) {
+
     checkPause();
     try {
       executeDownload();
     } catch (DownloadException e) {
+
+//        if (retryDownloadCount >= config.getRetryDownloadCount()) {
       downloadInfo.setStatus(DownloadInfo.STATUS_ERROR);
       downloadInfo.setException(e);
       downloadResponse.onStatusChanged(downloadInfo);
       downloadResponse.handleException(e);
+//        }
+//
+//        retryDownloadCount++;
     }
+    checkPause();
+//    }
   }
 
   private void executeDownload() {
