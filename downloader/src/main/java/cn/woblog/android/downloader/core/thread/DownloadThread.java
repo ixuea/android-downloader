@@ -63,7 +63,7 @@ public class DownloadThread implements Runnable {
 //
 //        retryDownloadCount++;
     }
-    checkPause();
+//    checkPause();
 //    }
   }
 
