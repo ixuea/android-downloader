@@ -4,6 +4,7 @@
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
+/.idea/kotlinc.xml
 /.idea/inspectionProfiles
 .DS_Store
 /build
