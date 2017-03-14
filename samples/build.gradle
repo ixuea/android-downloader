@@ -44,6 +44,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':downloader')
 
+//    compile 'cn.woblog.android:downloader:1.0.1-SNAPSHOT'
+
     compile "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.androidSupportVersion"
     compile "com.android.support:design:$rootProject.androidSupportVersion"

@@ -16,6 +16,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
+//        local maven repo.
+//        maven { name 'android-downloader-local'; url '/Users/renpingqing/Documents/work/repo' }
     }
 }
 
@@ -23,9 +26,11 @@ subprojects { project ->
     repositories {
         jcenter()
         mavenCentral()
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
-        }
+//        maven {
+//            url "https://oss.sonatype.org/content/repositories/snapshots"
+//        }
+
+
     }
 
     apply plugin: 'checkstyle'
