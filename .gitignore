@@ -6,6 +6,8 @@
 /.idea/libraries
 /.idea/kotlinc.xml
 /.idea/inspectionProfiles
+/.idea/markdown-navigator/
+
 .DS_Store
 /build
 /captures
