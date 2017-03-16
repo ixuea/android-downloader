@@ -20,7 +20,7 @@ script: 'travis_retry ./gradlew build'
 
 after_success:
 - .buildscript/deploy_snapshot.sh
-#  - ./gradlew jacocoTestReport coveralls
+- ./gradlew createDebugCoverageReport coveralls
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
