@@ -1,8 +1,13 @@
 AndroidDownloader
 =====
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/lifengsofts/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=lifengsofts/AndroidDownloader&utm_campaign=badger)
+
 [![Build Status](https://travis-ci.org/lifengsofts/AndroidDownloader.svg?branch=master)](https://travis-ci.org/lifengsofts/AndroidDownloader)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/lifengsofts/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=lifengsofts/AndroidDownloader&utm_campaign=badger)
+[![Code Climate](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/gpa.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
+[![Test Coverage](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/coverage.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader/coverage)
+[![Issue Count](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/issue_count.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
+
 
 Android Downloader is a open source multithread and mulitask downloadInfo framework for Android.
 
