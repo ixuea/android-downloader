@@ -7,7 +7,10 @@ AndroidDownloader
 [![Code Climate](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/gpa.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
 [![Test Coverage](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/coverage.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader/coverage)
 [![Issue Count](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/issue_count.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
-
+![downloads Size](https://img.shields.io/github/downloads/lifengsofts/AndroidDownloader/latest/total.svg)
+![Maven-central Version](https://img.shields.io/maven-central/v/cn.woblog.android/downloader.svg)
+![Release](https://img.shields.io/github/release/lifengsofts/AndroidDownloader.svg)
+![License](https://img.shields.io/github/license/lifengsofts/AndroidDownloader.svg)
 
 Android Downloader is a open source multithread and mulitask downloadInfo framework for Android.
 
