@@ -1,17 +1,11 @@
-plugins {
-//    id 'net.saliman.cobertura' version '2.3.1'
-    id 'com.github.kt3k.coveralls' version '2.8.1'
-}
-
 
 apply plugin: 'com.android.library'
 apply plugin: 'findbugs'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
-//apply plugin: "jacoco"
-//apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: "jacoco"
+apply plugin: 'com.github.kt3k.coveralls'
 
-//cobertura.coverageFormats = ['html', 'xml']
 
 findbugs {
     toolVersion = FINDBUGS_VERSION
@@ -25,21 +19,14 @@ pmd {
     toolVersion = PMD_VERSION
 }
 
-//jacoco {
-//    toolVersion = JACOCO_VERSION
-////    reportsDir = file("$buildDir/customJacocoReportDir")
-//}
+jacoco {
+    toolVersion = JACOCO_VERSION
+}
 
-//jacocoTestReport {
-//    reports {
-//        xml.enabled = true // coveralls plugin depends on xml format report
-//        html.enabled = true
-//    }
-//}
 
-//coveralls {
-//    jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
-//}
+coveralls {
+    jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -58,7 +45,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            testCoverageEnabled = true
+//            testCoverageEnabled = true
         }
 
         release {
@@ -138,6 +125,32 @@ afterEvaluate {
     }
 
     check.dependsOn('pmd')
+
+    task jacocoTestReport(type: JacocoReport, dependsOn: testDebugUnitTest) {
+        def coverageSourceDirs = ['src/main/java']
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports"
+
+        classDirectories = fileTree(
+                dir: 'build/intermediates/classes/debug',
+                excludes: ['**/R.class',
+                           '**/R$*.class',
+                           '**/BuildConfig.*',
+                           '**/Manifest*.*',
+                           '**/BitmapRequestBuilder.class',
+                           '**/DrawableRequestBuilder.class',
+                           '**/GifRequestBuilder.class',]
+        )
+
+        additionalSourceDirs = files(coverageSourceDirs)
+        sourceDirectories = files(coverageSourceDirs)
+        executionData = files('build/jacoco/testDebug.exec')
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
 
 }
 
