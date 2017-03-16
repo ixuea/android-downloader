@@ -65,9 +65,6 @@ public class ListActivity extends BaseActivity implements OnItemClickListener {
     myDownloadInfos.add(new MyDownloadInfo("Chrome",
         "http://img.wdjimg.com/mms/icon/v1/d/fd/914f576f9fa3e9e7aab08ad0a003cfdd_256_256.png",
         "http://wdj-qn-apk.wdjcdn.com/6/0d/6e93a829b97d671ee56190aec78400d6.apk"));
-    myDownloadInfos.add(new MyDownloadInfo("Facebook",
-        "http://img.wdjimg.com/mms/icon/v1/b/d0/ac5196fbf245580eee113296dff14d0b_256_256.png",
-        "http://m.shouji.360tpcdn.com/170223/2e08d26f5e838b54470deec30c1565d2/com.facebook.katana_50465869.apk"));
     return myDownloadInfos;
   }
 
