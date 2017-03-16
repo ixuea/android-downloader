@@ -1,9 +1,17 @@
+plugins {
+//    id 'net.saliman.cobertura' version '2.3.1'
+    id 'com.github.kt3k.coveralls' version '2.8.1'
+}
+
+
 apply plugin: 'com.android.library'
 apply plugin: 'findbugs'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 //apply plugin: "jacoco"
 //apply plugin: 'com.github.kt3k.coveralls'
+
+//cobertura.coverageFormats = ['html', 'xml']
 
 findbugs {
     toolVersion = FINDBUGS_VERSION
@@ -19,7 +27,16 @@ pmd {
 
 //jacoco {
 //    toolVersion = JACOCO_VERSION
+////    reportsDir = file("$buildDir/customJacocoReportDir")
 //}
+
+//jacocoTestReport {
+//    reports {
+//        xml.enabled = true // coveralls plugin depends on xml format report
+//        html.enabled = true
+//    }
+//}
+
 //coveralls {
 //    jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
 //}
@@ -38,6 +55,12 @@ android {
 
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled = true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
