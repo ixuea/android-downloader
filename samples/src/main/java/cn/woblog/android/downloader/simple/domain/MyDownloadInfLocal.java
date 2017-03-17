@@ -1,6 +1,5 @@
 package cn.woblog.android.downloader.simple.domain;
 
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.List;
@@ -35,7 +34,6 @@ public class MyDownloadInfLocal {
   @DatabaseField
   private int supportRanges;
 
-  @DatabaseField(dataType = DataType.SERIALIZABLE)
   private List<MyDownloadThreadInfoLocal> downloadThreadInfos;
 
   public int getId() {

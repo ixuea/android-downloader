@@ -1,4 +1,3 @@
-
 apply plugin: 'com.android.library'
 apply plugin: 'findbugs'
 apply plugin: 'checkstyle'

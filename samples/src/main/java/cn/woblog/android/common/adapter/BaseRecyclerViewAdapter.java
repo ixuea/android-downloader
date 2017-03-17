@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * Created by renpingqing on 21/01/2017.
- * @param <D>
- * @param <VH>
  */
 public abstract class BaseRecyclerViewAdapter<D, VH extends ViewHolder> extends
     RecyclerView.Adapter<VH> {

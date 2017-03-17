@@ -25,15 +25,17 @@ public class DBController implements DownloadDBController {
   private static DBController instance;
   private final Context context;
   private final DBHelper dbHelper;
-  private final Dao<MyBusinessInfLocal, Integer> myDownloadInfoLocalsDao;
+  private final Dao<MyBusinessInfLocal, Integer> myBusinessInfoLocalsDao;
   private final Dao<MyDownloadInfLocal, Integer> myDownloadInfLocalDao;
+  private final Dao<MyDownloadThreadInfoLocal, Integer> myDownloadThreadInfoLocalDao;
 
   public DBController(Context context) throws SQLException {
     this.context = context;
     dbHelper = new DBHelper(context);
     try {
-      myDownloadInfoLocalsDao = dbHelper.getDao(MyBusinessInfLocal.class);
+      myBusinessInfoLocalsDao = dbHelper.getDao(MyBusinessInfLocal.class);
       myDownloadInfLocalDao = dbHelper.getDao(MyDownloadInfLocal.class);
+      myDownloadThreadInfoLocalDao = dbHelper.getDao(MyDownloadThreadInfoLocal.class);
     } catch (SQLException e) {
       e.printStackTrace();
       throw e;
@@ -50,17 +52,17 @@ public class DBController implements DownloadDBController {
 
   public void createOrUpdateMyDownloadInfo(MyBusinessInfLocal downloadInfoLocal)
       throws SQLException {
-    myDownloadInfoLocalsDao.createOrUpdate(downloadInfoLocal);
+    myBusinessInfoLocalsDao.createOrUpdate(downloadInfoLocal);
   }
 
   public int deleteMyDownloadInfo(int id)
       throws SQLException {
-    return myDownloadInfoLocalsDao.deleteById(id);
+    return myBusinessInfoLocalsDao.deleteById(id);
   }
 
   public MyBusinessInfLocal findMyDownloadInfoById(int id)
       throws SQLException {
-    return myDownloadInfoLocalsDao.queryForId(id);
+    return myBusinessInfoLocalsDao.queryForId(id);
   }
 
   @Override
@@ -121,33 +123,32 @@ public class DBController implements DownloadDBController {
     }
   }
 
-  private MyDownloadInfLocal convertDownloadInfo(DownloadInfo downloadInfo) {
-    MyDownloadInfLocal downloadInfLocal = new MyDownloadInfLocal();
-    downloadInfLocal.setCreateAt(downloadInfo.getCreateAt());
-    downloadInfLocal.setUri(downloadInfo.getUri());
-    downloadInfLocal.setPath(downloadInfo.getPath());
-    downloadInfLocal.setSize(downloadInfo.getSize());
-    downloadInfLocal.setProgress(downloadInfo.getProgress());
-    downloadInfLocal.setStatus(downloadInfo.getStatus());
-    downloadInfLocal.setSupportRanges(downloadInfo.getSupportRanges());
-    downloadInfLocal
-        .setDownloadThreadInfos(converDownloadThreadInfos(downloadInfo.getDownloadThreadInfos()));
-    return downloadInfLocal;
-  }
 
   @Override
   public void createOrUpdate(DownloadThreadInfo downloadThreadInfo) {
-
+    try {
+      myDownloadThreadInfoLocalDao.createOrUpdate(convertDownloadThreadInfo(downloadThreadInfo));
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void delete(DownloadInfo downloadInfo) {
-
+    try {
+      myDownloadInfLocalDao.deleteById(downloadInfo.getId());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void delete(DownloadThreadInfo download) {
-
+    try {
+      myDownloadThreadInfoLocalDao.deleteById(download.getDownloadInfoId());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   private List<DownloadInfo> convertDownloadInfos(List<MyDownloadInfLocal> infos) {
@@ -161,6 +162,9 @@ public class DBController implements DownloadDBController {
 
 
   private DownloadInfo convertDownloadInfo(MyDownloadInfLocal downloadInfLocal) {
+    if (downloadInfLocal == null) {
+      return null;
+    }
     DownloadInfo downloadInfo = new DownloadInfo();
     downloadInfo.setCreateAt(downloadInfLocal.getCreateAt());
     downloadInfo.setUri(downloadInfLocal.getUri());
@@ -184,8 +188,11 @@ public class DBController implements DownloadDBController {
     return downloadThreadInfos;
   }
 
-  private List<MyDownloadThreadInfoLocal> converDownloadThreadInfos(
+  private List<MyDownloadThreadInfoLocal> convertDownloadThreadInfos(
       List<DownloadThreadInfo> downloadThreadInfos) {
+    if (downloadThreadInfos == null) {
+      return null;
+    }
     List<MyDownloadThreadInfoLocal> downloadThreadInfosLocal = new ArrayList<>();
     for (DownloadThreadInfo d : downloadThreadInfos
         ) {
@@ -217,5 +224,19 @@ public class DBController implements DownloadDBController {
     downloadThreadInfo.setEnd(d.getEnd());
     downloadThreadInfo.setProgress(d.getProgress());
     return downloadThreadInfo;
+  }
+
+  private MyDownloadInfLocal convertDownloadInfo(DownloadInfo downloadInfo) {
+    MyDownloadInfLocal downloadInfLocal = new MyDownloadInfLocal();
+    downloadInfLocal.setCreateAt(downloadInfo.getCreateAt());
+    downloadInfLocal.setUri(downloadInfo.getUri());
+    downloadInfLocal.setPath(downloadInfo.getPath());
+    downloadInfLocal.setSize(downloadInfo.getSize());
+    downloadInfLocal.setProgress(downloadInfo.getProgress());
+    downloadInfLocal.setStatus(downloadInfo.getStatus());
+    downloadInfLocal.setSupportRanges(downloadInfo.getSupportRanges());
+    downloadInfLocal
+        .setDownloadThreadInfos(convertDownloadThreadInfos(downloadInfo.getDownloadThreadInfos()));
+    return downloadInfLocal;
   }
 }

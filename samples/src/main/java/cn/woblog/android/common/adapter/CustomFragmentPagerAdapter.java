@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by ren on 2015/12/3 0003.
+ *
  * @param <T> item data type.
  */
 public abstract class CustomFragmentPagerAdapter<T> extends FragmentPagerAdapter {

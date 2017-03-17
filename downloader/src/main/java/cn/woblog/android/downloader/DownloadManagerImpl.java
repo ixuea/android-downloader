@@ -182,6 +182,4 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   }
 
 
-
-
 }
