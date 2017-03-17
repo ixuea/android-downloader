@@ -16,7 +16,7 @@ import java.util.List;
  * Created by renpingqing on 17/1/23.
  */
 
-public class DefaultDownloadDBController implements DownloadDBController {
+public final class DefaultDownloadDBController implements DownloadDBController {
 
 
   public static final String[] DOWNLOAD_INFO_COLUMNS = new String[]{"_id", "supportRanges",

@@ -4,6 +4,8 @@ package cn.woblog.android.downloader.config;
  * Created by renpingqing on 17/3/2.
  */
 
+import cn.woblog.android.downloader.db.DownloadDBController;
+
 /**
  * Download manager config.
  *
@@ -20,6 +22,7 @@ public class Config {
   //  private String databaseName = "/sdcard/d/download_info.db";
   private int databaseVersion = 1;
   private int retryDownloadCount = 3;
+  private DownloadDBController downloadDBController;
 
   public int getConnectTimeout() {
     return connectTimeout;
@@ -79,5 +82,14 @@ public class Config {
 
   public void setRetryDownloadCount(int retryDownloadCount) {
     this.retryDownloadCount = retryDownloadCount;
+  }
+
+  public DownloadDBController getDownloadDBController() {
+    return downloadDBController;
+  }
+
+  public void setDownloadDBController(
+      DownloadDBController downloadDBController) {
+    this.downloadDBController = downloadDBController;
   }
 }

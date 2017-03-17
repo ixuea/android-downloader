@@ -9,6 +9,7 @@ import cn.woblog.android.downloader.config.Config;
 import cn.woblog.android.downloader.simple.activity.DownloadManagerActivity;
 import cn.woblog.android.downloader.simple.activity.ListActivity;
 import cn.woblog.android.downloader.simple.activity.SimpleActivity;
+import cn.woblog.android.downloader.simple.db.DBController;
 
 /**
  * sample main activity.
@@ -26,22 +27,33 @@ public class MainActivity extends BaseActivity {
   @Override
   protected void initData() {
     super.initData();
-    Config config = new Config();
-    //set database path.
-    config.setDatabaseName("/sdcard/a/d.db");
 
-    //set download quantity at the same time.
-    config.setDownloadThread(3);
+    try {
+      //custom download database.
+      DBController dbController = DBController.getInstance(getApplicationContext());
 
-    //set each download info thread number
-    config.setEachDownloadThread(2);
+      Config config = new Config();
+      //set database path.
+//    config.setDatabaseName("/sdcard/a/d.db");
+      config.setDownloadDBController(dbController);
 
-    // set connect timeout,unit millisecond
-    config.setConnectTimeout(10000);
+      //set download quantity at the same time.
+      config.setDownloadThread(3);
 
-    // set read data timeout,unit millisecond
-    config.setReadTimeout(10000);
-    DownloadService.getDownloadManager(this.getApplicationContext(), config);
+      //set each download info thread number
+      config.setEachDownloadThread(2);
+
+      // set connect timeout,unit millisecond
+      config.setConnectTimeout(10000);
+
+      // set read data timeout,unit millisecond
+      config.setReadTimeout(10000);
+      DownloadService.getDownloadManager(this.getApplicationContext(), config);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+
   }
 
 

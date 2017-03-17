@@ -20,7 +20,7 @@ import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.db.DBController;
-import cn.woblog.android.downloader.simple.domain.MyDownloadInfoLocal;
+import cn.woblog.android.downloader.simple.domain.MyBusinessInfLocal;
 import cn.woblog.android.downloader.simple.event.DownloadStatusChanged;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import com.bumptech.glide.Glide;
@@ -229,9 +229,9 @@ public class DownloadAdapter extends
       EventBus.getDefault().post(new DownloadStatusChanged(downloadInfo));
     }
 
-    public void bindBaseInfo(MyDownloadInfoLocal myDownloadInfoLocal) {
-      Glide.with(context).load(myDownloadInfoLocal.getIcon()).into(iv_icon);
-      tv_name.setText(myDownloadInfoLocal.getName());
+    public void bindBaseInfo(MyBusinessInfLocal myBusinessInfLocal) {
+      Glide.with(context).load(myBusinessInfLocal.getIcon()).into(iv_icon);
+      tv_name.setText(myBusinessInfLocal.getName());
     }
 
     private void notifyDownloadStatus() {

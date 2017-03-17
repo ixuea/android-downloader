@@ -23,8 +23,8 @@ import cn.woblog.android.downloader.domain.DownloadInfo.Builder;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
 import cn.woblog.android.downloader.simple.db.DBController;
-import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
-import cn.woblog.android.downloader.simple.domain.MyDownloadInfoLocal;
+import cn.woblog.android.downloader.simple.domain.MyBusinessInfLocal;
+import cn.woblog.android.downloader.simple.domain.MyBusinessInfo;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import com.bumptech.glide.Glide;
 import java.io.File;
@@ -35,7 +35,7 @@ import java.sql.SQLException;
  * Created by renpingqing on 17/1/19.
  */
 public class DownloadListAdapter extends
-    BaseRecyclerViewAdapter<MyDownloadInfo, DownloadListAdapter.ViewHolder> {
+    BaseRecyclerViewAdapter<MyBusinessInfo, DownloadListAdapter.ViewHolder> {
 
   private static final String TAG = "DownloadListAdapter";
   private final Context context;
@@ -96,7 +96,7 @@ public class DownloadListAdapter extends
     }
 
     @SuppressWarnings("unchecked")
-    public void bindData(final MyDownloadInfo data, int position, final Context context) {
+    public void bindData(final MyBusinessInfo data, int position, final Context context) {
       Glide.with(context).load(data.getIcon()).into(iv_icon);
       tv_name.setText(data.getName());
 
@@ -172,10 +172,10 @@ public class DownloadListAdapter extends
             downloadManager.download(downloadInfo);
 
             //save extra info to my database.
-            MyDownloadInfoLocal myDownloadInfoLocal = new MyDownloadInfoLocal(
+            MyBusinessInfLocal myBusinessInfLocal = new MyBusinessInfLocal(
                 data.getUrl().hashCode(), data.getName(), data.getIcon(), data.getUrl());
             try {
-              dbController.createOrUpdateMyDownloadInfo(myDownloadInfoLocal);
+              dbController.createOrUpdateMyDownloadInfo(myBusinessInfLocal);
             } catch (SQLException e) {
               e.printStackTrace();
             }

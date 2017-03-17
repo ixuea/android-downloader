@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
  * Created by renpingqing on 17/1/19.
  */
-public class MyDownloadInfo implements Serializable {
+public class MyBusinessInfo implements Serializable {
 
   private String name;
   private String icon;
   private String url;
 
-  public MyDownloadInfo(String name, String icon, String url) {
+  public MyBusinessInfo(String name, String icon, String url) {
     this.name = name;
     this.icon = icon;
     this.url = url;

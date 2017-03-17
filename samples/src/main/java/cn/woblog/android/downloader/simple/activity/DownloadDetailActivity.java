@@ -19,7 +19,7 @@ import cn.woblog.android.downloader.domain.DownloadInfo;
 import cn.woblog.android.downloader.domain.DownloadInfo.Builder;
 import cn.woblog.android.downloader.simple.R;
 import cn.woblog.android.downloader.simple.callback.MyDownloadListener;
-import cn.woblog.android.downloader.simple.domain.MyDownloadInfo;
+import cn.woblog.android.downloader.simple.domain.MyBusinessInfo;
 import cn.woblog.android.downloader.simple.util.FileUtil;
 import com.bumptech.glide.Glide;
 import java.io.File;
@@ -40,7 +40,7 @@ public class DownloadDetailActivity extends BaseActivity {
   private ProgressBar pb;
   private TextView tv_name;
   private Button bt_action;
-  private MyDownloadInfo data;
+  private MyBusinessInfo data;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class DownloadDetailActivity extends BaseActivity {
   @Override
   protected void initData() {
     super.initData();
-    data = (MyDownloadInfo) getIntent().getSerializableExtra(DATA);
+    data = (MyBusinessInfo) getIntent().getSerializableExtra(DATA);
     Glide.with(this).load(data.getIcon()).into(iv_icon);
 
     downloadManager = DownloadService.getDownloadManager(getApplicationContext());

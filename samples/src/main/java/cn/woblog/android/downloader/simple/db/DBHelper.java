@@ -2,7 +2,8 @@ package cn.woblog.android.downloader.simple.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import cn.woblog.android.downloader.simple.domain.MyDownloadInfoLocal;
+import cn.woblog.android.downloader.simple.domain.MyBusinessInfLocal;
+import cn.woblog.android.downloader.simple.domain.MyDownloadInfLocal;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
   private static final String DB_NAME = "/sdcard/d/data.db";
-  private static final int DB_VERSION = 1;
+  private static final int DB_VERSION = 2;
 
   public DBHelper(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -24,7 +25,8 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
     try {
-      TableUtils.createTable(connectionSource, MyDownloadInfoLocal.class);
+      TableUtils.createTable(connectionSource, MyBusinessInfLocal.class);
+      TableUtils.createTable(connectionSource, MyDownloadInfLocal.class);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -34,7 +36,8 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
   public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion,
       int newVersion) {
     try {
-      TableUtils.dropTable(connectionSource, MyDownloadInfoLocal.class, true);
+      TableUtils.dropTable(connectionSource, MyBusinessInfLocal.class, true);
+      TableUtils.dropTable(connectionSource, MyDownloadInfLocal.class, true);
     } catch (SQLException e) {
       e.printStackTrace();
     }

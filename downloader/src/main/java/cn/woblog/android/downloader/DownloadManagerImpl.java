@@ -11,6 +11,7 @@ import cn.woblog.android.downloader.core.task.DownloadTask;
 import cn.woblog.android.downloader.db.DefaultDownloadDBController;
 import cn.woblog.android.downloader.db.DownloadDBController;
 import cn.woblog.android.downloader.domain.DownloadInfo;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -41,12 +42,22 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     } else {
       this.config = config;
     }
-    downloadDBController = new DefaultDownloadDBController(context, this.config);
+
+    if (config.getDownloadDBController() == null) {
+      downloadDBController = new DefaultDownloadDBController(context, this.config);
+    } else {
+      downloadDBController = config.getDownloadDBController();
+    }
+
+    if (downloadDBController.findAllDownloading() == null) {
+      downloadingCaches = new ArrayList<>();
+    } else {
+      downloadingCaches = downloadDBController.findAllDownloading();
+    }
+
     cacheDownloadTask = new ConcurrentHashMap<>();
 
     downloadDBController.pauseAllDownloading();
-
-    downloadingCaches = downloadDBController.findAllDownloading();
 
     executorService = Executors.newFixedThreadPool(this.config.getDownloadThread());
 

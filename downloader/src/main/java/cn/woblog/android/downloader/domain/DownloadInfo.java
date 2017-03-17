@@ -47,14 +47,16 @@ public class DownloadInfo implements Serializable {
    *
    */
   public static final int STATUS_REMOVED = 7;
+
+
+  private transient DownloadListener downloadListener;
+  private DownloadException exception;
+
+  //--------------------The following fields require persistence.
   /**
    * Each download task id.
    */
   private int id;
-  /**
-   * Support multi-threaded download.
-   */
-  private int supportRanges;
   /**
    * Time to create a download task.
    */
@@ -65,9 +67,13 @@ public class DownloadInfo implements Serializable {
   private long progress;
   @DownloadStatus
   private int status;
+  /**
+   * Support multi-threaded download.
+   */
+  private int supportRanges;
+
   private List<DownloadThreadInfo> downloadThreadInfos;
-  private transient DownloadListener downloadListener;
-  private DownloadException exception;
+
 
   public DownloadException getException() {
     return exception;
