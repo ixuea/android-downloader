@@ -31,7 +31,7 @@ then
   git rev-list master...origin/master --pretty
   exit 1
 fi
-if [[ $(git rev-list gh-pages...origin/master --count) -ne 0 ]]; 
+if [[ $(git rev-list gh-pages...origin/gh-pages --count) -ne 0 ]]; 
 then 
   echo "Origin and gh-pages are not up to date"
   git rev-list gh-pages...origin/gh-pages --pretty
