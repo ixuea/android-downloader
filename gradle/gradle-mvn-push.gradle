@@ -127,6 +127,7 @@ afterEvaluate { project ->
             options {
                 links('http://docs.oracle.com/javase/7/docs/api/')
                 linksOffline('http://d.android.com/reference', "${android.sdkDirectory}/docs/reference")
+                locale('en_US')
             }
 
             exclude '**/BuildConfig.java'
