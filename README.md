@@ -55,6 +55,8 @@ If your project uses ProGuard, you need to add the following configuration to yo
 How do I use Android Downloader?
 =======
 
+For more information on [GitHub wiki][200] and [Javadocs][201].
+
 0.Add network network permissions()
 -------
 
@@ -366,3 +368,6 @@ License
 [40]: https://github.com/lifengsofts/AndroidDownloader/releases
 [50]: https://github.com/lifengsofts/AndroidDownloader/releases
 [60]: https://github.com/lifengsofts/AndroidDownloader#build
+
+[200]: https://github.com/lifengsofts/AndroidDownloader/wiki
+[201]: http://i.woblog.cn/AndroidDownloader/javadocs/1.0.1/
