@@ -1,4 +1,6 @@
 #!/bin/bash
+#useage ./.buildscript/deploy_javadocs.sh 1.0.1
+
 set -e
 set -o pipefail
 
