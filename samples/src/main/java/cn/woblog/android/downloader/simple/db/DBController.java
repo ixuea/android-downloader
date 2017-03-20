@@ -153,8 +153,7 @@ public class DBController implements DownloadDBController {
 
   private List<DownloadInfo> convertDownloadInfos(List<MyDownloadInfLocal> infos) {
     List<DownloadInfo> downloadInfos = new ArrayList<>();
-    for (MyDownloadInfLocal downloadInfLocal :
-        infos) {
+    for (MyDownloadInfLocal downloadInfLocal : infos) {
       downloadInfos.add(convertDownloadInfo(downloadInfLocal));
     }
     return downloadInfos;
