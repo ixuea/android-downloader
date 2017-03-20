@@ -45,7 +45,7 @@ GIT_COMMIT_SHA="$(git rev-parse HEAD)"
 ./gradlew androidJavadocs
 rm -rf $TEMP_DIR
 mkdir -p $TEMP_DIR
-cp -r downloader/build/docs/javadoc $TEMP_DIR
+cp -r downloader/build/docs/javadoc/ $TEMP_DIR
 git checkout gh-pages
 rm -rf "${JAVADOC_GH_PAGES_DIR}/${1}"
 mkdir -p $JAVADOC_GH_PAGES_DIR/$1
