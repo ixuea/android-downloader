@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-TEMP_DIR="/tmp/tmp_android_downloader_javadoc"
+TEMP_DIR="/tmp/tmp_android_downloader_javadoc/"
 JAVADOC_GH_PAGES_DIR="javadocs"
 
 if [[ -z "$1" ]]; 
