@@ -15,8 +15,9 @@ import java.sql.SQLException;
 
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
-  private static final String DB_NAME = "/sdcard/d/data.db";
-  private static final int DB_VERSION = 2;
+  //  private static final String DB_NAME = "/sdcard/d/data.db";
+  private static final String DB_NAME = "download_data.db";
+  private static final int DB_VERSION = 3;
 
   public DBHelper(Context context) {
     super(context, DB_NAME, null, DB_VERSION);

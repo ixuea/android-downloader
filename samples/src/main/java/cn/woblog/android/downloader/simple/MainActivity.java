@@ -9,7 +9,6 @@ import cn.woblog.android.downloader.config.Config;
 import cn.woblog.android.downloader.simple.activity.DownloadManagerActivity;
 import cn.woblog.android.downloader.simple.activity.ListActivity;
 import cn.woblog.android.downloader.simple.activity.SimpleActivity;
-import cn.woblog.android.downloader.simple.db.DBController;
 
 /**
  * sample main activity.
@@ -30,12 +29,12 @@ public class MainActivity extends BaseActivity {
 
     try {
       //custom download database.
-      DBController dbController = DBController.getInstance(getApplicationContext());
+//      DBController dbController = DBController.getInstance(getApplicationContext());
 
       Config config = new Config();
       //set database path.
 //    config.setDatabaseName("/sdcard/a/d.db");
-      config.setDownloadDBController(dbController);
+//      config.setDownloadDBController(dbController);
 
       //set download quantity at the same time.
       config.setDownloadThread(3);

@@ -57,7 +57,12 @@ public class DownloadAdapter extends
 
     DownloadInfo data = getData(position);
     try {
-      holder.bindBaseInfo(dbController.findMyDownloadInfoById(data.getUri().hashCode()));
+      MyBusinessInfLocal myDownloadInfoById = dbController
+          .findMyDownloadInfoById(data.getUri().hashCode());
+      if (myDownloadInfoById != null) {
+        holder.bindBaseInfo(myDownloadInfoById);
+      }
+
     } catch (SQLException e) {
       e.printStackTrace();
     }

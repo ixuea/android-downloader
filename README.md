@@ -13,7 +13,9 @@ Android Downloader is a open source multithread and mulitask downloadInfo framew
 
 Try out the sample application [on the Apk file][20].
 
-![AndroidDownloader Sample Screenshots][30]
+![AndroidDownloader Sample Screenshots][30]![AndroidDownloader Sample Screenshots][31]
+![AndroidDownloader Sample Screenshots][32]![AndroidDownloader Sample Screenshots][33]
+
 
 Download
 =======
@@ -361,7 +363,12 @@ License
 
 
 [20]: https://i.woblog.cn
-[30]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/screenshot.png
+
+[30]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/download-a-file.png
+[31]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/use-in-list.png
+[32]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/download-manager-downloading.png
+[33]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/download-manager-downloaded.png
+
 [40]: https://github.com/lifengsofts/AndroidDownloader/releases
 [50]: https://github.com/lifengsofts/AndroidDownloader/releases
 [60]: https://github.com/lifengsofts/AndroidDownloader#build
