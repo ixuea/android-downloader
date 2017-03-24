@@ -4,10 +4,7 @@ AndroidDownloader
 
 [![Build Status](https://travis-ci.org/lifengsofts/AndroidDownloader.svg?branch=master)](https://travis-ci.org/lifengsofts/AndroidDownloader)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/lifengsofts/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=lifengsofts/AndroidDownloader&utm_campaign=badger)
-<!-- [![Code Climate](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/gpa.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader) -->
-<!-- [![Test Coverage](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/coverage.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader/coverage) -->
 [![Issue Count](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/issue_count.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
-<!-- ![downloads Size](https://img.shields.io/github/downloads/lifengsofts/AndroidDownloader/latest/total.svg) -->
 ![Maven-central Version](https://img.shields.io/maven-central/v/cn.woblog.android/downloader.svg)
 ![Release](https://img.shields.io/github/release/lifengsofts/AndroidDownloader.svg)
 ![License](https://img.shields.io/github/license/lifengsofts/AndroidDownloader.svg)
