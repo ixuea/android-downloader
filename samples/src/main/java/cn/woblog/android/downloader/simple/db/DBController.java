@@ -180,10 +180,13 @@ public class DBController implements DownloadDBController {
   private List<DownloadThreadInfo> converDownloadThreadInfos1(
       List<MyDownloadThreadInfoLocal> downloadThreadInfosLocal) {
     List<DownloadThreadInfo> downloadThreadInfos = new ArrayList<>();
-    for (MyDownloadThreadInfoLocal d : downloadThreadInfosLocal
-        ) {
-      downloadThreadInfos.add(convertDownloadThreadInfo(d));
+    if (downloadThreadInfosLocal != null) {
+      for (MyDownloadThreadInfoLocal d : downloadThreadInfosLocal
+          ) {
+        downloadThreadInfos.add(convertDownloadThreadInfo(d));
+      }
     }
+
     return downloadThreadInfos;
   }
 
