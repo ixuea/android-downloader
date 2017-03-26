@@ -343,7 +343,7 @@ You may also find precompiled APKs on the releases page.
 Author
 =======
 
-Patsy - @Patsysoft on GitHub, Email is patsysoft@gmail.com.
+Pich - @Pichsofts on GitHub, Email is Pichsofts@gmail.com.
 
 
 License
@@ -364,7 +364,7 @@ License
     limitations under the License.
 
 
-[10]: https://github.com/lifengsofts/AndroidDownloader/issues/new?body=**Android+Downloader+version**%3a%0a**Android+Version**%3a%0a**Issue+details%2fRepro+steps**%3a%0a%0a**Use+code**%3a%0a%60%60%60%0aPlease+paste+your+code+here%0a%60%60%60%0a**Stack+trace**%3a%0a%60%60%60%0aPlease+paste+stack+trace+here%0a%60%60%60%0a**Screenshot(if+any)**%3a%0aPlease+image+url+here
+[10]: https://github.com/lifengsofts/AndroidDownloader/issues/new
 
 [20]: https://i.woblog.cn
 
