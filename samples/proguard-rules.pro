@@ -16,6 +16,11 @@
 #   public *;
 #}
 
+# Android Downloader
+-keep public class * implements cn.woblog.android.downloader.db.DownloadDBController
+-keep class cn.woblog.android.downloader.domain.** { *; }
+#\ Android Downloader
+
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
