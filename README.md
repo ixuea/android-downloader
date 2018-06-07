@@ -29,7 +29,7 @@ Or use Gradle:
 
 ```gradle
 dependencies {
-  compile 'cn.woblog.android:downloader:1.0.0'
+  compile 'cn.woblog.android:downloader:1.0.1'
 }
 ```
 
