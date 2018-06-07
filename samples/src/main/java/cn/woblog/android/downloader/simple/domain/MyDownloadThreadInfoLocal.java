@@ -18,7 +18,7 @@ public class MyDownloadThreadInfoLocal implements Serializable {
   private int threadId;
 
   @DatabaseField
-  private int downloadInfoId;
+  private String downloadInfoId;
   private String uri;
 
   @DatabaseField
@@ -47,11 +47,11 @@ public class MyDownloadThreadInfoLocal implements Serializable {
     this.threadId = threadId;
   }
 
-  public int getDownloadInfoId() {
+  public String getDownloadInfoId() {
     return downloadInfoId;
   }
 
-  public void setDownloadInfoId(int downloadInfoId) {
+  public void setDownloadInfoId(String downloadInfoId) {
     this.downloadInfoId = downloadInfoId;
   }
 

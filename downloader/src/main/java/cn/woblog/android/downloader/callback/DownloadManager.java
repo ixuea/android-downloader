@@ -20,7 +20,7 @@ public interface DownloadManager {
 
   void onDestroy();
 
-  DownloadInfo getDownloadById(int id);
+  DownloadInfo getDownloadById(String id);
 
   List<DownloadInfo> findAllDownloading();
 

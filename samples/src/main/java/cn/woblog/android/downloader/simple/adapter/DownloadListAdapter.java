@@ -101,7 +101,7 @@ public class DownloadListAdapter extends
       tv_name.setText(data.getName());
 
       // Get download task status
-      downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
+      downloadInfo = downloadManager.getDownloadById(data.getUrl());
 
       // Set a download listener
       if (downloadInfo != null) {
@@ -188,7 +188,7 @@ public class DownloadListAdapter extends
     private void notifyDownloadStatus() {
       if (downloadInfo.getStatus() == STATUS_REMOVED) {
         try {
-          dbController.deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+          dbController.deleteMyDownloadInfo(downloadInfo.getUri());
         } catch (SQLException e) {
           e.printStackTrace();
         }

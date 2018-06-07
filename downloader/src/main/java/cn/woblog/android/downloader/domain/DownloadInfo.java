@@ -56,7 +56,7 @@ public class DownloadInfo implements Serializable {
   /**
    * Each download task id.
    */
-  private int id;
+  private String id;
   /**
    * Time to create a download task.
    */
@@ -141,11 +141,11 @@ public class DownloadInfo implements Serializable {
     this.status = status;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -190,7 +190,7 @@ public class DownloadInfo implements Serializable {
 
   @Override
   public int hashCode() {
-    return id;
+    return id.hashCode();
   }
 
   public boolean isPause() {
@@ -265,10 +265,10 @@ public class DownloadInfo implements Serializable {
         setCreateAt(System.currentTimeMillis());
       }
 
-      downloadInfo.setId(url.hashCode());
+      downloadInfo.setId(url);
 
       if (TextUtils.isEmpty(id)) {
-        downloadInfo.setId(url.hashCode());
+        downloadInfo.setId(url);
       }
 
       return downloadInfo;

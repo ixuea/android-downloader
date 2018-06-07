@@ -85,7 +85,7 @@ public class DownloadResponseImpl implements DownloadResponse {
       }
     }
 
-    Message message = handler.obtainMessage(downloadInfo.getId());
+    Message message = handler.obtainMessage(downloadInfo.getId().hashCode());
     message.obj = downloadInfo;
     message.sendToTarget();
 

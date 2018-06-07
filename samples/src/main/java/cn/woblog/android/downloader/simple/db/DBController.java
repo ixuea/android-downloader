@@ -25,9 +25,9 @@ public class DBController implements DownloadDBController {
   private static DBController instance;
   private final Context context;
   private final DBHelper dbHelper;
-  private final Dao<MyBusinessInfLocal, Integer> myBusinessInfoLocalsDao;
-  private final Dao<MyDownloadInfLocal, Integer> myDownloadInfLocalDao;
-  private final Dao<MyDownloadThreadInfoLocal, Integer> myDownloadThreadInfoLocalDao;
+  private final Dao<MyBusinessInfLocal, String> myBusinessInfoLocalsDao;
+  private final Dao<MyDownloadInfLocal, String> myDownloadInfLocalDao;
+  private final Dao<MyDownloadThreadInfoLocal, String> myDownloadThreadInfoLocalDao;
 
   public DBController(Context context) throws SQLException {
     this.context = context;
@@ -55,12 +55,12 @@ public class DBController implements DownloadDBController {
     myBusinessInfoLocalsDao.createOrUpdate(downloadInfoLocal);
   }
 
-  public int deleteMyDownloadInfo(int id)
+  public int deleteMyDownloadInfo(String id)
       throws SQLException {
     return myBusinessInfoLocalsDao.deleteById(id);
   }
 
-  public MyBusinessInfLocal findMyDownloadInfoById(int id)
+  public MyBusinessInfLocal findMyDownloadInfoById(String id)
       throws SQLException {
     return myBusinessInfoLocalsDao.queryForId(id);
   }
@@ -91,7 +91,7 @@ public class DBController implements DownloadDBController {
   }
 
   @Override
-  public DownloadInfo findDownloadedInfoById(int id) {
+  public DownloadInfo findDownloadedInfoById(String id) {
     try {
       return convertDownloadInfo(myDownloadInfLocalDao.queryForId(id));
     } catch (SQLException e) {
@@ -104,7 +104,7 @@ public class DBController implements DownloadDBController {
   public void pauseAllDownloading() {
 
     try {
-      UpdateBuilder<MyDownloadInfLocal, Integer> myDownloadInfLocalIntegerUpdateBuilder = myDownloadInfLocalDao
+      UpdateBuilder<MyDownloadInfLocal, String> myDownloadInfLocalIntegerUpdateBuilder = myDownloadInfLocalDao
           .updateBuilder();
       myDownloadInfLocalIntegerUpdateBuilder.updateColumnValue("status", STATUS_PAUSED).where()
           .ne("status", STATUS_COMPLETED);

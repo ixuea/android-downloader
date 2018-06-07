@@ -13,15 +13,15 @@ public class DownloadThreadInfo implements Serializable {
    */
   private int id;
   private int threadId;
-  private int downloadInfoId;
+  private String downloadInfoId;
   private String uri;
   private long start;
   private long end;
   private long progress;
 
-  public DownloadThreadInfo(int threadId, int downloadInfoId, String uri, long start,
+  public DownloadThreadInfo(int threadId, String downloadInfoId, String uri, long start,
       long end) {
-    this.id = downloadInfoId + threadId;
+    this.id = downloadInfoId.hashCode() + threadId;
     this.threadId = threadId;
     this.downloadInfoId = downloadInfoId;
     this.uri = uri;
@@ -40,11 +40,11 @@ public class DownloadThreadInfo implements Serializable {
     this.id = id;
   }
 
-  public int getDownloadInfoId() {
+  public String getDownloadInfoId() {
     return downloadInfoId;
   }
 
-  public void setDownloadInfoId(int downloadInfoId) {
+  public void setDownloadInfoId(String downloadInfoId) {
     this.downloadInfoId = downloadInfoId;
   }
 

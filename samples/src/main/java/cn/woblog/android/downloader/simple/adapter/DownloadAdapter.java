@@ -58,7 +58,7 @@ public class DownloadAdapter extends
     DownloadInfo data = getData(position);
     try {
       MyBusinessInfLocal myDownloadInfoById = dbController
-          .findMyDownloadInfoById(data.getUri().hashCode());
+          .findMyDownloadInfoById(data.getUri());
       if (myDownloadInfoById != null) {
         holder.bindBaseInfo(myDownloadInfoById);
       }
@@ -243,7 +243,7 @@ public class DownloadAdapter extends
 
       if (downloadInfo.getStatus() == STATUS_REMOVED) {
         try {
-          dbController.deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+          dbController.deleteMyDownloadInfo(downloadInfo.getUri());
         } catch (SQLException e) {
           e.printStackTrace();
         }

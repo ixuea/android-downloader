@@ -69,7 +69,7 @@ public class DownloadDetailActivity extends BaseActivity {
 
     downloadManager = DownloadService.getDownloadManager(getApplicationContext());
 
-    downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
+    downloadInfo = downloadManager.getDownloadById(data.getUrl());
 
     if (downloadInfo != null) {
       downloadInfo

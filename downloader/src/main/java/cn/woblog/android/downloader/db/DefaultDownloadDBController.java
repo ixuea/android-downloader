@@ -102,7 +102,7 @@ public final class DefaultDownloadDBController implements DownloadDBController {
       DownloadThreadInfo downloadThreadInfo) {
     downloadThreadInfo.setId(cursor.getInt(0));
     downloadThreadInfo.setThreadId(cursor.getInt(1));
-    downloadThreadInfo.setDownloadInfoId(cursor.getInt(2));
+    downloadThreadInfo.setDownloadInfoId(cursor.getString(2));
     downloadThreadInfo.setUri(cursor.getString(3));
     downloadThreadInfo.setStart(cursor.getLong(4));
     downloadThreadInfo.setEnd(cursor.getLong(5));
@@ -110,7 +110,7 @@ public final class DefaultDownloadDBController implements DownloadDBController {
   }
 
   private void inflateDownloadInfo(Cursor cursor, DownloadInfo downloadInfo) {
-    downloadInfo.setId(cursor.getInt(0));
+    downloadInfo.setId(cursor.getString(0));
     downloadInfo.setSupportRanges(cursor.getInt(1));
     downloadInfo.setCreateAt(cursor.getLong(2));
     downloadInfo.setUri(cursor.getString(3));
@@ -121,10 +121,10 @@ public final class DefaultDownloadDBController implements DownloadDBController {
   }
 
   @Override
-  public DownloadInfo findDownloadedInfoById(int id) {
+  public DownloadInfo findDownloadedInfoById(String id) {
     Cursor cursor = readableDatabase
         .query(DefaultDownloadHelper.TABLE_NAME_DOWNLOAD_INFO, DOWNLOAD_INFO_COLUMNS, "_id=?",
-            new String[]{String.valueOf(id)},
+            new String[]{id},
             null, null, "createAt desc");
     if (cursor.moveToNext()) {
       DownloadInfo downloadInfo = new DownloadInfo();

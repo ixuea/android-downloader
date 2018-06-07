@@ -52,7 +52,7 @@ public class SimpleActivity extends BaseActivity implements OnClickListener {
   public void initData() {
     downloadManager = DownloadService.getDownloadManager(getApplicationContext());
 
-    downloadInfo = downloadManager.getDownloadById(DEFAULT_URL.hashCode());
+    downloadInfo = downloadManager.getDownloadById(DEFAULT_URL);
 
     refresh();
   }

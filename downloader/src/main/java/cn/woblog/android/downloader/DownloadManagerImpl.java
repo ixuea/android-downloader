@@ -26,7 +26,7 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   private static final int MIN_EXECUTE_INTERVAL = 500;
   private static DownloadManagerImpl instance;
   private final ExecutorService executorService;
-  private final ConcurrentHashMap<Integer, DownloadTask> cacheDownloadTask;
+  private final ConcurrentHashMap<String, DownloadTask> cacheDownloadTask;
   private final List<DownloadInfo> downloadingCaches;
   private final Context context;
 
@@ -136,10 +136,10 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
   }
 
   @Override
-  public DownloadInfo getDownloadById(int id) {
+  public DownloadInfo getDownloadById(String id) {
     DownloadInfo downloadInfo = null;
     for (DownloadInfo d : downloadingCaches) {
-      if (d.getId() == id) {
+      if (d.getId().equals(id)) {
         downloadInfo = d;
         break;
       }
