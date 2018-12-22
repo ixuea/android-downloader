@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.ixuea.android.downloader.simple"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 101
+        versionName "1.0.1"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+//        xmlReport false
+//        htmlReport true
+//
+//        // is true disable lint progress
+//        quiet false
+//        abortOnError false
+//        ignoreWarnings true
+//
+////        lintConfig file("int.xml")
+//        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+////        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+        abortOnError false
+
+    }
+
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':downloader')
+
+//    compile 'com.ixuea.android:downloader:1.0.1-SNAPSHOT'
+
+    compile "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.androidSupportVersion"
+    compile "com.android.support:design:$rootProject.androidSupportVersion"
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+
+//    ormlite
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile 'com.j256.ormlite:ormlite-core:5.0'
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+}
+
+
+task run(type: Exec, dependsOn: 'installDebug') {
+    description 'Installs the APK and runs the main activity: "gradlew :samples:run"'
+    commandLine "${android.sdkDirectory}/platform-tools/adb", 'shell', 'am', 'start', '-n', 'com.ixuea.android.downloader.simple/.MainActivity'
+}

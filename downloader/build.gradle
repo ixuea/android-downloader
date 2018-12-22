@@ -1,0 +1,171 @@
+apply plugin: 'com.android.library'
+apply plugin: 'findbugs'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: "jacoco"
+apply plugin: 'com.github.kt3k.coveralls'
+
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.ixuea'
+
+
+findbugs {
+    toolVersion = FINDBUGS_VERSION
+}
+
+//checkstyle {
+//    toolVersion = CHECK_STYLE_VERSION
+//}
+
+pmd {
+    toolVersion = PMD_VERSION
+}
+
+jacoco {
+    toolVersion = JACOCO_VERSION
+}
+
+
+coveralls {
+    jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            testCoverageEnabled = true
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+afterEvaluate {
+    task findbugs(type: FindBugs, dependsOn: assembleDebug) {
+
+        description 'Run findbugs'
+        group 'verification'
+
+        ignoreFailures = true
+
+        classes = fileTree('build/intermediates/classes/debug/')
+        source = fileTree('src/main/java')
+        classpath = project.configurations.compile
+
+        effort = 'max'
+
+        excludeFilter = file("findbugs-exclude.xml")
+
+        reports {
+            xml.enabled = false
+            html.enabled = true
+
+            xml {
+                destination "$project.buildDir/findbugs.xml"
+            }
+            html {
+                destination "$project.buildDir/findbugs.html"
+            }
+        }
+    }
+
+    check.dependsOn('findbugs')
+
+//    task checkstyle(type: Checkstyle) {
+//        configFile = rootProject.file('checkstyle.xml')
+//        configProperties.checkStyleConfigDir = rootProject.rootDir
+////        configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/quality/checkstyle/suppressions.xml").absolutePath
+//        source 'src'
+//        include '**/*.java'
+//        exclude '**/gen/**'
+//        classpath = files()
+//    }
+
+
+    task pmd(type: Pmd) {
+        description 'Run pmd'
+        group 'verification'
+
+        // If ruleSets is not empty, it seems to contain some
+        // defaults which override rules in the ruleset file...
+        ignoreFailures = false
+        ruleSets = []
+        ruleSetFiles = files('pmd-ruleset.xml')
+
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+
+    }
+
+    check.dependsOn('pmd')
+
+    task jacocoTestReport(type: JacocoReport, dependsOn: testDebugUnitTest) {
+        def coverageSourceDirs = ['src/main/java']
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports"
+
+        classDirectories = fileTree(
+                dir: 'build/intermediates/classes/debug',
+                excludes: ['**/R.class',
+                           '**/R$*.class',
+                           '**/BuildConfig.*',
+                           '**/Manifest*.*',
+                           '**/BitmapRequestBuilder.class',
+                           '**/DrawableRequestBuilder.class',
+                           '**/GifRequestBuilder.class',]
+        )
+
+        additionalSourceDirs = files(coverageSourceDirs)
+        sourceDirectories = files(coverageSourceDirs)
+        executionData = files('build/jacoco/testDebug.exec')
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-annotations:24.2.1'
+}
+
+
+
+apply from: "${rootProject.projectDir}/gradle/gradle-mvn-push.gradle"

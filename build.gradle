@@ -1,0 +1,102 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+//        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.+'
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+//        local maven repo.
+//        maven { name 'android-downloader-local'; url '/Users/smile/Documents/work/repo' }
+    }
+}
+
+subprojects { project ->
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+//        maven {
+//            url "https://oss.sonatype.org/content/repositories/snapshots"
+//        }
+
+
+    }
+
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        toolVersion = '6.12.1'
+    }
+
+    checkstyle {
+        configFile rootProject.file('checkstyle.xml')
+        configProperties.checkStyleConfigDir = rootProject.rootDir
+    }
+
+    task checkstyle(type: Checkstyle) {
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        // empty classpath
+        classpath = files()
+    }
+
+    afterEvaluate {
+        if (project.tasks.findByName('check')) {
+            check.dependsOn('checkstyle')
+        }
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+        }
+    }
+
+//    android {
+//        lintOptions {
+//            abortOnError true
+//            xmlReport false
+//            htmlReport true
+////        lintConfig file("${project.rootDir}/config/quality/lint/lint.xml")
+////        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+////        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+//        }
+//    }
+
+
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    minSdkVersion = 10
+    compileSdkVersion = 22
+    buildToolsVersion = '22.0.1'
+
+    targetSdkVersion = 22
+
+    androidSupportVersion = '22.2.0'
+
+//    gradle
+    androidGradleVersion = '2.2.2'
+}
