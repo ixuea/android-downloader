@@ -172,6 +172,8 @@ You may also find precompiled APKs on the releases page.
 
 See the example code.
 
+Android development QQ group: 702321063.
+
 ## Author
 
 Smile - @ixueadev on GitHub, Email is ixueadev@163.com, See more ixuea([http://www.ixuea.com][100])
