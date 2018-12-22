@@ -10,64 +10,64 @@ English | [中文][14]
 ![Release](https://img.shields.io/github/release/lifengsofts/AndroidDownloader.svg)
 ![License](https://img.shields.io/github/license/lifengsofts/AndroidDownloader.svg)
 
-[Report an issue][10], iOS and macOS use [CocoaDownloader][12].
+[提交一个Issue][10], iOS和macOS平台使用[CocoaDownloader][12].
 
-Android Downloader is a open source multithread and mulitask downloadInfo framework for Android.
+Android Downloader是一个开源的多线程，多任务下载框架。
 
-Try out the sample application [on the Apk file][20].
+更多功能和使用方法可以查看这个[APK][20].
 
 ![AndroidDownloader Sample Screenshots][30] ![AndroidDownloader Sample Screenshots][31]
 
 ![AndroidDownloader Sample Screenshots][32] ![AndroidDownloader Sample Screenshots][33]
 
 
-Download
+下载
 =======
 
-You can download a jar from GitHub's [releases page][40].
+你能从Github[releases page][40]下载jar包.
 
-Or use Gradle:
+或者使用Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.ixuea.android:downloader:1.0.1'
+  compile 'com.ixuea.android:downloader:2.0.0'
 }
 ```
 
-Or Maven:
+或者使用Maven:
 
 ```xml
 <dependency>
   <groupId>com.ixuea.android</groupId>
   <artifactId>downloader</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
-For info on using the bleeding edge, see the [Snapshots][50] wiki page.
+如果要使用Snapshot版本, 请查看[Snapshots][50]wiki页面.
 
 ProGuard
 =======
 
-If your project uses ProGuard, you need to add the following configuration to your project proguard-rules.pro file
+如果你的项目使用了ProGuard，你需要添加下面的配置信息到项目的proguard-rules.pro文件中
 
 ```pro
 -keep public class * implements com.ixuea.android.downloader.db.DownloadDBController
 ```
 
-How do I use Android Downloader?
+如果使用?
 =======
 
-For more information on [GitHub wiki][200] and [Javadocs][201].
+更多的信息可以查看[GitHub wiki][200]和[Javadocs][201].
 
-0.Add network network permissions()
+0.添加网络访问权限
 -------
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-1.Configuration download service
+1.配置下载服务
 --------------------------------
 
 ```xml
@@ -78,16 +78,14 @@ For more information on [GitHub wiki][200] and [Javadocs][201].
 </service>
 ```
 
-2.Create a DownloadManager instance
+2.创建DownloadManager实例
 -----------------------------------
 
 ```java
 downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
 ```
 
-Simple use as follows
-
-3.Download a file
+3.下载一个文件
 -----------------
 
 ```java
@@ -148,36 +146,35 @@ downloadInfo.setDownloadListener(new DownloadListener() {
 downloadManager.download(downloadInfo);
 ```
 
-Compatibility
+更多信息请查看Demo.
+
+兼容
 =======
 
-* **Android SDK**: Android Downloader requires a minimum API level of 10.
+* **Android SDK**: 要求最新Android SDK为API 10.
 
 
-Build
+实例代码
 =======
 
-
-Samples
-=======
-
-Follow the steps in the [Build][60] section to setup the project and then:
+可以看到该[Build][60]文档配置开发环境:
 
 ```gradle
 ./gradlew :samples:run
 ```
 
-You may also find precompiled APKs on the releases page.
+你也可以在releases界面找到Demo APK.
 
-## More
+## 更多帮助信息
 
-See the example code.
+请查看Demo项目.
 
-## Author
+## 作者
 
 Smile - @ixueadev on GitHub, Email is ixueadev@163.com, See more ixuea([http://www.ixuea.com][100])
 
-Android development QQ group: 702321063.
+Android开发交流群QQ群: 702321063.
+
 
 [10]: https://github.com/lifengsofts/AndroidDownloader/issues/new
 [12]: http://a.ixuea.com/8
