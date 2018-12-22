@@ -14,7 +14,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public class GetFileInfoTask implements Runnable {

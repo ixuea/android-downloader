@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.config;
 
 /**
- * Created by renpingqing on 17/3/2.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/3/2.
  */
 
 import cn.woblog.android.downloader.db.DownloadDBController;

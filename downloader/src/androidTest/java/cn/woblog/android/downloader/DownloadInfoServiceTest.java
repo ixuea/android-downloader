@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Created by renpingqing on 15/01/2017.
+ * Created by ixuea(http://a.ixuea.com/3) on 15/01/2017.
  */
 @RunWith(AndroidJUnit4.class)
 public class DownloadInfoServiceTest {

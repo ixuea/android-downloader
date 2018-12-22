@@ -5,7 +5,7 @@ import cn.woblog.android.downloader.domain.DownloadThreadInfo;
 import java.util.List;
 
 /**
- * Created by renpingqing on 17/1/23.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/23.
  */
 
 public interface DownloadDBController {

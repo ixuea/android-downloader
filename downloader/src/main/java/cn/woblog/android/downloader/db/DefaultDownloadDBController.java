@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by renpingqing on 17/1/23.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/23.
  */
 
 public final class DefaultDownloadDBController implements DownloadDBController {

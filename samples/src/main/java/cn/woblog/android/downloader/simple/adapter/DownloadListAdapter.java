@@ -32,7 +32,7 @@ import java.lang.ref.SoftReference;
 import java.sql.SQLException;
 
 /**
- * Created by renpingqing on 17/1/19.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/19.
  */
 public class DownloadListAdapter extends
     BaseRecyclerViewAdapter<MyBusinessInfo, DownloadListAdapter.ViewHolder> {

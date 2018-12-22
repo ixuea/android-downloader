@@ -3,7 +3,7 @@ package cn.woblog.android.downloader.simple.domain;
 import java.io.Serializable;
 
 /**
- * Created by renpingqing on 17/1/19.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/19.
  */
 public class MyBusinessInfo implements Serializable {
 

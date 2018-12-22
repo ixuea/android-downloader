@@ -5,7 +5,7 @@ import cn.woblog.android.downloader.exception.DownloadException;
 import java.lang.ref.SoftReference;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public abstract class MyDownloadListener extends AbsDownloadListener {

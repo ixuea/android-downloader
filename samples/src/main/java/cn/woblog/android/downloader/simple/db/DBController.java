@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by renpingqing on 17/3/2.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/3/2.
  */
 
 public class DBController implements DownloadDBController {

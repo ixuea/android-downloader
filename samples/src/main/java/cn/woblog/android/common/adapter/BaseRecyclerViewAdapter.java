@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * Created by renpingqing on 21/01/2017.
+ * Created by ixuea(http://a.ixuea.com/3) on 21/01/2017.
  * @param <D> data type
  * @param <VH> ViewHolder type
  */

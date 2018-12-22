@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * Created by renpingqing on 17/3/2.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/3/2.
  */
 @DatabaseTable(tableName = "MyBusinessInfLocal")
 public class MyBusinessInfLocal {

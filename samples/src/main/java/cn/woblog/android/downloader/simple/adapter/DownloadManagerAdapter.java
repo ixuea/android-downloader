@@ -8,7 +8,7 @@ import cn.woblog.android.downloader.simple.fragment.DownloadedFragment;
 import cn.woblog.android.downloader.simple.fragment.DownloadingFragment;
 
 /**
- * Created by renpingqing on 17/3/1.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/3/1.
  */
 
 public class DownloadManagerAdapter extends CustomFragmentPagerAdapter<String> {

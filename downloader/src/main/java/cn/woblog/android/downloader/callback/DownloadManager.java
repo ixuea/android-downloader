@@ -5,7 +5,7 @@ import cn.woblog.android.downloader.domain.DownloadInfo;
 import java.util.List;
 
 /**
- * Created by renpingqing on 15/01/2017.
+ * Created by ixuea(http://a.ixuea.com/3) on 15/01/2017.
  */
 
 public interface DownloadManager {

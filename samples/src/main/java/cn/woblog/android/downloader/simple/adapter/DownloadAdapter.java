@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * Created by renpingqing on 17/3/1.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/3/1.
  */
 
 public class DownloadAdapter extends

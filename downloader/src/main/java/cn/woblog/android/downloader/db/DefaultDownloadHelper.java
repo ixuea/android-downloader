@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import cn.woblog.android.downloader.config.Config;
 
 /**
- * Created by renpingqing on 17/1/23.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/23.
  */
 
 public class DefaultDownloadHelper extends SQLiteOpenHelper {

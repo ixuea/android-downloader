@@ -3,7 +3,7 @@ package cn.woblog.android.downloader.callback;
 import cn.woblog.android.downloader.exception.DownloadException;
 
 /**
- * Created by renpingqing on 17/2/23.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/2/23.
  */
 
 public interface DownloadListener {

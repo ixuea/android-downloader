@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public class DownloadTaskImpl implements DownloadTask, OnGetFileInfoListener,

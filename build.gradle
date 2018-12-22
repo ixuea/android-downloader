@@ -19,7 +19,7 @@ allprojects {
         jcenter()
 
 //        local maven repo.
-//        maven { name 'android-downloader-local'; url '/Users/renpingqing/Documents/work/repo' }
+//        maven { name 'android-downloader-local'; url '/Users/smile/Documents/work/repo' }
     }
 }
 

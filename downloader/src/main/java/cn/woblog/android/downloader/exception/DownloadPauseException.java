@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.exception;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public class DownloadPauseException extends DownloadException {

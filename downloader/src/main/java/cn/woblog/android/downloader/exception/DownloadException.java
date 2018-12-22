@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public class DownloadException extends RuntimeException {

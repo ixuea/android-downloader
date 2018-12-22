@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by renpingqing on 14/01/2017.
+ * Created by ixuea(http://a.ixuea.com/3) on 14/01/2017.
  */
 
 public final class DownloadManagerImpl implements DownloadManager, DownloadTaskListener {

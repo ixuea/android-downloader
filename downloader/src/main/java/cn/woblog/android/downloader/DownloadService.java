@@ -11,7 +11,7 @@ import cn.woblog.android.downloader.config.Config;
 import java.util.List;
 
 /**
- * Created by renpingqing on 14/02/2017.
+ * Created by ixuea(http://a.ixuea.com/3) on 14/02/2017.
  */
 
 public class DownloadService extends Service {

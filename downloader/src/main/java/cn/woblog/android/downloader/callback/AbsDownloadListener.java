@@ -3,7 +3,7 @@ package cn.woblog.android.downloader.callback;
 import java.lang.ref.SoftReference;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public abstract class AbsDownloadListener implements DownloadListener {

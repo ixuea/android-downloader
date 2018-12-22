@@ -1,7 +1,7 @@
 package cn.woblog.android.downloader.simple.util;
 
 /**
- * Created by renpingqing on 17/1/23.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/23.
  */
 
 public class FileUtil {

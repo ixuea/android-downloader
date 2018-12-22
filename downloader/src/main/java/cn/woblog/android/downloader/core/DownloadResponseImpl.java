@@ -10,7 +10,7 @@ import cn.woblog.android.downloader.domain.DownloadThreadInfo;
 import cn.woblog.android.downloader.exception.DownloadException;
 
 /**
- * Created by renpingqing on 17/1/22.
+ * Created by ixuea(http://a.ixuea.com/3) on 17/1/22.
  */
 
 public class DownloadResponseImpl implements DownloadResponse {
