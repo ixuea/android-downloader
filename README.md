@@ -3,12 +3,12 @@ AndroidDownloader
 
 English | [中文][14]
 
-[![Build Status](https://travis-ci.org/lifengsofts/AndroidDownloader.svg?branch=master)](https://travis-ci.org/lifengsofts/AndroidDownloader)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/lifengsofts/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=lifengsofts/AndroidDownloader&utm_campaign=badger)
-[![Issue Count](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/issue_count.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
+[![Build Status](https://travis-ci.org/ixuea/AndroidDownloader.svg?branch=master)](https://travis-ci.org/ixuea/AndroidDownloader)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/ixuea/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=ixuea/AndroidDownloader&utm_campaign=badger)
+[![Issue Count](https://codeclimate.com/github/ixuea/AndroidDownloader/badges/issue_count.svg)](https://codeclimate.com/github/ixuea/AndroidDownloader)
 ![Maven-central Version](https://img.shields.io/maven-central/v/com.ixuea.android/downloader.svg)
-![Release](https://img.shields.io/github/release/lifengsofts/AndroidDownloader.svg)
-![License](https://img.shields.io/github/license/lifengsofts/AndroidDownloader.svg)
+![Release](https://img.shields.io/github/release/ixuea/AndroidDownloader.svg)
+![License](https://img.shields.io/github/license/ixuea/AndroidDownloader.svg)
 
 [Report an issue][10], iOS and macOS use [CocoaDownloader][12].
 
@@ -179,22 +179,22 @@ Smile - @ixueadev on GitHub, Email is ixueadev@163.com, See more ixuea([http://w
 
 Android development QQ group: 702321063.
 
-[10]: https://github.com/lifengsofts/AndroidDownloader/issues/new
+[10]: https://github.com/ixuea/AndroidDownloader/issues/new
 [12]: http://a.ixuea.com/8
 [13]: https://github.com/ixuea/AndroidDownloader
 [14]: https://github.com/ixuea/AndroidDownloader/blob/master/docs/zh.md
 [20]: https://i.woblog.cn
 
-[30]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/download-a-file.png
-[31]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/use-in-list.png
-[32]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/download-manager-downloading.png
-[33]: https://raw.github.com/lifengsofts/AndroidDownloader/master/samples/art/download-manager-downloaded.png
+[30]: https://raw.github.com/ixuea/AndroidDownloader/master/samples/art/download-a-file.png
+[31]: https://raw.github.com/ixuea/AndroidDownloader/master/samples/art/use-in-list.png
+[32]: https://raw.github.com/ixuea/AndroidDownloader/master/samples/art/download-manager-downloading.png
+[33]: https://raw.github.com/ixuea/AndroidDownloader/master/samples/art/download-manager-downloaded.png
 
-[40]: https://github.com/lifengsofts/AndroidDownloader/releases
-[50]: https://github.com/lifengsofts/AndroidDownloader/releases
-[60]: https://github.com/lifengsofts/AndroidDownloader#build
+[40]: https://github.com/ixuea/AndroidDownloader/releases
+[50]: https://github.com/ixuea/AndroidDownloader/releases
+[60]: https://github.com/ixuea/AndroidDownloader#build
 
 [100]: http://a.ixuea.com/3
 
-[200]: https://github.com/lifengsofts/AndroidDownloader/wiki
+[200]: https://github.com/ixuea/AndroidDownloader/wiki
 [201]: http://i.woblog.cn/AndroidDownloader/javadocs/2.0.0/
