@@ -43,10 +43,10 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
       this.config = config;
     }
 
-    if (config.getDownloadDBController() == null) {
+    if (this.config.getDownloadDBController() == null) {
       downloadDBController = new DefaultDownloadDBController(context, this.config);
     } else {
-      downloadDBController = config.getDownloadDBController();
+      downloadDBController = this.config.getDownloadDBController();
     }
 
     if (downloadDBController.findAllDownloading() == null) {
