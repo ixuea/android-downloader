@@ -5,7 +5,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "cn.woblog.android.downloader.simple"
+        applicationId "com.ixuea.android.downloader.simple"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 101
@@ -44,7 +44,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':downloader')
 
-//    compile 'cn.woblog.android:downloader:1.0.1-SNAPSHOT'
+//    compile 'com.ixuea.android:downloader:1.0.1-SNAPSHOT'
 
     compile "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.androidSupportVersion"
@@ -67,5 +67,5 @@ dependencies {
 
 task run(type: Exec, dependsOn: 'installDebug') {
     description 'Installs the APK and runs the main activity: "gradlew :samples:run"'
-    commandLine "${android.sdkDirectory}/platform-tools/adb", 'shell', 'am', 'start', '-n', 'cn.woblog.android.downloader.simple/.MainActivity'
+    commandLine "${android.sdkDirectory}/platform-tools/adb", 'shell', 'am', 'start', '-n', 'com.ixuea.android.downloader.simple/.MainActivity'
 }

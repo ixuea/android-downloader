@@ -1,4 +1,4 @@
-package cn.woblog.android.downloader.library;
+package com.ixuea.android.downloader.library;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -19,6 +19,6 @@ public class ExampleInstrumentedTest {
     // Context of the app under test.
     Context appContext = InstrumentationRegistry.getTargetContext();
 
-//    assertEquals("cn.woblog.android.downloader.library.test", appContext.getPackageName());
+//    assertEquals("com.ixuea.android.downloader.library.test", appContext.getPackageName());
   }
 }

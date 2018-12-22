@@ -17,8 +17,8 @@
 #}
 
 # Android Downloader
--keep public class * implements cn.woblog.android.downloader.db.DownloadDBController
--keep class cn.woblog.android.downloader.domain.** { *; }
+-keep public class * implements com.ixuea.android.downloader.db.DownloadDBController
+-keep class com.ixuea.android.downloader.domain.** { *; }
 #\ Android Downloader
 
 

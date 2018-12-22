@@ -5,7 +5,7 @@ AndroidDownloader
 [![Build Status](https://travis-ci.org/lifengsofts/AndroidDownloader.svg?branch=master)](https://travis-ci.org/lifengsofts/AndroidDownloader)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/lifengsofts/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=lifengsofts/AndroidDownloader&utm_campaign=badger)
 [![Issue Count](https://codeclimate.com/github/lifengsofts/AndroidDownloader/badges/issue_count.svg)](https://codeclimate.com/github/lifengsofts/AndroidDownloader)
-![Maven-central Version](https://img.shields.io/maven-central/v/cn.woblog.android/downloader.svg)
+![Maven-central Version](https://img.shields.io/maven-central/v/com.ixuea.android/downloader.svg)
 ![Release](https://img.shields.io/github/release/lifengsofts/AndroidDownloader.svg)
 ![License](https://img.shields.io/github/license/lifengsofts/AndroidDownloader.svg)
 
@@ -29,7 +29,7 @@ Or use Gradle:
 
 ```gradle
 dependencies {
-  compile 'cn.woblog.android:downloader:1.0.1'
+  compile 'com.ixuea.android:downloader:1.0.1'
 }
 ```
 
@@ -37,7 +37,7 @@ Or Maven:
 
 ```xml
 <dependency>
-  <groupId>cn.woblog.android</groupId>
+  <groupId>com.ixuea.android</groupId>
   <artifactId>downloader</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -51,7 +51,7 @@ ProGuard
 If your project uses ProGuard, you need to add the following configuration to your project proguard-rules.pro file
 
 ```pro
--keep public class * implements cn.woblog.android.downloader.db.DownloadDBController
+-keep public class * implements com.ixuea.android.downloader.db.DownloadDBController
 ```
 
 How do I use Android Downloader?
@@ -70,9 +70,9 @@ For more information on [GitHub wiki][200] and [Javadocs][201].
 --------------------------------
 
 ```xml
-<service android:name="cn.woblog.android.downloader.DownloadService">
+<service android:name="com.ixuea.android.downloader.DownloadService">
   <intent-filter>
-    <action android:name="cn.woblog.android.downloader.DOWNLOAD_SERVICE" />
+    <action android:name="com.ixuea.android.downloader.DOWNLOAD_SERVICE" />
   </intent-filter>
 </service>
 ```

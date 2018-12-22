@@ -9,7 +9,7 @@
   android:paddingLeft="@dimen/activity_horizontal_margin"
   android:paddingRight="@dimen/activity_horizontal_margin"
   android:orientation="vertical"
-  tools:context="cn.woblog.android.downloader.simple.activity.SimpleActivity">
+  tools:context="com.ixuea.android.downloader.simple.activity.SimpleActivity">
 
   <Button
     android:id="@+id/bt_download_button"

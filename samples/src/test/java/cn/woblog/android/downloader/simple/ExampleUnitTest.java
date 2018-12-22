@@ -1,4 +1,4 @@
-package cn.woblog.android.downloader.simple;
+package com.ixuea.android.downloader.simple;
 
 import static org.junit.Assert.assertEquals;
 

@@ -4,7 +4,7 @@
   android:id="@+id/activity_download_detail"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="cn.woblog.android.downloader.simple.activity.DownloadDetailActivity">
+  tools:context="com.ixuea.android.downloader.simple.activity.DownloadDetailActivity">
 
   <include layout="@layout/item_download_info" />
 
