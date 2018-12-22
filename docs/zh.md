@@ -1,7 +1,7 @@
 AndroidDownloader
 =====
 
-English | [中文][14]
+[English][13] | 中文
 
 [![Build Status](https://travis-ci.org/ixuea/AndroidDownloader.svg?branch=master)](https://travis-ci.org/ixuea/AndroidDownloader)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a72dfeec9f54c3187475aaa5ebafe73)](https://www.codacy.com/app/ixuea/AndroidDownloader?utm_source=github.com&utm_medium=referral&utm_content=ixuea/AndroidDownloader&utm_campaign=badger)
