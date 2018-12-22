@@ -5,6 +5,9 @@ apply plugin: 'pmd'
 apply plugin: "jacoco"
 apply plugin: 'com.github.kt3k.coveralls'
 
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.ixuea'
+
 
 findbugs {
     toolVersion = FINDBUGS_VERSION
