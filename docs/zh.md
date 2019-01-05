@@ -40,7 +40,7 @@ allprojects {
 
 ```gradle
 dependencies {
-  compile 'com.ixuea:AndroidDownloader:2.0.3'
+  compile 'com.ixuea:AndroidDownloader:latest'
 }
 ```
 
