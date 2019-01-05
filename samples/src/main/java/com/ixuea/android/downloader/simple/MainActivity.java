@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
             //      config.setDownloadDBController(dbController);
 
             //set download quantity at the same time.
-            config.setDownloadThread(3);
+            config.setDownloadThread(1);
 
             //set each download info thread number
             config.setEachDownloadThread(2);
