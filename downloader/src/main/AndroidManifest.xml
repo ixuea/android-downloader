@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.ixuea.android.downloader">
+    package="com.ixuea.android.downloader">
 
-  <application>
-    <service android:name="com.ixuea.android.downloader.DownloadService">
-      <intent-filter>
-        <action android:name="com.ixuea.android.downloader.DOWNLOAD_SERVICE" />
-      </intent-filter>
-    </service>
-  </application>
+    <application>
+        <service android:name="com.ixuea.android.downloader.DownloadService">
+            <intent-filter>
+                <action android:name="com.ixuea.android.downloader.DOWNLOAD_SERVICE" />
+            </intent-filter>
+        </service>
+    </application>
 </manifest>

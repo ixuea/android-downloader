@@ -9,57 +9,57 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "MyBusinessInfLocal")
 public class MyBusinessInfLocal {
 
-  @DatabaseField(id = true)
-  private String id;
+    @DatabaseField(id = true)
+    private String id;
 
-  @DatabaseField
-  private String name;
+    @DatabaseField
+    private String name;
 
-  @DatabaseField
-  private String icon;
+    @DatabaseField
+    private String icon;
 
-  @DatabaseField
-  private String url;
+    @DatabaseField
+    private String url;
 
-  public MyBusinessInfLocal() {
-  }
+    public MyBusinessInfLocal() {
+    }
 
-  public MyBusinessInfLocal(String id, String name, String icon, String url) {
-    this.id = id;
-    this.name = name;
-    this.icon = icon;
-    this.url = url;
-  }
+    public MyBusinessInfLocal(String id, String name, String icon, String url) {
+        this.id = id;
+        this.name = name;
+        this.icon = icon;
+        this.url = url;
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getIcon() {
-    return icon;
-  }
+    public String getIcon() {
+        return icon;
+    }
 
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-  public String getUrl() {
-    return url;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

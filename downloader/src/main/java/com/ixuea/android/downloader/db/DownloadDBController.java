@@ -2,6 +2,7 @@ package com.ixuea.android.downloader.db;
 
 import com.ixuea.android.downloader.domain.DownloadInfo;
 import com.ixuea.android.downloader.domain.DownloadThreadInfo;
+
 import java.util.List;
 
 /**
@@ -10,19 +11,19 @@ import java.util.List;
 
 public interface DownloadDBController {
 
-  List<DownloadInfo> findAllDownloading();
+    List<DownloadInfo> findAllDownloading();
 
-  List<DownloadInfo> findAllDownloaded();
+    List<DownloadInfo> findAllDownloaded();
 
-  DownloadInfo findDownloadedInfoById(String id);
+    DownloadInfo findDownloadedInfoById(String id);
 
-  void pauseAllDownloading();
+    void pauseAllDownloading();
 
-  void createOrUpdate(DownloadInfo downloadInfo);
+    void createOrUpdate(DownloadInfo downloadInfo);
 
-  void createOrUpdate(DownloadThreadInfo downloadThreadInfo);
+    void createOrUpdate(DownloadThreadInfo downloadThreadInfo);
 
-  void delete(DownloadInfo downloadInfo);
+    void delete(DownloadInfo downloadInfo);
 
-  void delete(DownloadThreadInfo download);
+    void delete(DownloadThreadInfo download);
 }

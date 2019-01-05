@@ -9,7 +9,7 @@ import com.ixuea.android.downloader.exception.DownloadException;
 
 public interface DownloadResponse {
 
-  void onStatusChanged(DownloadInfo downloadInfo);
+    void onStatusChanged(DownloadInfo downloadInfo);
 
-  void handleException(DownloadException exception);
+    void handleException(DownloadException exception);
 }

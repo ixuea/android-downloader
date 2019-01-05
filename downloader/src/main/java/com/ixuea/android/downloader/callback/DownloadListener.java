@@ -8,17 +8,17 @@ import com.ixuea.android.downloader.exception.DownloadException;
 
 public interface DownloadListener {
 
-  void onStart();
+    void onStart();
 
-  void onWaited();
+    void onWaited();
 
-  void onPaused();
+    void onPaused();
 
-  void onDownloading(long progress, long size);
+    void onDownloading(long progress, long size);
 
-  void onRemoved();
+    void onRemoved();
 
-  void onDownloadSuccess();
+    void onDownloadSuccess();
 
-  void onDownloadFailed(DownloadException e);
+    void onDownloadFailed(DownloadException e);
 }

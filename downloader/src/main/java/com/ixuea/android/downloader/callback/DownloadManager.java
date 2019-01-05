@@ -2,6 +2,7 @@ package com.ixuea.android.downloader.callback;
 
 import com.ixuea.android.downloader.db.DownloadDBController;
 import com.ixuea.android.downloader.domain.DownloadInfo;
+
 import java.util.List;
 
 /**
@@ -10,25 +11,25 @@ import java.util.List;
 
 public interface DownloadManager {
 
-  void download(DownloadInfo downloadInfo);
+    void download(DownloadInfo downloadInfo);
 
-  void pause(DownloadInfo downloadInfo);
+    void pause(DownloadInfo downloadInfo);
 
-  void resume(DownloadInfo downloadInfo);
+    void resume(DownloadInfo downloadInfo);
 
-  void remove(DownloadInfo downloadInfo);
+    void remove(DownloadInfo downloadInfo);
 
-  void onDestroy();
+    void onDestroy();
 
-  DownloadInfo getDownloadById(String id);
+    DownloadInfo getDownloadById(String id);
 
-  List<DownloadInfo> findAllDownloading();
+    List<DownloadInfo> findAllDownloading();
 
-  List<DownloadInfo> findAllDownloaded();
+    List<DownloadInfo> findAllDownloaded();
 
-  DownloadDBController getDownloadDBController();
+    DownloadDBController getDownloadDBController();
 
-  void resumeAll();
+    void resumeAll();
 
-  void pauseAll();
+    void pauseAll();
 }

@@ -6,5 +6,5 @@ package com.ixuea.android.downloader.core.task;
 
 public interface DownloadTask {
 
-  void start();
+    void start();
 }
