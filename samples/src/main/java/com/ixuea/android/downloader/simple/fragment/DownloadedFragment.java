@@ -37,7 +37,7 @@ public class DownloadedFragment extends BaseFragment {
   @Override
   protected View getLayoutView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_download, null);
+    return inflater.inflate(R.layout.fragment_downloaded, null);
   }
 
   @Override
@@ -62,16 +62,16 @@ public class DownloadedFragment extends BaseFragment {
 
     //downloading info
 
-    setData();
+    fetchData();
   }
 
-  private void setData() {
+  private void fetchData() {
     downloadAdapter.setData(downloadManager.findAllDownloaded());
   }
 
   @Subscribe
   public void onEventMainThread(DownloadStatusChanged event) {
-    setData();
+    fetchData();
   }
 
   @Override

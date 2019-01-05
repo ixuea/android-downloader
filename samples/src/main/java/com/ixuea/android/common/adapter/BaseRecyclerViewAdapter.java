@@ -43,6 +43,11 @@ public abstract class BaseRecyclerViewAdapter<D, VH extends ViewHolder> extends
     notifyDataSetChanged();
   }
 
+  public void clearData() {
+    this.data.clear();
+    notifyDataSetChanged();
+  }
+
   /**
    *
    * @param onItemClickListener
@@ -50,6 +55,10 @@ public abstract class BaseRecyclerViewAdapter<D, VH extends ViewHolder> extends
   public void setOnItemClickListener(
       OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
+  }
+
+  public List<D> getData() {
+    return data;
   }
 
   /**

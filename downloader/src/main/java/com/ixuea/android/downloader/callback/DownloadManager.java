@@ -28,4 +28,7 @@ public interface DownloadManager {
 
   DownloadDBController getDownloadDBController();
 
+  void resumeAll();
+
+  void pauseAll();
 }

@@ -198,10 +198,7 @@ public class DownloadListAdapter extends
 
     private void refresh() {
       if (downloadInfo == null) {
-        tv_size.setText("");
-        pb.setProgress(0);
-        bt_action.setText("Download");
-        tv_status.setText("not downloadInfo");
+        defaultStatusUI();
       } else {
         switch (downloadInfo.getStatus()) {
           case DownloadInfo.STATUS_NONE:
@@ -245,10 +242,8 @@ public class DownloadListAdapter extends
             tv_status.setText("success");
             break;
           case STATUS_REMOVED:
-            tv_size.setText("");
-            pb.setProgress(0);
-            bt_action.setText("Download");
-            tv_status.setText("not downloadInfo");
+            defaultStatusUI();
+            break;
           case STATUS_WAIT:
             tv_size.setText("");
             pb.setProgress(0);
@@ -258,6 +253,14 @@ public class DownloadListAdapter extends
         }
 
       }
+    }
+
+    private void defaultStatusUI() {
+      tv_size.setText("");
+      pb.setProgress(0);
+      bt_action.setText("Download");
+      tv_status.setText("not downloadInfo");
+
     }
   }
 }
