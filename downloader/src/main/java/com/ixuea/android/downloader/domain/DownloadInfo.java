@@ -270,6 +270,8 @@ public class DownloadInfo implements Serializable {
 
             if (TextUtils.isEmpty(id)) {
                 downloadInfo.setId(url);
+            } else {
+                downloadInfo.setId(id);
             }
 
             return downloadInfo;
