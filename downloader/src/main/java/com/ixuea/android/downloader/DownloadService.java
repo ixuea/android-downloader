@@ -65,7 +65,7 @@ public class DownloadService extends Service {
     @Override
     public void onDestroy() {
         if (downloadManager != null) {
-            downloadManager.onDestroy();
+            downloadManager.destroy();
             downloadManager = null;
         }
         super.onDestroy();

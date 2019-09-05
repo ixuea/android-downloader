@@ -129,8 +129,8 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskL
     }
 
     @Override
-    public void onDestroy() {
-
+    public void destroy() {
+        instance=null;
     }
 
     @Override

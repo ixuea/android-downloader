@@ -19,7 +19,7 @@ public interface DownloadManager {
 
     void remove(DownloadInfo downloadInfo);
 
-    void onDestroy();
+    void destroy();
 
     DownloadInfo getDownloadById(String id);
 
