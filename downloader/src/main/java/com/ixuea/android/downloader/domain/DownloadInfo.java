@@ -244,8 +244,9 @@ public class DownloadInfo implements Serializable {
             return this;
         }
 
-        public void setId(String id) {
+        public Builder setId(String id) {
             this.id = id;
+            return this;
         }
 
         public DownloadInfo build() {
