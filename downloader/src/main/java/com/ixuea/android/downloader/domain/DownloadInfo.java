@@ -261,8 +261,10 @@ public class DownloadInfo implements Serializable {
             downloadInfo.setPath(path);
 
             if (createAt == -1) {
-                setCreateAt(System.currentTimeMillis());
+                createAt = System.currentTimeMillis();
             }
+
+            downloadInfo.setCreateAt(createAt);
 
             if (TextUtils.isEmpty(id)) {
                 downloadInfo.setId(url);
