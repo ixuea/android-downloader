@@ -144,6 +144,7 @@ public class DownloadListAdapter extends
                                 break;
                             case DownloadInfo.STATUS_COMPLETED:
                                 downloadManager.remove(downloadInfo);
+                                downloadInfo=null;
                                 break;
                         }
                     } else {
@@ -186,6 +187,10 @@ public class DownloadListAdapter extends
         }
 
         private void notifyDownloadStatus() {
+            if (downloadInfo == null) {
+                return;
+            }
+
             if (downloadInfo.getStatus() == STATUS_REMOVED) {
                 try {
                     dbController.deleteMyDownloadInfo(downloadInfo.getUri());
