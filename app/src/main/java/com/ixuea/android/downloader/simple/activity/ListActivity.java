@@ -74,6 +74,9 @@ public class ListActivity extends BaseActivity implements OnItemClickListener {
         myBusinessInfos.add(new MyBusinessInfo("支付宝",
                 "http://pp.myapp.com/ma_icon/0/icon_5294_1631934458/96",
                 "https://e50d9cb5335f94b56f730c9778f0af9e.dlied1.cdntips.net/imtt.dd.qq.com/16891/apk/94D8AB3EFA5C7FD345ABFCED1B9B90E0.apk"));
+        myBusinessInfos.add(new MyBusinessInfo("和平精英-大文件",
+                "https://pp.myapp.com/ma_icon/0/icon_52575843_1631064949/96",
+                "https://a2b7a617e94763717ccf697f697eccf4.dlied1.cdntips.net/imtt.dd.qq.com/16891/apk/DAE19B232D28B8EC63045162C1CE22F5.apk"));
         return myBusinessInfos;
     }
 
