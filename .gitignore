@@ -53,6 +53,9 @@ proguard/
 # Android Studio captures folder
 captures/
 
+#Android other
+.idea/deploymentTargetDropDown.xml
+
 # IntelliJ
 *.iml
 .idea/workspace.xml
