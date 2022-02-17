@@ -28,7 +28,11 @@ public class DownloadService extends Service {
     public static DownloadManager getDownloadManager(Context context, Config config) {
         if (!isServiceRunning(context)) {
             Intent downloadSvr = new Intent(context, DownloadService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(downloadSvr);
+            } else {
             context.startService(downloadSvr);
+            }
         }
         if (DownloadService.downloadManager == null) {
             DownloadService.downloadManager = DownloadManagerImpl.getInstance(context, config);
