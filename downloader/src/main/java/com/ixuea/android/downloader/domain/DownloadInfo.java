@@ -75,6 +75,16 @@ public class DownloadInfo implements Serializable {
      */
     private int supportRanges;
 
+    // to show or hide download progress LOG
+    private boolean showDownloadLog = true;
+
+    public boolean isShowDownloadLog() {
+        return showDownloadLog;
+    }
+    public void setShowDownloadLog(boolean showDownloadLog) {
+        this.showDownloadLog = showDownloadLog;
+    }
+
     private List<DownloadThreadInfo> downloadThreadInfos;
 
 
@@ -217,6 +227,7 @@ public class DownloadInfo implements Serializable {
         private long createAt = -1;
         private String url;
         private String path;
+        private boolean showProgressLog=true;
 
         public Builder() {
 
@@ -226,6 +237,12 @@ public class DownloadInfo implements Serializable {
         public Builder setCreateAt(long createAt) {
             this.createAt = createAt;
             return this;
+        }
+
+        public Builder setShowProgressLog(boolean showProgressLog) {
+            this.showProgressLog = showProgressLog;
+            return this;
+
         }
 
 
@@ -271,6 +288,7 @@ public class DownloadInfo implements Serializable {
             } else {
                 downloadInfo.setId(id);
             }
+            downloadInfo.setShowDownloadLog(this.showProgressLog);
 
             return downloadInfo;
         }
