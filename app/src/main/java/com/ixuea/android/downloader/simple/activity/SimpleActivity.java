@@ -30,7 +30,7 @@ import java.io.File;
  */
 public class SimpleActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String DEFAULT_URL = "https://3b8637d9f6c334dab555e2afbdc16687.dlied1.cdntips.net/imtt.dd.qq.com/16891/apk/49F7A4E3B47E5828D02B2A10C580DB65.apk";
+    public static final String DEFAULT_URL = "http://212.183.159.230/5MB.zip";
 
 
     private TextView tv_download_info;
@@ -122,6 +122,7 @@ public class SimpleActivity extends BaseActivity implements View.OnClickListener
         String path = d.getAbsolutePath().concat("/").concat("a.apk");
         downloadInfo = new DownloadInfo.Builder().setUrl(DEFAULT_URL)
                 .setPath(path)
+                .setShowProgressLog(false)
                 .build();
         setDownloadListener();
         downloadManager.download(downloadInfo);

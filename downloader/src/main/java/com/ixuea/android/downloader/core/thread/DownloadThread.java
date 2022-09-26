@@ -103,12 +103,15 @@ public class DownloadThread implements Runnable {
                     downloadProgressListener.onProgress();
                     //          }
 
-                    Log.d(TAG,
-                            "downloadInfo:" + downloadInfo.getId() + " thread:" + downloadThreadInfo.getThreadId()
-                                    + " progress:"
-                                    + downloadThreadInfo.getProgress()
-                                    + ",start:" + downloadThreadInfo.getStart() + ",end:" + downloadThreadInfo
-                                    .getEnd());
+                    // if true then show log
+                    if(downloadInfo.isShowDownloadLog()){
+                        Log.d(TAG,
+                                "downloadInfo:" + downloadInfo.getId() + " thread:" + downloadThreadInfo.getThreadId()
+                                        + " progress:"
+                                        + downloadThreadInfo.getProgress()
+                                        + ",start:" + downloadThreadInfo.getStart() + ",end:" + downloadThreadInfo
+                                        .getEnd());
+                    }
                 }
 
                 //downloadInfo success
